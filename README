@@ -2,13 +2,13 @@ Readme for Prg
 ==========================================================
 
 Compilation:
-./compile.sh
+./build.sh
 
 Clean project:
 ./clean.sh
 
 Compile and run:
-./crun.h
+./Brun.sh
 
 Running:
 ./run.sh
