@@ -1,0 +1,4 @@
+ // the configured options and settings for SDL_OGL
+#define SDL_OGL_VERSION_MAJOR @SDL_OGL_VERSION_MAJOR@
+#define SDL_OGL_VERSION_MINOR @SDL_OGL_VERSION_MINOR@
+ 
