@@ -1,3 +1,3 @@
 #! /bin/sh
 
-/build/src/prg
+build/src/prg
