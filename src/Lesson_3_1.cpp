@@ -44,7 +44,7 @@ void Lesson_3_1::drawGLScene()
 
 void Lesson_3_1::draw()
 {
-	glColor3f (0.7, 0.2, 0.5);
+	glColor3f (1.0, 1.0, 1.0);
 
 
 	glLoadIdentity();
@@ -58,7 +58,7 @@ void Lesson_3_1::draw()
 }
 
 
-void Lesson_3_1::wireCube(GLfloat size)
+void Lesson_3_1::wireCube(GLdouble size)
 {
 	size = size > 0 ? size : size * -1;
 	size /= 2;

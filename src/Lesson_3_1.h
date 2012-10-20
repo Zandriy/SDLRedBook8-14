@@ -21,7 +21,7 @@ public:
 
 private:
 	void draw();
-	void wireCube(GLfloat size);
+	void wireCube(GLdouble size);
 };
 
 #endif /* LESSON_3_1_H_ */
