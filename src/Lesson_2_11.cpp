@@ -25,7 +25,7 @@ void Lesson_2_11::reshape(int width, int height)
 	glLoadIdentity();
 
 	// Set coordinate system
-	gluLookAt(0.2, 0.9, 1.0, 0.5, 0.5, -1.0, 0.0, 1.0, 0.0);
+	glOrtho(-1.0, 1.0, -1.0, 1.0, 1.5, 20.0);
 
 	// Make sure we're changing the model view and not the projection
 	glMatrixMode( GL_MODELVIEW );
@@ -48,17 +48,21 @@ void Lesson_2_11::draw()
 {
 	glColor3f (0.0, 1.0, 0.5);
 
+	// Set camera
+	glLoadIdentity();
+	gluLookAt(-0.6, 0.6, 2.2, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	GLfloat vertices[] = {
-			0.0, 0.0, 1.5,
-			1.0, 0.0, 1.5,
-			1.0, 1.0, 1.5,
-			0.0, 1.0, 1.5,
-			0.0, 0.0, 0.6,
-			1.0, 0.0, 0.6,
-			1.0, 1.0, 0.6,
-			0.0, 1.0, 0.6
+			-0.5, -0.5,  0.5,
+			 0.5, -0.5,  0.5,
+			 0.5,  0.5,  0.5,
+			-0.5,  0.5,  0.5,
+			-0.5, -0.5, -0.5,
+			 0.5, -0.5, -0.5,
+			 0.5,  0.5, -0.5,
+			-0.5,  0.5, -0.5
 	};
 
 	GLubyte allIndices[] = {
@@ -72,19 +76,6 @@ void Lesson_2_11::draw()
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
-/*
-	glBegin(GL_QUADS);
-	glArrayElement(4);
-	glArrayElement(5);
-	glArrayElement(6);
-	glArrayElement(7);
-
-	glVertex3f(0.0, 0.0, 2.0);
-	glVertex3f(1.0, 0.0, 2.0);
-	glVertex3f(1.0, 1.0, 2.0);
-	glVertex3f(0.0, 1.0, 2.0);
-	glEnd();
-	*/
 
 	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, allIndices);
 

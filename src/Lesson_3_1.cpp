@@ -46,10 +46,8 @@ void Lesson_3_1::draw()
 {
 	glColor3f (1.0, 1.0, 1.0);
 
-
+	// Set camera
 	glLoadIdentity();
-
-	// Set coordinate system
 	gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
 	glScalef(1.0, 2.0, 1.0);
