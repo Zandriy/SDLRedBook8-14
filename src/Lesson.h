@@ -9,7 +9,7 @@
 #define LESSON_H_
 
 #ifdef __APPLE__
-#include <OpenGL/gl.h>
+#include <OpenGL/OpenGL.h>
 #include <OpenGL/glu.h>
 #else
 #include <GL/gl.h>
