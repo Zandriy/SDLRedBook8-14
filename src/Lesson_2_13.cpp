@@ -69,7 +69,7 @@ void Lesson_2_13::draw()
 	glBegin(GL_TRIANGLES);
 	for (int i = 0; i < TRIANGLES_ORDER; ++i )
 	{
-		glColor3f (0.5 * (i%QTY), 0.1 * (i%QTY), 0.4 * (i%QTY));
+		glColor3f (0.5 / (i%QTY + 1), 0.1 * (i%QTY), 0.9 / (i%QTY + 1));
 
 		glVertex3fv(&vdata[ tindices[i][0] ] [0]);
 		glVertex3fv(&vdata[ tindices[i][1] ] [0]);

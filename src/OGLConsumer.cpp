@@ -56,7 +56,7 @@ void OGL_Consumer::initGL()
 	glShadeModel( GL_SMOOTH );
 
 	// Set the background black
-	glClearColor( 0.1f, 0.1f, 0.3f, 0.0f );
+	glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
 
 	// Depth buffer setup
 	glClearDepth( 1.0f );

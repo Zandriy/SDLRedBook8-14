@@ -8,7 +8,7 @@
 #include "OGLApplication.h"
 #include "SDL_OGLConfig.h"
 
-int main(int argc, char ** argv)
+int SDL_main(int argc, char ** argv)
 {
     fprintf(stdout,"Version %d.%d\n",
             SDL_OGL_VERSION_MAJOR,
@@ -20,6 +20,3 @@ int main(int argc, char ** argv)
 
 	return app.exec();
 }
-
-
-

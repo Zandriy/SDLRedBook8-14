@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 2.6)
 project (SDL_OGL)
 
+SET(CMAKE_CXX_FLAGS "-g")
+
 # The version number.
 set (SDL_OGL_VERSION_MAJOR 1)
 set (SDL_OGL_VERSION_MINOR 1)

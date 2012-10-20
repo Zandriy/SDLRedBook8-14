@@ -13,6 +13,10 @@ if(NOT OPENGL_FOUND)
 	message( FATAL ERROR "GL not found!")
 endif(NOT OPENGL_FOUND)
 
+IF (APPLE)
+	SET(SDL_MAIN_SOURCE SDLMain.m)
+ENDIF()
+
 SET(SDL_OGL_PROJECT_SOURCE
 	prg.cpp
 	OGLApplication.cpp
@@ -33,18 +37,25 @@ SET(SDL_OGL_PROJECT_SOURCE
 
 SET(SDL_OGL_PROJECT_TARGET prg)
 
+include_directories(
+	${SDL_INCLUDE_DIR}
+	${OPENGL_INCLUDE_DIR}
+	)
+
 link_libraries(
 	${SDL_LIBRARY}
 	${OPENGL_LIBRARY}
 	)
 
-ADD_EXECUTABLE(${SDL_OGL_PROJECT_TARGET} ${SDL_OGL_PROJECT_SOURCE})
+ADD_EXECUTABLE(${SDL_OGL_PROJECT_TARGET} ${SDL_MAIN_SOURCE} ${SDL_OGL_PROJECT_SOURCE})
 
 message("============ INFO ============")
-message("OS: " ${CMAKE_SYSTEM} ERROR)
+message("OS: " ${CMAKE_SYSTEM})
 message("PROCESSOR: " ${CMAKE_SYSTEM_PROCESSOR})
-message("SDL LIB include: " ${SDL_LIBRARY})
-message("OpenGL LIB include: " ${OPENGL_LIBRARY})
+message("SDL INCLUDE: " ${SDL_INCLUDE_DIR})
+message("OPENGL INCLUDE: " ${OPENGL_INCLUDE_DIR})
+message("SDL LIB: " ${SDL_LIBRARY})
+message("OpenGL LIB: " ${OPENGL_LIBRARY})
 message("==============================")
 message(" !!! always do `pwd -P` before `rm` !!!")
 message("==============================")
