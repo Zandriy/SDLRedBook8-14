@@ -12,7 +12,7 @@
 
 #define INIT_W		350
 #define INIT_H		350
-#define INIT_LESSON		9
+#define INIT_LESSON		12
 
 OGL_Application::OGL_Application()
 :	m_surface (NULL)
@@ -237,6 +237,10 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 		case SDLK_w:
 			m_OGL_Consumer->setLesson(11);
 			resizeWindow( 350, 350 );
+			break;
+		case SDLK_e:
+			m_OGL_Consumer->setLesson(12);
+			resizeWindow( 450, 150 );
 			break;
 		default:
 			break;

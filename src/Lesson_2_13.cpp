@@ -45,7 +45,7 @@ void Lesson_2_13::reshape(int width, int height)
 	glLoadIdentity();
 
 	// Set coordinate system
-	glOrtho(-1.0, -1.0, 1.0, 1.0, -1.0, 1.0);
+	glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 
 	// Make sure we're changing the model view and not the projection
 	glMatrixMode( GL_MODELVIEW );
