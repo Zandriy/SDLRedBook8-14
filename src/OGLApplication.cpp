@@ -177,7 +177,8 @@ bool OGL_Application::resizeWindow( int width, int height )
 // function to handle key press events
 void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 {
-	if (14 == m_curLesson)
+	if ( 	14 == m_curLesson ||
+			15 == m_curLesson  )
 	{
 		if ( m_OGL_Consumer->sendMessage(m_curLesson, keysym->sym, keysym->mod) )
 			return;
@@ -255,6 +256,10 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 			break;
 		case SDLK_t:
 			m_OGL_Consumer->setLesson(m_curLesson = 14);
+			resizeWindow( 500, 500 );
+			break;
+		case SDLK_y:
+			m_OGL_Consumer->setLesson(m_curLesson = 15);
 			resizeWindow( 500, 500 );
 			break;
 		default:
