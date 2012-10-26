@@ -10,9 +10,9 @@
 // if BPP is 0, it will be set to maximum possible
 #define SURFACE_BPP		24
 
-#define INIT_W		350
-#define INIT_H		350
-#define INIT_LESSON		12
+#define INIT_W		500
+#define INIT_H		500
+#define INIT_LESSON		14
 
 OGL_Application::OGL_Application()
 :	m_surface (NULL)
@@ -23,6 +23,7 @@ OGL_Application::OGL_Application()
 ,	m_height(INIT_H)
 ,	m_bpp(SURFACE_BPP)
 ,	m_OGL_Consumer(NULL)
+,	m_curLesson(INIT_LESSON)
 {
 }
 
@@ -96,7 +97,7 @@ void OGL_Application::init()
 int OGL_Application::exec()
 {
 	// the start lesson
-	m_OGL_Consumer->setLesson(INIT_LESSON);
+	m_OGL_Consumer->setLesson(m_curLesson);
 	resizeWindow( INIT_W, INIT_H );
 
 	// used to collect events
@@ -176,6 +177,12 @@ bool OGL_Application::resizeWindow( int width, int height )
 // function to handle key press events
 void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 {
+	if (14 == m_curLesson)
+	{
+		if ( m_OGL_Consumer->sendMessage(m_curLesson, keysym->sym, keysym->mod) )
+			return;
+	}
+
 	switch ( keysym->sym )
 	{
 		case SDLK_ESCAPE:
@@ -191,62 +198,68 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 			if(m_surface == NULL) m_breakReason = SDL_QUIT; /* If you can't switch back for some reason, then epic fail */
 			break;
 		case SDLK_1:
-			m_OGL_Consumer->setLesson(0);
+			m_OGL_Consumer->setLesson(m_curLesson = 0);
 			resizeWindow( 250, 250 );
 			break;
 		case SDLK_2:
-			m_OGL_Consumer->setLesson(1);
+			m_OGL_Consumer->setLesson(m_curLesson = 1);
 			resizeWindow( 250, 250 );
 			break;
 		case SDLK_3:
-			m_OGL_Consumer->setLesson(2);
+			m_OGL_Consumer->setLesson(m_curLesson = 2);
 			resizeWindow( 400, 150 );
 			break;
 		case SDLK_4:
-			m_OGL_Consumer->setLesson(3);
+			m_OGL_Consumer->setLesson(m_curLesson = 3);
 			resizeWindow( 350, 150 );
 			break;
 		case SDLK_5:
-			m_OGL_Consumer->setLesson(4);
+			m_OGL_Consumer->setLesson(m_curLesson = 4);
 			resizeWindow( 350, 350 );
 			break;
 		case SDLK_6:
-			m_OGL_Consumer->setLesson(5);
+			m_OGL_Consumer->setLesson(m_curLesson = 5);
 			resizeWindow( 350, 350 );
 			break;
 		case SDLK_7:
-			m_OGL_Consumer->setLesson(6);
+			m_OGL_Consumer->setLesson(m_curLesson = 6);
 			resizeWindow( 350, 350 );
 			break;
 		case SDLK_8:
-			m_OGL_Consumer->setLesson(7);
+			m_OGL_Consumer->setLesson(m_curLesson = 7);
 			resizeWindow( 350, 350 );
 			break;
 		case SDLK_9:
-			m_OGL_Consumer->setLesson(8);
+			m_OGL_Consumer->setLesson(m_curLesson = 8);
 			resizeWindow( 350, 350 );
 			break;
 		case SDLK_0:
-			m_OGL_Consumer->setLesson(9);
+			m_OGL_Consumer->setLesson(m_curLesson = 9);
 			resizeWindow( 350, 350 );
 			break;
 		case SDLK_q:
-			m_OGL_Consumer->setLesson(10);
+			m_OGL_Consumer->setLesson(m_curLesson = 10);
 			resizeWindow( 350, 350 );
 			break;
 		case SDLK_w:
-			m_OGL_Consumer->setLesson(11);
+			m_OGL_Consumer->setLesson(m_curLesson = 11);
 			resizeWindow( 350, 350 );
 			break;
 		case SDLK_e:
-			m_OGL_Consumer->setLesson(12);
+			m_OGL_Consumer->setLesson(m_curLesson = 12);
 			resizeWindow( 450, 150 );
+			break;
+		case SDLK_r:
+			m_OGL_Consumer->setLesson(m_curLesson = 13);
+			resizeWindow( 500, 500 );
+			break;
+		case SDLK_t:
+			m_OGL_Consumer->setLesson(m_curLesson = 14);
+			resizeWindow( 500, 500 );
 			break;
 		default:
 			break;
 	}
-
-	return;
 }
 
 // Here goes our drawing code

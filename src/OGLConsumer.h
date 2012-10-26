@@ -17,6 +17,7 @@ public:
 	~OGL_Consumer();
 	void initGL();
 	void setLesson(unsigned int lessonNum);
+	bool sendMessage(unsigned int lessonNum, unsigned int message, unsigned int mode);
 	void reshape(unsigned int width, unsigned int height);
 	void drawGLScene();
 

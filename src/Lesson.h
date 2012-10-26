@@ -23,6 +23,11 @@ public:
 
 	virtual void reshape(int width, int height) = 0;
 	virtual void drawGLScene() = 0;
+
+	virtual bool sendMessage(unsigned int message, unsigned int mode)
+	{
+		return false;
+	}
 };
 
 #endif /* LESSON_2_10_H_ */

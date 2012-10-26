@@ -20,8 +20,10 @@
 #include "Lesson_2_15ex.h"
 #include "Lesson_3_1.h"
 #include "Lesson_3_2.h"
+#include "Lesson_3_5.h"
+#include "Lesson_3_6.h"
 
-#define LESSON_QTY 13
+#define LESSON_QTY 15
 
 OGL_Consumer::OGL_Consumer()
 :	m_lesson(new Lesson * [LESSON_QTY])
@@ -40,6 +42,8 @@ OGL_Consumer::OGL_Consumer()
 	m_lesson[10] = new Lesson_2_15ex;
 	m_lesson[11] = new Lesson_3_1;
 	m_lesson[12] = new Lesson_3_2;
+	m_lesson[13] = new Lesson_3_5;
+	m_lesson[14] = new Lesson_3_6;
 }
 
 OGL_Consumer::~OGL_Consumer()
@@ -82,6 +86,11 @@ void OGL_Consumer::setLesson(unsigned int lessonNum)
 		return;
 
 	m_lessonNum = lessonNum;
+}
+
+bool OGL_Consumer::sendMessage(unsigned int lessonNum, unsigned int message, unsigned int mode)
+{
+	return m_lesson[m_lessonNum]->sendMessage(message, mode);
 }
 
 void OGL_Consumer::reshape(unsigned int width, unsigned int height)
