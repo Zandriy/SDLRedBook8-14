@@ -23,7 +23,6 @@ public:
 
 private:
 	void draw();
-	void wireCube(GLdouble size);
 
 	int m_shoulder;
 	int m_elbow;

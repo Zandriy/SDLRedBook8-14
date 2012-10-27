@@ -21,7 +21,6 @@ public:
 
 private:
 	void draw();
-	void wireSphere(GLdouble radius,GLint slices, GLint stacks);
 };
 
 #endif /* LESSON_3_5_H_ */

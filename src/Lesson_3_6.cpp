@@ -6,6 +6,8 @@
  */
 
 #include "Lesson_3_6.h"
+
+#include "OGLShapes.h"
 #include <SDL/SDL.h>
 
 Lesson_3_6::Lesson_3_6()
@@ -50,13 +52,13 @@ void Lesson_3_6::draw()
 	glPushMatrix();
 
 	// draw the Sun
-	wireSphere(1.0, 20, 16);
+	OGLShapes::wireSphere(1.0, 20, 16);
 	glRotatef((GLfloat)m_year, 0.0, 1.0, 0.0);
 	glTranslatef(2.0, 0.0, 0.0);
 	glRotatef((GLfloat)m_day, 0.0, 1.0, 0.0);
 
 	// draw a planet
-	wireSphere(0.2, 10, 8);
+	OGLShapes::wireSphere(0.2, 10, 8);
 	glPopMatrix();
 }
 
@@ -83,52 +85,4 @@ bool Lesson_3_6::sendMessage(unsigned int  message, unsigned int mode)
 	}
 
 	return true;
-}
-
-void Lesson_3_6::wireSphere(GLdouble radius,GLint slices, GLint stacks)
-{
-	/*
-	radius
-	    The radius of the sphere.
-	slices
-	    The number of subdivisions around the Z axis (similar to lines of longitude).
-	stacks
-	    The number of subdivisions along the Z axis (similar to lines of latitude).
-	*/
-
-	radius = radius > 0 ? radius : radius * -1;
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-
-	GLdouble size = radius;
-
-	GLfloat vertices[] = {
-			-size, -size,  size,
-			 size, -size,  size,
-			 size,  size,  size,
-			-size,  size,  size,
-			-size, -size, -size,
-			 size, -size, -size,
-			 size,  size, -size,
-			-size,  size, -size
-	};
-
-	GLubyte allIndices[] = {
-			  4, 7, 6, 5
-			, 1, 2, 6, 5
-			, 0, 1, 5, 4
-			, 0, 3, 2, 1
-			, 0, 4, 7, 3
-			, 2, 3, 7, 6
-	};
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-
-	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, allIndices);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

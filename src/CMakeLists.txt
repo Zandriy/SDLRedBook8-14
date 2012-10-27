@@ -21,6 +21,7 @@ ENDIF()
 
 SET(SDL_OGL_PROJECT_SOURCE
 	prg.cpp
+	OGLShapes.cpp
 	OGLApplication.cpp
 	OGLConsumer.cpp
 	Lesson_1_2.cpp

@@ -23,7 +23,6 @@ public:
 
 private:
 	void draw();
-	void wireSphere(GLdouble radius,GLint slices, GLint stacks);
 
 	int m_year;
 	int m_day;

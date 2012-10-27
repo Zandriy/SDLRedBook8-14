@@ -6,6 +6,8 @@
  */
 
 #include "Lesson_3_7.h"
+
+#include "OGLShapes.h"
 #include <SDL/SDL.h>
 
 Lesson_3_7::Lesson_3_7()
@@ -48,7 +50,7 @@ void Lesson_3_7::draw()
 	glTranslatef (1.0, 0.0, 0.0);
 	glPushMatrix();
 	glScalef (2.0, 0.4, 1.0);
-	wireCube (1.0);
+	OGLShapes::wireCube (1.0);
 	glPopMatrix();
 
 	glTranslatef (1.0, 0.0, 0.0);
@@ -56,7 +58,7 @@ void Lesson_3_7::draw()
 	glTranslatef (1.0, 0.0, 0.0);
 	glPushMatrix();
 	glScalef (2.0, 0.4, 1.0);
-	wireCube (1.0);
+	OGLShapes::wireCube (1.0);
 	glPopMatrix();
 
 	glPopMatrix();
@@ -85,41 +87,4 @@ bool Lesson_3_7::sendMessage(unsigned int  message, unsigned int mode)
 	}
 
 	return true;
-}
-
-void Lesson_3_7::wireCube(GLdouble size)
-{
-	size = size > 0 ? size : size * -1;
-	size /= 2;
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	GLfloat vertices[] = {
-			-size, -size,  size,
-			 size, -size,  size,
-			 size,  size,  size,
-			-size,  size,  size,
-			-size, -size, -size,
-			 size, -size, -size,
-			 size,  size, -size,
-			-size,  size, -size
-	};
-
-	GLubyte allIndices[] = {
-			  4, 7, 6, 5
-			, 1, 2, 6, 5
-			, 0, 1, 5, 4
-			, 0, 3, 2, 1
-			, 0, 4, 7, 3
-			, 2, 3, 7, 6
-	};
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-
-	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, allIndices);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
