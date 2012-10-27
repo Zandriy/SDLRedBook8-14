@@ -92,9 +92,9 @@ void OGL_Consumer::setLesson(unsigned int lessonNum)
 	m_lessonNum = lessonNum;
 }
 
-bool OGL_Consumer::sendMessage(unsigned int lessonNum, unsigned int message, unsigned int mode)
+bool OGL_Consumer::sendMessage(unsigned int lessonNum, int message, int mode, int x, int y)
 {
-	return m_lesson[m_lessonNum]->sendMessage(message, mode);
+	return m_lesson[m_lessonNum]->sendMessage(message, mode, x, y);
 }
 
 void OGL_Consumer::reshape(unsigned int width, unsigned int height)

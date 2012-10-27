@@ -38,7 +38,7 @@ void Lesson_3_8::drawGLScene()
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 }
 
-void Lesson_3_8::mouse(int button,int state,int x, int y)
+bool Lesson_3_8::sendMessage(int message, int mode, int x, int y)
 {
 	GLint viewport[4];
 	GLdouble mvmatrix[16], projmatrix[16];
@@ -48,9 +48,9 @@ void Lesson_3_8::mouse(int button,int state,int x, int y)
 	//Backed object x, y, z coordinates
 	GLdouble wx,wy,wz;
 
-	switch(button) {
+	switch(message) {
 	case SDL_BUTTON_LEFT:
-		if (state==SDL_PRESSED) {
+		if (mode==SDL_PRESSED) {
 			glGetIntegerv(GL_VIEWPORT,viewport);
 			glGetDoublev(GL_MODELVIEW_MATRIX,mvmatrix);
 			glGetDoublev(GL_PROJECTION_MATRIX,projmatrix);
@@ -64,8 +64,13 @@ void Lesson_3_8::mouse(int button,int state,int x, int y)
 		}
 		break;
 	case SDL_BUTTON_RIGHT:
-		if (state==SDL_PRESSED)
+		if (mode==SDL_PRESSED)
 			exit(0);
 		break;
+	default:
+		return false;
+		break;
 	}
+
+	return true;
 }

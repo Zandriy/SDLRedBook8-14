@@ -19,7 +19,7 @@ public:
 	virtual void reshape(int width, int height);
 	virtual void drawGLScene();
 
-	virtual bool sendMessage(unsigned int  message, unsigned int mode);
+	virtual bool sendMessage(int message, int mode, int x, int y);
 
 private:
 	void draw();

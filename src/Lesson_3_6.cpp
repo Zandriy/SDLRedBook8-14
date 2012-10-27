@@ -62,7 +62,7 @@ void Lesson_3_6::draw()
 	glPopMatrix();
 }
 
-bool Lesson_3_6::sendMessage(unsigned int  message, unsigned int mode)
+bool Lesson_3_6::sendMessage(int message, int mode, int x, int y)
 {
 	switch (message) {
 	case SDLK_d:

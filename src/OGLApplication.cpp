@@ -131,6 +131,8 @@ int OGL_Application::exec()
 					handleKeyPress( &event.key.keysym );
 					break;
 				case SDL_MOUSEBUTTONDOWN:
+					m_OGL_Consumer->sendMessage(m_curLesson, event.button.button, event.button.state,
+							event.button.x, event.button.y);
 					break;
 				case SDL_QUIT:
 					// handle quit requests
@@ -180,7 +182,7 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 	if ( 	14 == m_curLesson ||
 			15 == m_curLesson  )
 	{
-		if ( m_OGL_Consumer->sendMessage(m_curLesson, keysym->sym, keysym->mod) )
+		if ( m_OGL_Consumer->sendMessage(m_curLesson, keysym->sym, keysym->mod, 0, 0) )
 			return;
 	}
 

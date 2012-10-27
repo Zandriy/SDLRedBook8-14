@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 
 private:
-	void mouse(int button,int state,int x, int y);
+	bool sendMessage(int message, int mode, int x, int y);
 };
 
 #endif /* LESSON_3_8_H_ */
