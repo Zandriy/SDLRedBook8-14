@@ -48,17 +48,23 @@ void Lesson_3_6::drawGLScene()
 
 void Lesson_3_6::draw()
 {
-	glColor3f (1.0, 1.0, 1.0);
 	glPushMatrix();
 
 	// draw the Sun
+	glColor3f (1.0, 0.7, 0.0);
+	glRotatef((GLfloat)(m_day/2), 1.0, 0.75, 0.0);
 	OGLShapes::wireSphere(1.0, 20, 16);
+
+	glPopMatrix();
+	glPushMatrix();
+
+	// draw a planet
+	glColor3f (0.0, 0.5, 0.5);
 	glRotatef((GLfloat)m_year, 0.0, 1.0, 0.0);
 	glTranslatef(2.0, 0.0, 0.0);
 	glRotatef((GLfloat)m_day, 0.0, 1.0, 0.0);
-
-	// draw a planet
 	OGLShapes::wireSphere(0.2, 10, 8);
+
 	glPopMatrix();
 }
 

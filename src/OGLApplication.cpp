@@ -292,7 +292,8 @@ void OGL_Application::drawGLScene()
 		if (t - T0 >= 5000) {
 			float seconds = (t - T0) / 1000.0;
 			float fps = Frames / seconds;
-			printf("%d frames in %g seconds = %g FPS\n", Frames, seconds, fps);
+			// debug output
+			// printf("%d frames in %g seconds = %g FPS\n", Frames, seconds, fps);
 			T0 = t;
 			Frames = 0;
 		}
