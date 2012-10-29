@@ -18,6 +18,10 @@ public:
 
 	virtual void reshape(int width, int height);
 	virtual void drawGLScene();
+	virtual char* getName()
+	{
+		return "3-7. Robot(s-S, e-E)";
+	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);
 

@@ -18,8 +18,11 @@ public:
 
 	virtual void reshape(int width, int height);
 	virtual void drawGLScene();
+	virtual char* getName()
+	{
+		return "3-8. gluUnProject";
+	}
 
-private:
 	bool sendMessage(int message, int mode, int x, int y);
 };
 

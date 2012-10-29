@@ -18,6 +18,10 @@ public:
 
 	virtual void reshape(int width, int height);
 	virtual void drawGLScene();
+	virtual char* getName()
+	{
+		return "3-5. Clip";
+	}
 
 private:
 	void draw();

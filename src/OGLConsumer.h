@@ -20,6 +20,7 @@ public:
 	bool sendMessage(unsigned int lessonNum, int message, int mode, int x, int y);
 	void reshape(unsigned int width, unsigned int height);
 	void drawGLScene();
+	char* getLessonName();
 
 private:
 	Lesson ** m_lesson;

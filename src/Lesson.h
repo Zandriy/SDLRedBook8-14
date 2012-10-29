@@ -23,6 +23,7 @@ public:
 
 	virtual void reshape(int width, int height) = 0;
 	virtual void drawGLScene() = 0;
+	virtual char* getName() = 0;
 
 	virtual bool sendMessage(int message, int mode, int x, int y)
 	{

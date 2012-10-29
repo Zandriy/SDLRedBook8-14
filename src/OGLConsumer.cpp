@@ -108,3 +108,7 @@ void OGL_Consumer::drawGLScene()
 	m_lesson[m_lessonNum]->drawGLScene();
 }
 
+char* OGL_Consumer::getLessonName()
+{
+	return m_lesson[m_lessonNum]->getName();
+}

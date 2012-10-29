@@ -18,6 +18,10 @@ public:
 
 	virtual void reshape(int width, int height);
 	virtual void drawGLScene();
+	virtual char* getName()
+	{
+		return "2-15ex. Icosahedron-Sphere";
+	}
 
 private:
 	void draw();

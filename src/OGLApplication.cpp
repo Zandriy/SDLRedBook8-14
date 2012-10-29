@@ -98,6 +98,7 @@ int OGL_Application::exec()
 {
 	// the start lesson
 	m_OGL_Consumer->setLesson(m_curLesson);
+	SDL_WM_SetCaption(m_OGL_Consumer->getLessonName(), NULL);
 	resizeWindow( INIT_W, INIT_H );
 
 	// used to collect events
@@ -271,6 +272,8 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 		default:
 			break;
 	}
+
+	SDL_WM_SetCaption(m_OGL_Consumer->getLessonName(), NULL);
 }
 
 // Here goes our drawing code

@@ -18,6 +18,10 @@ public:
 
 	virtual void reshape(int width, int height);
 	virtual void drawGLScene();
+	virtual char* getName()
+	{
+		return "3-6. Planet(y-Y,d-D)";
+	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);
 
