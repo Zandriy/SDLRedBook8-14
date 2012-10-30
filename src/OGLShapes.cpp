@@ -50,16 +50,11 @@ void OGLShapes::wireCube(GLdouble size)
 void OGLShapes::wireSphere(GLdouble radius,GLint slices, GLint stacks)
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	sphere(radius,slices, stacks);
+	solidSphere(radius,slices, stacks);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void OGLShapes::solidSphere(GLdouble radius,GLint slices, GLint stacks)
-{
-	sphere(radius,slices, stacks);
-}
-
-void OGLShapes::sphere(GLdouble radius,GLint slices, GLint stacks)
 {
 	/*
 	radius

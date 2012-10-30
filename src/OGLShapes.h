@@ -27,7 +27,6 @@ private:
 	OGLShapes(const OGLShapes&);
 	~OGLShapes();
 
-	static void sphere(GLdouble radius,GLint slices, GLint stacks);
 	static void spherePoints(GLdouble radius,GLint slices, GLint stacks, GLfloat *points);
 };
 

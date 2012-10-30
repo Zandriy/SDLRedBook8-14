@@ -39,8 +39,11 @@ void Lesson_5_1::reshape(int width, int height)
 void Lesson_5_1::drawGLScene()
 {
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_specular);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_specular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, mat_specular);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, mat_specular);
 
 	glEnable(GL_LIGHTING);
@@ -59,5 +62,5 @@ void Lesson_5_1::drawGLScene()
 
 void Lesson_5_1::draw()
 {
-	OGLShapes::solidSphere (1.0, 20, 16);
+	OGLShapes::solidSphere (1.0, 40, 32);
 }
