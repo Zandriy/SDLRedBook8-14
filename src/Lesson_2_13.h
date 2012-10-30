@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "2-13. Icosahedron";
+		return (char*)&"2-13. Icosahedron";
 	}
 
 private:

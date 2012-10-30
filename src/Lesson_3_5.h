@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "3-5. Clip";
+		return (char*)&"3-5. Clip";
 	}
 
 private:

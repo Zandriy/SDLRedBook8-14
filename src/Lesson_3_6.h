@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "3-6. Planet(y-Y,d-D)";
+		return (char*)&"3-6. Planet(y-Y,d-D)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);

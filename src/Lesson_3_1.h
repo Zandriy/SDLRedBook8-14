@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "3-1. Cube(gluLookAt)";
+		return (char*)&"3-1. Cube(gluLookAt)";
 	}
 
 private:

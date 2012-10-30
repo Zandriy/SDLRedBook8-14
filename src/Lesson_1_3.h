@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "1-3. Double Buffer";
+		return (char*)&"1-3. Double Buffer";
 	}
 
 private:

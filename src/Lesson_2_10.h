@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "2-10. glArrayElement";
+		return (char*)&"2-10. glArrayElement";
 	}
 
 private:

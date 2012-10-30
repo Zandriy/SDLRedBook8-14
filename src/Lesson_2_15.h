@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "2-15. Icosahedron with normals";
+		return (char*)&"2-15. Icosahedron with normals";
 	}
 
 private:

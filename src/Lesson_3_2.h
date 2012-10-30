@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "3-2. Model Transformation";
+		return (char*)&"3-2. Model Transformation";
 	}
 
 private:

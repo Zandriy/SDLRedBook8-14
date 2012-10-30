@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "2-9. Vertex Array";
+		return (char*)&"2-9. Vertex Array";
 	}
 
 private:

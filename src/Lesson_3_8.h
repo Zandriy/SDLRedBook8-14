@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "3-8. gluUnProject";
+		return (char*)&"3-8. gluUnProject";
 	}
 
 	bool sendMessage(int message, int mode, int x, int y);

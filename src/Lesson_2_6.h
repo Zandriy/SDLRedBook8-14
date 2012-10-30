@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "2-6. Polys (stipple)";
+		return (char*)&"2-6. Polys (stipple)";
 	}
 
 private:

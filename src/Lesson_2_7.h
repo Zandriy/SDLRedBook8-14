@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return "2-7. Edge Flag";
+		return (char*)&"2-7. Edge Flag";
 	}
 
 private:
