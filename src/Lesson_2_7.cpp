@@ -49,12 +49,10 @@ void Lesson_2_7::reshape(int width, int height)
 	glLoadIdentity();
 
 	// Set coordinate system
-	gluOrtho2D(0.0, X_SIZE, 0.0, Y_SIZE);
+	gluOrtho2D(0.0, ( GLdouble )X_SIZE, 0.0, ( GLdouble )Y_SIZE);
 
 	// Make sure we're changing the model view and not the projection
 	glMatrixMode( GL_MODELVIEW );
-	// Reset The View
-	glLoadIdentity();
 }
 
 void Lesson_2_7::drawGLScene()
@@ -75,11 +73,11 @@ void Lesson_2_7::draw()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_POLYGON);
 	glEdgeFlag(GL_TRUE);
-	glVertex3fv(V0);
+	glVertex2fv(V0);
 	glEdgeFlag(GL_FALSE);
-	glVertex3fv(V1);
+	glVertex2fv(V1);
 	glEdgeFlag(GL_TRUE);
-	glVertex3fv(V2);
+	glVertex2fv(V2);
 	glEnd();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
