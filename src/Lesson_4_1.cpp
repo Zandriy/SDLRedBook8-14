@@ -7,10 +7,6 @@
 
 #include "Lesson_4_1.h"
 
-#include <SDL/SDL.h>
-#include <stdlib.h>
-#include <stdio.h>
-
 Lesson_4_1::Lesson_4_1() {
 	// TODO Auto-generated constructor stub
 }
@@ -39,6 +35,7 @@ void Lesson_4_1::drawGLScene()
 	// Clear The Screen And The Depth Buffer
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+	glLoadIdentity();
 	draw();
 }
 

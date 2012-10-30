@@ -60,10 +60,8 @@ void Lesson_2_7::drawGLScene()
 	// Clear The Screen And The Depth Buffer
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	draw();
-
-	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
+	draw();
 }
 
 void Lesson_2_7::draw()

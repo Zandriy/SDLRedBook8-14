@@ -49,6 +49,18 @@ void OGLShapes::wireCube(GLdouble size)
 
 void OGLShapes::wireSphere(GLdouble radius,GLint slices, GLint stacks)
 {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	sphere(radius,slices, stacks);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+void OGLShapes::solidSphere(GLdouble radius,GLint slices, GLint stacks)
+{
+	sphere(radius,slices, stacks);
+}
+
+void OGLShapes::sphere(GLdouble radius,GLint slices, GLint stacks)
+{
 	/*
 	radius
 	    The radius of the sphere.
@@ -65,16 +77,16 @@ void OGLShapes::wireSphere(GLdouble radius,GLint slices, GLint stacks)
 	slices = slices < 1 ? 1 : slices;
 	stacks = stacks < 3 ? 3 : stacks;
 
-	const int offsetY = 1;
-	const int offsetZ = 2;
 	const int coordsPerPoint = 3;
-	const float stackAngle = 2 * M_PI / stacks;
-	const GLdouble Zstep = radius * 2 / (slices + 1);
 	const int arrCoordSize = (slices * stacks + 2/*poles*/) * coordsPerPoint;
 
 	GLfloat * points = new GLfloat[ arrCoordSize ];
+	GLfloat * normals = new GLfloat[ arrCoordSize ];
 	GLuint * topPoleIndices = new GLuint[ stacks+2 ];
 	GLuint * downPoleIndices = new GLuint[ stacks+2 ];
+
+	spherePoints(radius, slices, stacks, points);
+	spherePoints(1.0, slices, stacks, normals);
 
 	GLuint ** interIndices;
 
@@ -86,10 +98,93 @@ void OGLShapes::wireSphere(GLdouble radius,GLint slices, GLint stacks)
 			interIndices[i] = new GLuint[ (stacks+1)*2 ];
 	}
 
+
+	// pole slices
+	for(int i = 0; i < stacks+2; ++i)
+	{
+		if (i ==stacks+1)
+		{
+			topPoleIndices[i] = 1;
+			downPoleIndices[i] = (arrCoordSize / coordsPerPoint) - 1 - 1;
+		}
+		else
+		{
+			topPoleIndices[i] = i;
+			downPoleIndices[i] = (arrCoordSize / coordsPerPoint) - 1 - i;
+		}
+	}
+
+	// belt
+	if (slices > 1)
+	{
+		for(int i = 0; i < stacks+1; ++i)
+		{
+			if ( i == stacks )
+			{
+				interIndices[0][i*2] = 1;
+				interIndices[0][i*2+1] = stacks+1;
+			}
+			else
+			{
+					interIndices[0][i*2] = i+1;
+					interIndices[0][i*2+1] = stacks+i+1;
+			}
+		}
+
+
+		for (int i = 1; i < slices-1; ++i)
+		{
+			for(int j = 0; j < (stacks+1)*2; ++j )
+				interIndices[i][j] = interIndices[i-1][j] + stacks;
+		}
+	}
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glVertexPointer(coordsPerPoint, GL_FLOAT, 0, points);
+	glNormalPointer(GL_FLOAT, 0, normals);
+
+	glDrawElements(GL_TRIANGLE_FAN, stacks+2, GL_UNSIGNED_INT, topPoleIndices);
+
+	glDrawElements(GL_TRIANGLE_FAN, stacks+2, GL_UNSIGNED_INT, downPoleIndices);
+
+	if (slices > 1)
+	{
+		for (int i = 0; i < slices-1; ++i)
+			glDrawElements(GL_QUAD_STRIP, (stacks+1)*2, GL_UNSIGNED_INT, interIndices[i]);
+	}
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+	delete [] points;
+	delete [] normals;
+	delete [] topPoleIndices;
+	delete [] downPoleIndices;
+
+	if (slices > 1)
+	{
+		for (int i = 1; i < slices-1; ++i)
+			delete [] interIndices[i];
+
+		delete [] interIndices;
+	}
+}
+
+void OGLShapes::spherePoints(GLdouble radius,GLint slices, GLint stacks, GLfloat *points)
+{
+	const int offsetY = 1;
+	const int offsetZ = 2;
+	const int coordsPerPoint = 3;
+	const float stackAngle = 2 * M_PI / stacks;
+	const GLdouble Zstep = radius * 2 / (slices + 1);
+	const int arrCoordSize = (slices * stacks + 2/*poles*/) * coordsPerPoint;
+
 	int upX = 0;
 	int downX = arrCoordSize - coordsPerPoint;
 
 	GLfloat currZ = radius;
+	// radius on the current slice
 	GLfloat currR = 0;
 
 	// poles X and Y
@@ -143,76 +238,4 @@ void OGLShapes::wireSphere(GLdouble radius,GLint slices, GLint stacks)
 		                                           << "\t" << points[upX+offsetZ] << std::endl;
 	}
 #endif
-
-	// pole slices
-	for(int i = 0; i < stacks+2; ++i)
-	{
-		if (i ==stacks+1)
-		{
-			topPoleIndices[i] = 1;
-			downPoleIndices[i] = (arrCoordSize / coordsPerPoint) - 1 - 1;
-		}
-		else
-		{
-			topPoleIndices[i] = i;
-			downPoleIndices[i] = (arrCoordSize / coordsPerPoint) - 1 - i;
-		}
-	}
-
-	// belt
-	if (slices > 1)
-	{
-		for(int i = 0; i < stacks+1; ++i)
-		{
-			if ( i == stacks )
-			{
-				interIndices[0][i*2] = 1;
-				interIndices[0][i*2+1] = stacks+1;
-			}
-			else
-			{
-					interIndices[0][i*2] = i+1;
-					interIndices[0][i*2+1] = stacks+i+1;
-			}
-		}
-
-
-		for (int i = 1; i < slices-1; ++i)
-		{
-			for(int j = 0; j < (stacks+1)*2; ++j )
-				interIndices[i][j] = interIndices[i-1][j] + stacks;
-		}
-	}
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(coordsPerPoint, GL_FLOAT, 0, points);
-
-	glDrawElements(GL_TRIANGLE_FAN, stacks+2, GL_UNSIGNED_INT, topPoleIndices);
-
-	glDrawElements(GL_TRIANGLE_FAN, stacks+2, GL_UNSIGNED_INT, downPoleIndices);
-
-	if (slices > 1)
-	{
-		for (int i = 0; i < slices-1; ++i)
-			glDrawElements(GL_QUAD_STRIP, (stacks+1)*2, GL_UNSIGNED_INT, interIndices[i]);
-	}
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	delete [] points;
-	delete [] topPoleIndices;
-	delete [] downPoleIndices;
-
-	if (slices > 1)
-	{
-		for (int i = 1; i < slices-1; ++i)
-			delete [] interIndices[i];
-
-		delete [] interIndices;
-	}
 }

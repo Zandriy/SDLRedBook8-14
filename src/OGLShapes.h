@@ -21,10 +21,14 @@ class OGLShapes
 public:
 	static void wireCube(GLdouble size);
 	static void wireSphere(GLdouble radius,GLint slices, GLint stacks);
+	static void solidSphere(GLdouble radius,GLint slices, GLint stacks);
 private:
 	OGLShapes();
 	OGLShapes(const OGLShapes&);
 	~OGLShapes();
+
+	static void sphere(GLdouble radius,GLint slices, GLint stacks);
+	static void spherePoints(GLdouble radius,GLint slices, GLint stacks, GLfloat *points);
 };
 
 
