@@ -12,10 +12,16 @@
 
 void OGLShapes::wireCube(GLdouble size)
 {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	solidCube(size);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+void OGLShapes::solidCube(GLdouble size)
+{
 	size = size > 0 ? size : size * -1;
 	size /= 2;
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	GLfloat vertices[] = {
 			-size, -size,  size,
@@ -26,6 +32,15 @@ void OGLShapes::wireCube(GLdouble size)
 			size, -size, -size,
 			size,  size, -size,
 			-size,  size, -size
+	};
+
+	GLfloat normals[] = {
+			0.0, 0.0, 1.0,
+			1.0, 0.0, 0.0,
+			0.0, -1.0, 0.0,
+			0.0, 0.0, -1.0,
+			-1.0, 0.0, 0.0,
+			0.0, 1.0, 0.0
 	};
 
 	GLubyte allIndices[] = {
@@ -40,11 +55,20 @@ void OGLShapes::wireCube(GLdouble size)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 
-	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, allIndices);
+	glNormal3fv(&normals[0]);
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, &allIndices[0]);
+	glNormal3fv(&normals[3]);
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, &allIndices[4]);
+	glNormal3fv(&normals[6]);
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, &allIndices[8]);
+	glNormal3fv(&normals[9]);
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, &allIndices[12]);
+	glNormal3fv(&normals[12]);
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, &allIndices[16]);
+	glNormal3fv(&normals[15]);
+	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, &allIndices[20]);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void OGLShapes::wireSphere(GLdouble radius,GLint slices, GLint stacks)
