@@ -190,6 +190,19 @@ void OGLShapes::solidSphere(GLdouble radius,GLint slices, GLint stacks)
 	}
 }
 
+void OGLShapes::wireTorus(GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GLint rings)
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	solidTorus(innerRadius, outerRadius, nsides, rings);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+}
+
+void OGLShapes::solidTorus(GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GLint rings)
+{
+	solidCube(outerRadius*2);
+}
+
 void OGLShapes::spherePoints(GLdouble radius,GLint slices, GLint stacks, GLfloat *points)
 {
 	const int offsetY = 1;

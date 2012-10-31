@@ -66,7 +66,7 @@ void Lesson_5_6::draw()
 	glEnable(GL_LIGHTING);
 	glPopMatrix();
 
-	OGLShapes::solidCube (1.7); // glutSolidTorus(0.275,0.85,40,40);
+	OGLShapes::solidTorus(0.275,0.85,40,40);
 
 	glPopMatrix();
 }
