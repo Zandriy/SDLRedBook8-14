@@ -62,5 +62,5 @@ void Lesson_5_1::drawGLScene()
 
 void Lesson_5_1::draw()
 {
-	OGLShapes::solidSphere (1.0, 40, 32);
+	OGLShapes::solidSphere (1.0, 20, 16);
 }
