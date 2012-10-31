@@ -34,20 +34,40 @@ void Lesson_5_1::reshape(int width, int height)
 
 void Lesson_5_1::drawGLScene()
 {
-	GLfloat mat_specular[] = { 1.0, 0.8, 0.0, 1.0 };
+	GLfloat mat_specular[] = { 1.0, 0.7, 0.0, 1.0 };
 	GLfloat mat_shininess[] = { 50.0 }; // 0.0 ... 128.0
 	GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
+	GLfloat light_ambient1[]={1.0, 0.2, 0.2, 1.0};
+	GLfloat light_diffuse1[]={1.0, 1.0, 1.0, 1.0};
+	GLfloat light_specular1[]={1.0, 1.0, 1.0, 1.0};
+	GLfloat light_position1[]={-0.2, 0.2, -1.0, 1.0};
+	GLfloat spot_direction1[]={-1.0, -1.0, 0.0};
 
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_specular);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_specular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
+	// directional light
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, mat_specular);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, mat_specular);
 
+	// positional light ( spot )
+	glLightfv(GL_LIGHT1,GL_AMBIENT, light_ambient1);
+	glLightfv(GL_LIGHT1,GL_DIFFUSE, light_diffuse1);
+	glLightfv(GL_LIGHT1,GL_SPECULAR, light_specular1);
+	glLightfv(GL_LIGHT1,GL_POSITION, light_position1);
+	glLightf(GL_LIGHT1,GL_CONSTANT_ATTENUATION, 1.5);
+	glLightf(GL_LIGHT1,GL_LINEAR_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION, 0.2);
+	glLightf(GL_LIGHT1,GL_SPOT_CUTOFF, 45.0);
+	glLightfv(GL_LIGHT1,GL_SPOT_DIRECTION, spot_direction1);
+	glLightf(GL_LIGHT1,GL_SPOT_EXPONENT, 2.0);
+
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
 
 	// Clear The Screen And The Depth Buffer
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -57,6 +77,7 @@ void Lesson_5_1::drawGLScene()
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
+	glDisable(GL_LIGHT1);
 }
 
 
