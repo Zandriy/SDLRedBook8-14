@@ -9,10 +9,6 @@
 
 #include "OGLShapes.h"
 
-GLfloat mat_specular[] = { 1.0, 0.8, 0.0, 1.0 };
-GLfloat mat_shininess[] = { 50.0 }; // 0.0 ... 128.0
-GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
-
 Lesson_5_1::Lesson_5_1() {
 	// TODO Auto-generated constructor stub
 }
@@ -38,6 +34,10 @@ void Lesson_5_1::reshape(int width, int height)
 
 void Lesson_5_1::drawGLScene()
 {
+	GLfloat mat_specular[] = { 1.0, 0.8, 0.0, 1.0 };
+	GLfloat mat_shininess[] = { 50.0 }; // 0.0 ... 128.0
+	GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
+
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_specular);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_specular);

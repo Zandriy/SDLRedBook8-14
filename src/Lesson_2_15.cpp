@@ -59,6 +59,21 @@ void Lesson_2_15::reshape(int width, int height)
 
 void Lesson_2_15::drawGLScene()
 {
+	GLfloat mat_specular[] = { 1.0, 0.0, 0.6, 1.0 };
+	GLfloat mat_shininess[] = { 50.0 }; // 0.0 ... 128.0
+	GLfloat light_position1[] = { 2.0, 1.0, 1.0, 0.0 };
+	GLfloat light_position2[] = {-2.0,-1.0, 2.0, 0.0 };
+
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_specular);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position1);
+	glLightfv(GL_LIGHT1, GL_POSITION, light_position2);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, mat_specular);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+
 	// Clear The Screen And The Depth Buffer
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
@@ -66,6 +81,10 @@ void Lesson_2_15::drawGLScene()
 
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
+
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
+	glDisable(GL_LIGHT1);
 }
 
 void Lesson_2_15::draw()
@@ -73,10 +92,8 @@ void Lesson_2_15::draw()
 	glBegin(GL_TRIANGLES);
 	for (int i = 0; i < TRIANGLES_ORDER; ++i )
 	{
-		glColor3f (0.5 / (i%QTY + 1), 0.9 / (i%QTY + 1), 0.4 / (i%QTY + 1));
-
 		GLfloat d1[3], d2[3], norm[3];
-		for(int j=0;j<3;j++)
+		for(int j=0;j<3;++j)
 		{
 			d1[j]=L_2_15::vdata[L_2_15::tindices[i][0]][j]-L_2_15::vdata[L_2_15::tindices[i][1]][j];
 			d2[j]=L_2_15::vdata[L_2_15::tindices[i][1]][j]-L_2_15::vdata[L_2_15::tindices[i][2]][j];
