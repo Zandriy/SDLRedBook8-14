@@ -158,6 +158,7 @@ void OGLShapes::solidSphere(GLdouble radius,GLint slices, GLint stacks)
 		}
 	}
 
+	// draw a sphere
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glVertexPointer(coordsPerPoint, GL_FLOAT, 0, points);
@@ -176,6 +177,7 @@ void OGLShapes::solidSphere(GLdouble radius,GLint slices, GLint stacks)
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 
+	// clean arrays
 	delete [] points;
 	delete [] normals;
 	delete [] topPoleIndices;
@@ -200,7 +202,137 @@ void OGLShapes::wireTorus(GLdouble innerRadius, GLdouble outerRadius, GLint nsid
 
 void OGLShapes::solidTorus(GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GLint rings)
 {
-	solidCube(outerRadius*2);
+	GLdouble ringR;
+	GLdouble normalR;
+	GLdouble distToCenter;
+
+	innerRadius = innerRadius > 0.0 ? innerRadius : innerRadius * -1;
+
+	outerRadius = outerRadius > 0.0 ? outerRadius : outerRadius * -1;
+	outerRadius = outerRadius == 0.0 ? 0.5 : outerRadius;
+
+	nsides = nsides < 3 ? 3 : nsides;
+	rings = rings < 3 ? 3 : rings;
+
+	if (innerRadius == outerRadius)
+		outerRadius += 0.1;
+
+	if (innerRadius > outerRadius)
+	{
+		ringR = innerRadius;
+		innerRadius = outerRadius;
+		outerRadius = ringR;
+	}
+
+	ringR = outerRadius - innerRadius;
+	normalR = 1.0;
+
+	distToCenter = innerRadius + ringR / 2;
+
+	const int offsetY = 1;
+	const int offsetZ = 2;
+	const int coordsPerPoint = 3;
+	const float nsideAngle = 2 * M_PI / nsides;
+	const float ringAngle = 2 * M_PI / rings;
+	const int arrCoordSize = (rings * nsides) * coordsPerPoint;
+
+	GLfloat * points = new GLfloat[ arrCoordSize ];
+	GLfloat * normals = new GLfloat[ arrCoordSize ];
+
+	GLuint ** beltIndices = new GLuint * [ nsides+1 ];
+
+	for (int i = 0; i < nsides+1; ++i)
+		beltIndices[i] = new GLuint[ (rings+1)*2 ];
+
+	int currX = 0;
+
+	// create first ring
+	for (int i = 0; i < nsides; ++i)
+	{
+		points[currX] = ringR * cos(nsideAngle*i) + distToCenter;
+		points[currX+offsetY] = ringR * sin(nsideAngle*i);
+		points[currX+offsetZ] = 0;
+
+		normals[currX] = normalR * cos(nsideAngle*i) + distToCenter;
+		normals[currX+offsetY] = normalR * sin(nsideAngle*i);
+		normals[currX+offsetZ] = 0;
+
+		currX+=coordsPerPoint;
+	}
+
+	int prevRingX = 0;
+
+	// set other rings
+	for (int i = 1; i < rings; ++i)
+	{
+		for (int j = 0; j < nsides; ++j)
+		{
+			points[currX] = points[j]*cos(ringAngle*i);
+			points[currX+offsetY] = points[prevRingX+offsetY];
+			points[currX+offsetZ] = points[j]*sin(ringAngle*i);
+
+			normals[currX] = normals[j]*cos(ringAngle*i);
+			normals[currX+offsetY] = normals[prevRingX+offsetY];
+			normals[currX+offsetZ] = points[j]*sin(ringAngle*i);
+
+			currX+=coordsPerPoint;
+			prevRingX+=coordsPerPoint;
+		}
+	}
+
+	// set first belt
+	for (int i = 0; i < rings+1; ++i)
+	{
+		if (i == rings)
+		{
+			beltIndices[0][i*2] = 1;
+			beltIndices[0][i*2+1] = 0;
+		}
+		else
+		{
+			beltIndices[0][i*2] = nsides*i + 1;
+			beltIndices[0][i*2+1] = nsides*i;
+		}
+	}
+
+	// set other belts
+	for (int i = 1; i < nsides+1; ++i)
+	{
+		for (int j = 0; j < rings+1; ++j)
+		{
+			if ( i == nsides )
+			{
+				beltIndices[i][j*2] = beltIndices[i-1][j*2] + 1;
+				beltIndices[i][j*2+1] = beltIndices[0][j*2];
+			}
+			else
+			{
+				beltIndices[i][j*2] = beltIndices[i-1][j*2] + 1;
+				beltIndices[i][j*2+1] = beltIndices[i-1][j*2+1] + 1;
+			}
+		}
+	}
+
+	// draw torus
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glVertexPointer(coordsPerPoint, GL_FLOAT, 0, points);
+	glNormalPointer(GL_FLOAT, 0, normals);
+
+	for (int i = 0; i < nsides+1; ++i)
+			glDrawElements(GL_QUAD_STRIP, (rings+1)*2, GL_UNSIGNED_INT, beltIndices[i]);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+	// clean arrays
+	delete [] points;
+	delete [] normals;
+
+	for (int i = 1; i < nsides+1; ++i)
+			delete [] beltIndices[i];
+
+	delete [] beltIndices;
 }
 
 void OGLShapes::spherePoints(GLdouble radius,GLint slices, GLint stacks, GLfloat *points)
