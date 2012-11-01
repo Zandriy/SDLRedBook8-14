@@ -24,23 +24,23 @@ void OGLShapes::solidCube(GLdouble size)
 
 
 	GLfloat vertices[] = {
-			-size, -size,  size,
-			size, -size,  size,
-			size,  size,  size,
-			-size,  size,  size,
-			-size, -size, -size,
-			size, -size, -size,
-			size,  size, -size,
-			-size,  size, -size
+			-size,  -size,  -size,
+			size, -size,  -size,
+			size, size,  -size,
+			-size,  size,  -size,
+			-size, -size, size,
+			size, -size, size,
+			size,  size, size,
+			-size,  size, size
 	};
 
 	GLfloat normals[] = {
-			0.0, 0.0, 1.0,
-			1.0, 0.0, 0.0,
-			0.0, -1.0, 0.0,
-			0.0, 0.0, -1.0,
-			-1.0, 0.0, 0.0,
-			0.0, 1.0, 0.0
+			 0.0,  0.0,  1.0,
+			 1.0,  0.0,  0.0,
+			 0.0, -1.0,  0.0,
+			 0.0,  0.0, -1.0,
+			-1.0,  0.0,  0.0,
+			 0.0,  1.0,  0.0
 	};
 
 	GLubyte allIndices[] = {
@@ -202,6 +202,9 @@ void OGLShapes::wireTorus(GLdouble innerRadius, GLdouble outerRadius, GLint nsid
 
 void OGLShapes::solidTorus(GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GLint rings)
 {
+	solidCube( (outerRadius-innerRadius)*2 );
+	return;
+
 	GLdouble ringR;
 	GLdouble normalR;
 	GLdouble distToCenter;

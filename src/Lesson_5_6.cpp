@@ -60,9 +60,11 @@ void Lesson_5_6::draw()
 	glPushMatrix();
 	glRotated((GLdouble)m_spin,1.0,0.0,0.0);
 	glLightfv(GL_LIGHT0,GL_POSITION,position);
-	glTranslated(0.0,0.0,1.5); glDisable(GL_LIGHTING);
+	glTranslated(0.0,0.0,1.5);
+	glDisable(GL_LIGHTING);
 	glColor3f(0.0,1.0,1.0);
 	OGLShapes::wireCube(0.1);
+	glEnable(GL_LIGHTING);
 	glPopMatrix();
 
 	OGLShapes::solidTorus(0.275,0.85,40,40);
