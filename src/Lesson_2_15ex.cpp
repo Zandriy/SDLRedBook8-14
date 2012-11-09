@@ -65,13 +65,19 @@ void Lesson_2_15ex::drawGLScene()
 
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_specular);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position1);
-	glLightfv(GL_LIGHT1, GL_POSITION, light_position2);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, mat_specular);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, mat_specular);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, mat_specular);
+
+	glLightfv(GL_LIGHT2, GL_POSITION, light_position2);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, mat_specular);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT2);
 
 	// Clear The Screen And The Depth Buffer
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -83,7 +89,7 @@ void Lesson_2_15ex::drawGLScene()
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
-	glDisable(GL_LIGHT1);
+	glDisable(GL_LIGHT2);
 }
 
 void Lesson_2_15ex::draw()

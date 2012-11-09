@@ -12,7 +12,7 @@
 
 #define INIT_W		500
 #define INIT_H		500
-#define INIT_LESSON		14
+#define INIT_LESSON		20
 
 OGL_Application::OGL_Application()
 :	m_surface (NULL)

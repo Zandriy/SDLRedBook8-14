@@ -24,8 +24,11 @@ public:
 	}
 private:
 	void draw();
+	void changeCameraPos();
 
 	GLdouble m_ex, m_ey, m_ez, m_upx, m_upy, m_upz;
+	int m_action;
+	bool m_bWire;
 };
 
 #endif /* LESSON_5_7_H_ */

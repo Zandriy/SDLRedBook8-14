@@ -40,7 +40,7 @@ void Lesson_5_1::drawGLScene()
 	GLfloat light_ambient1[]={1.0, 0.2, 0.2, 1.0};
 	GLfloat light_diffuse1[]={1.0, 1.0, 1.0, 1.0};
 	GLfloat light_specular1[]={1.0, 1.0, 1.0, 1.0};
-	GLfloat light_position1[]={-0.2, 0.2, -1.0, 1.0};
+	GLfloat light_position1[]={-0.2, -0.2, 1.0, 1.0};
 	GLfloat spot_direction1[]={-1.0, -1.0, 0.0};
 
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);

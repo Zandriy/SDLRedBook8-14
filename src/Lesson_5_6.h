@@ -27,6 +27,7 @@ private:
 	void light_moving();
 
 	int m_spin;
+	double m_rotFact;
 };
 
 #endif /* LESSON_5_6_H_ */
