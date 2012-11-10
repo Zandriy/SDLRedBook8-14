@@ -38,10 +38,17 @@ void Lesson_5_8::drawGLScene()
 
 	//Set the light
 	GLfloat light_position[]={1.0,1.0,1.0,0.0};
+	GLfloat light_position1[]={0.0,0.0,0.0,0.0};
 	GLfloat white_light[]={1.0,1.0,1.0,1.0};
+	GLfloat grey_light[]={0.3,0.3,0.3,0.5};
+
 	glLightfv(GL_LIGHT0,GL_POSITION,light_position);
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,white_light);
 	glLightfv(GL_LIGHT0,GL_SPECULAR,white_light);
+
+	glLightfv(GL_LIGHT1,GL_POSITION,light_position1);
+	glLightfv(GL_LIGHT1,GL_DIFFUSE,grey_light);
+	glLightfv(GL_LIGHT1,GL_SPECULAR,grey_light);
 
 	//...and model of two side lighting
 	GLfloat lmodel_ambient[]={1.0,1.0,1.0,1.0};
@@ -51,6 +58,7 @@ void Lesson_5_8::drawGLScene()
 	//Switch on the necessary things
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
 	glEnable(GL_DEPTH_TEST);
 
 	//Set material for facĕ
@@ -83,13 +91,10 @@ void Lesson_5_8::drawGLScene()
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
+	glDisable(GL_LIGHT1);
 }
 
 void Lesson_5_8::draw()
 {
-	glPushMatrix();
-
-	OGLShapes::solidSphere(0.9, 8, 15);
-
-	glPopMatrix();;
+	OGLShapes::solidSphere(0.85, 15, 25);
 }
