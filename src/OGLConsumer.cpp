@@ -28,8 +28,9 @@
 #include "Lesson_5_1.h"
 #include "Lesson_5_6.h"
 #include "Lesson_5_7.h"
+#include "Lesson_5_8.h"
 
-#define LESSON_QTY 21
+#define LESSON_QTY 22
 
 OGL_Consumer::OGL_Consumer()
 :	m_lesson(new Lesson * [LESSON_QTY])
@@ -56,6 +57,7 @@ OGL_Consumer::OGL_Consumer()
 	m_lesson[18] = new Lesson_5_1;
 	m_lesson[19] = new Lesson_5_6;
 	m_lesson[20] = new Lesson_5_7;
+	m_lesson[21] = new Lesson_5_8;
 }
 
 OGL_Consumer::~OGL_Consumer()
