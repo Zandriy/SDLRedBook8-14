@@ -89,9 +89,16 @@ void Lesson_5_8::drawGLScene()
 
 	draw();
 
+	//Set defaults
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
 	glDisable(GL_LIGHT1);
+	glDisable(GL_CLIP_PLANE1);
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
+	glFrontFace(GL_CCW);
+
+	GLfloat lmodel_ambientSET_DEFAULT[]={0.2,0.2,0.2,1.0};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,lmodel_ambientSET_DEFAULT);
 }
 
 void Lesson_5_8::draw()
