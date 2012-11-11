@@ -28,7 +28,10 @@ void Lesson_5_8::reshape(int width, int height)
 		glOrtho(-1.5,1.5,-1.5*(GLfloat)height/(GLfloat)width, 1.5*(GLfloat)height/(GLfloat)width,- 10.0,10.0);
 	else
 		glOrtho(-1.5*(GLfloat)width/(GLfloat)height, 1.5*(GLfloat)width/(GLfloat)height,-1.5,1.5,-
-				10.0,10.0); glMatrixMode(GL_MODELVIEW); glLoadIdentity();
+				10.0,10.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void Lesson_5_8::drawGLScene()

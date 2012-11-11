@@ -253,7 +253,7 @@ void OGLShapes::solidTorus(GLdouble innerRadius, GLdouble outerRadius, GLint nsi
 		points[currX+offsetY] = 0;
 		points[currX+offsetZ] = ringR * sin(nsideAngle*i);
 
-		normals[currX] = normalR * cos(nsideAngle*i) + distToCenter;
+		normals[currX] = normalR * cos(nsideAngle*i);
 		normals[currX+offsetY] = 0;
 		normals[currX+offsetZ] = normalR * sin(nsideAngle*i);
 

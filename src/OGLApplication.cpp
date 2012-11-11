@@ -289,6 +289,10 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 			m_OGL_Consumer->setLesson(m_curLesson = 21);
 			resizeWindow( 500, 500 );
 			break;
+		case SDLK_d:
+			m_OGL_Consumer->setLesson(m_curLesson = 22);
+			resizeWindow( 1000, 200 );
+			break;
 		default:
 			break;
 	}
