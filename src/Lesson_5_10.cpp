@@ -41,25 +41,30 @@ void Lesson_5_10::reshape(int width, int height)
 
 void Lesson_5_10::drawGLScene()
 {
-	   GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	   GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
+	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
 
-	   glClearColor (0.0, 0.0, 0.0, 0.0);
-	   glShadeModel (GL_SMOOTH);
-	   glEnable(GL_DEPTH_TEST);
-	   glMaterialfv(GL_FRONT, GL_DIFFUSE, m_diffuseMaterial);
-	   glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	   glMaterialf(GL_FRONT, GL_SHININESS, 25.0);
-	   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	   glEnable(GL_LIGHTING);
-	   glEnable(GL_LIGHT0);
+	glClearColor (0.0, 0.0, 0.0, 0.0);
+	glShadeModel (GL_SMOOTH);
+	glEnable(GL_DEPTH_TEST);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, m_diffuseMaterial);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialf(GL_FRONT, GL_SHININESS, 25.0);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 
-	   glColorMaterial(GL_FRONT, GL_DIFFUSE);
-	   glEnable(GL_COLOR_MATERIAL);
+	glColorMaterial(GL_FRONT, GL_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	draw();
+
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_LIGHT0);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 void Lesson_5_10::draw()
@@ -70,35 +75,35 @@ void Lesson_5_10::draw()
 
 bool Lesson_5_10::sendMessage(int message, int mode, int x, int y)
 {
-   switch (message) {
-      case SDL_BUTTON_LEFT:
-         if (mode==SDL_PRESSED) {
-            m_diffuseMaterial[0] += 0.1;
-            if (m_diffuseMaterial[0] > 1.0)
-               m_diffuseMaterial[0] = 0.0;
-            glColor4fv(m_diffuseMaterial);
-         }
-         break;
-      case SDL_BUTTON_MIDDLE:
-         if (mode==SDL_PRESSED) {
-            m_diffuseMaterial[1] += 0.1;
-            if (m_diffuseMaterial[1] > 1.0)
-               m_diffuseMaterial[1] = 0.0;
-            glColor4fv(m_diffuseMaterial);
-         }
-         break;
-      case SDL_BUTTON_RIGHT:
-         if (mode==SDL_PRESSED) {
-            m_diffuseMaterial[2] += 0.1;
-            if (m_diffuseMaterial[2] > 1.0)
-               m_diffuseMaterial[2] = 0.0;
-            glColor4fv(m_diffuseMaterial);
-         }
-         break;
-      default:
-  		return false;
-         break;
-   }
+	switch (message) {
+	case SDL_BUTTON_LEFT:
+		if (mode==SDL_PRESSED) {
+			m_diffuseMaterial[0] += 0.1;
+			if (m_diffuseMaterial[0] > 1.0)
+				m_diffuseMaterial[0] = 0.0;
+			glColor4fv(m_diffuseMaterial);
+		}
+		break;
+	case SDL_BUTTON_MIDDLE:
+		if (mode==SDL_PRESSED) {
+			m_diffuseMaterial[1] += 0.1;
+			if (m_diffuseMaterial[1] > 1.0)
+				m_diffuseMaterial[1] = 0.0;
+			glColor4fv(m_diffuseMaterial);
+		}
+		break;
+	case SDL_BUTTON_RIGHT:
+		if (mode==SDL_PRESSED) {
+			m_diffuseMaterial[2] += 0.1;
+			if (m_diffuseMaterial[2] > 1.0)
+				m_diffuseMaterial[2] = 0.0;
+			glColor4fv(m_diffuseMaterial);
+		}
+		break;
+	default:
+		return false;
+		break;
+	}
 
 	return true;
 }
