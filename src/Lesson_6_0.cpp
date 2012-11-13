@@ -1,0 +1,168 @@
+/*
+ * Lesson_6_0.cpp
+ *
+ *  Created on: Oct 3, 2012
+ *      Author: Andrew Zhabura
+ */
+
+#include "Lesson_6_0.h"
+
+#include "OGLShapes.h"
+
+#include <SDL/SDL.h>
+
+#define PI 3.14159265358979324
+
+Lesson_6_0::Lesson_6_0()
+: m_bmp (new BitMapFile)
+, m_texture(0)
+, m_isBillboard(false)
+, m_d(20.0)
+, m_b(40.0)
+{
+	// TODO Auto-generated constructor stub
+}
+
+Lesson_6_0::~Lesson_6_0() {
+	// TODO Auto-generated destructor stub
+}
+
+void Lesson_6_0::reshape(int width, int height)
+{
+	   glViewport(0, 0, (GLsizei)width, (GLsizei)height);
+	   glMatrixMode(GL_PROJECTION);
+	   glLoadIdentity();
+	   glFrustum(-10.0, 10.0, -5.0, 5.0, 5.0, 100.0);
+	   glMatrixMode(GL_MODELVIEW);
+	   glLoadIdentity();
+}
+
+void Lesson_6_0::drawGLScene()
+{
+	glClearColor (1.0, 1.0, 1.0, 0.0);
+	glEnable(GL_DEPTH_TEST);
+
+	// Create texture index array and load external textures.
+	glGenTextures(1, &m_texture);
+	loadExternalTextures();
+
+	// Turn on OpenGL texturing.
+	glEnable(GL_TEXTURE_2D);
+
+	// Specify how texture values combine with current surface color values.
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+	draw();
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+}
+
+void Lesson_6_0::draw()
+{
+	   glLoadIdentity();
+
+	   // Begin place the trees image.
+	   glPushMatrix();
+	   glTranslatef(-m_b, 0.0, -m_d);
+
+	   // If billboarding on, rotate the trees image so that it is normal to the viewing direction.
+	   if (m_isBillboard) glRotatef( atan(m_b/m_d)*(180.0/PI), 0.0, 1.0, 0.0);
+
+	   // Map the trees texture onto a vertical rectangle.
+	   glBindTexture(GL_TEXTURE_2D, m_texture);
+	   glBegin(GL_POLYGON);
+	      glTexCoord2f(0.0, 0.0); glVertex3f(-2.5, -5.0, 0.0);
+	      glTexCoord2f(1.0, 0.0); glVertex3f(2.5, -5.0, 0.0);
+	      glTexCoord2f(1.0, 1.0); glVertex3f(2.5, 5.0, 0.0);
+	      glTexCoord2f(0.0, 1.0); glVertex3f(-2.5, 5.0, 0.0);
+	   glEnd();
+
+	   glPopMatrix();
+	   // End place the trees image.
+}
+
+// Routine to read a bitmap file.
+// Works only for uncompressed m_bmp files of 24-bit color.
+void Lesson_6_0::getBMPData(std::string filename)
+{
+   unsigned int size, offset, headerSize;
+
+   // Read input file name.
+   std::ifstream infile(filename.c_str(), std::ios::binary);
+
+   // Get the starting point of the image data.
+   infile.seekg(10);
+   infile.read((char *) &offset, 4);
+
+   // Get the header size of the bitmap.
+   infile.read((char *) &headerSize,4);
+
+   // Get width and height values in the bitmap header.
+   infile.seekg(18);
+   infile.read( (char *) &m_bmp->sizeX, 4);
+   infile.read( (char *) &m_bmp->sizeY, 4);
+
+   // Allocate buffer for the image.
+   size = m_bmp->sizeX * m_bmp->sizeY * 24;
+   m_bmp->data = new unsigned char[size];
+
+   // Read bitmap data.
+   infile.seekg(offset);
+   infile.read((char *) m_bmp->data , size);
+
+   // Reverse color from bgr to rgb.
+   int temp;
+   for (int i = 0; i < size; i += 3)
+   {
+      temp = m_bmp->data[i];
+	  m_bmp->data[i] = m_bmp->data[i+2];
+	  m_bmp->data[i+2] = temp;
+   }
+}
+
+
+// Load external textures.
+void Lesson_6_0::loadExternalTextures()
+{
+   // Load the texture.
+   getBMPData("textures/trees.bmp");
+
+   // Bind trees image to texture index[0].
+   glBindTexture(GL_TEXTURE_2D, m_texture);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
+   gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, m_bmp->sizeX, m_bmp->sizeY,
+	                 GL_RGB, GL_UNSIGNED_BYTE, m_bmp->data);
+}
+
+bool Lesson_6_0::sendMessage(int message, int mode, int x, int y)
+{
+	switch (message) {
+	case SDLK_SPACE:
+		if (m_isBillboard)
+		{
+			m_isBillboard = false;
+			std::cout << "Billboarding off!\n";
+		}
+		else
+		{
+			m_isBillboard = true;
+			std::cout << "Billboarding on!\n";
+		}
+		break;
+	case SDL_BUTTON_LEFT:
+		if (mode==SDL_PRESSED) m_d += 0.2;
+		else m_d -= 0.2;
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	return true;
+}

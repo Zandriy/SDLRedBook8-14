@@ -72,7 +72,6 @@ void Lesson_5_10::draw()
 	OGLShapes::solidSphere(1.0, 20, 16);
 }
 
-
 bool Lesson_5_10::sendMessage(int message, int mode, int x, int y)
 {
 	switch (message) {

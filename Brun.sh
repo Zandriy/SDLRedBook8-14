@@ -1,3 +1,3 @@
 #! /bin/sh
 
-mkdir build; cd build && cmake .. && make && src/prg
+mkdir build; cd build && cmake .. && make && cd .. && build/src/prg
