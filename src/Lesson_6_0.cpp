@@ -11,8 +11,6 @@
 
 #include <SDL/SDL.h>
 
-#define PI 3.14159265358979324
-
 Lesson_6_0::Lesson_6_0()
 : m_bmp (new BitMapFile)
 , m_texture(0)
@@ -75,7 +73,6 @@ void Lesson_6_0::draw()
 
 	   for ( int i = 0; i < m_seg; ++i )
 	   {
-		   glRotatef(180.0/m_seg, 0.0, 1.0, 0.0);
 		   // Map the trees texture onto a vertical rectangle.
 		   glBegin(GL_POLYGON);
 		   glTexCoord2f(0.0, 0.0); glVertex3f(-1.0, -1.0, 0.0);
@@ -83,6 +80,8 @@ void Lesson_6_0::draw()
 		   glTexCoord2f(1.0, 1.0); glVertex3f(1.0, 1.0, 0.0);
 		   glTexCoord2f(0.0, 1.0); glVertex3f(-1.0, 1.0, 0.0);
 		   glEnd();
+
+		   glRotatef(180.0/m_seg, 0.0, 1.0, 0.0);
 	   }
 
 	   glBindTexture(GL_TEXTURE_2D, NULL);
