@@ -33,7 +33,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return (char*)&"6-0. Billboarding";
+		return (char*)&"6-0. Billboarding (mouse L-R)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);
@@ -45,8 +45,8 @@ private:
 
 	BitMapFile *m_bmp;
 	unsigned int m_texture;
-	bool m_isBillboard;
-	float m_d, m_b;
+	unsigned int m_seg;
+	float m_angle;
 };
 
 #endif /* LESSON_6_0_H_ */

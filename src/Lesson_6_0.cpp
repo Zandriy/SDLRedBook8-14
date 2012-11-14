@@ -16,9 +16,8 @@
 Lesson_6_0::Lesson_6_0()
 : m_bmp (new BitMapFile)
 , m_texture(0)
-, m_isBillboard(false)
-, m_d(20.0)
-, m_b(40.0)
+, m_angle(0.0)
+, m_seg(2)
 {
 	// TODO Auto-generated constructor stub
 }
@@ -29,17 +28,17 @@ Lesson_6_0::~Lesson_6_0() {
 
 void Lesson_6_0::reshape(int width, int height)
 {
-	   glViewport(0, 0, (GLsizei)width, (GLsizei)height);
-	   glMatrixMode(GL_PROJECTION);
-	   glLoadIdentity();
-	   glFrustum(-10.0, 10.0, -5.0, 5.0, 5.0, 100.0);
-	   glMatrixMode(GL_MODELVIEW);
-	   glLoadIdentity();
+	glViewport(0,0,(GLsizei) width, (GLsizei) height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void Lesson_6_0::drawGLScene()
 {
-	glClearColor (1.0, 1.0, 1.0, 0.0);
 	glEnable(GL_DEPTH_TEST);
 
 	// Create texture index array and load external textures.
@@ -49,8 +48,10 @@ void Lesson_6_0::drawGLScene()
 	// Turn on OpenGL texturing.
 	glEnable(GL_TEXTURE_2D);
 
-	// Specify how texture values combine with current surface color values.
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	// Turn on OpenGL blending.
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor4f(0.0, 1.0, 0.0, 0.7);
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
@@ -58,30 +59,35 @@ void Lesson_6_0::drawGLScene()
 
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
 }
 
 void Lesson_6_0::draw()
 {
 	   glLoadIdentity();
 
-	   // Begin place the trees image.
 	   glPushMatrix();
-	   glTranslatef(-m_b, 0.0, -m_d);
 
-	   // If billboarding on, rotate the trees image so that it is normal to the viewing direction.
-	   if (m_isBillboard) glRotatef( atan(m_b/m_d)*(180.0/PI), 0.0, 1.0, 0.0);
+	   if (m_angle >= 360.0 ) m_angle = 0.0;
+	   glRotatef(m_angle, 0.0, 1.0, 0.0);
 
-	   // Map the trees texture onto a vertical rectangle.
 	   glBindTexture(GL_TEXTURE_2D, m_texture);
-	   glBegin(GL_POLYGON);
-	      glTexCoord2f(0.0, 0.0); glVertex3f(-2.5, -5.0, 0.0);
-	      glTexCoord2f(1.0, 0.0); glVertex3f(2.5, -5.0, 0.0);
-	      glTexCoord2f(1.0, 1.0); glVertex3f(2.5, 5.0, 0.0);
-	      glTexCoord2f(0.0, 1.0); glVertex3f(-2.5, 5.0, 0.0);
-	   glEnd();
+
+	   for ( int i = 0; i < m_seg; ++i )
+	   {
+		   glRotatef(180.0/m_seg, 0.0, 1.0, 0.0);
+		   // Map the trees texture onto a vertical rectangle.
+		   glBegin(GL_POLYGON);
+		   glTexCoord2f(0.0, 0.0); glVertex3f(-1.0, -1.0, 0.0);
+		   glTexCoord2f(1.0, 0.0); glVertex3f(1.0, -1.0, 0.0);
+		   glTexCoord2f(1.0, 1.0); glVertex3f(1.0, 1.0, 0.0);
+		   glTexCoord2f(0.0, 1.0); glVertex3f(-1.0, 1.0, 0.0);
+		   glEnd();
+	   }
+
+	   glBindTexture(GL_TEXTURE_2D, NULL);
 
 	   glPopMatrix();
-	   // End place the trees image.
 }
 
 // Routine to read a bitmap file.
@@ -128,9 +134,9 @@ void Lesson_6_0::getBMPData(std::string filename)
 void Lesson_6_0::loadExternalTextures()
 {
    // Load the texture.
-   getBMPData("textures/trees.bmp");
+   getBMPData("textures/tree.bmp");
 
-   // Bind trees image to texture index[0].
+   // Bind trees image to texture.
    glBindTexture(GL_TEXTURE_2D, m_texture);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -143,21 +149,11 @@ void Lesson_6_0::loadExternalTextures()
 bool Lesson_6_0::sendMessage(int message, int mode, int x, int y)
 {
 	switch (message) {
-	case SDLK_SPACE:
-		if (m_isBillboard)
-		{
-			m_isBillboard = false;
-			std::cout << "Billboarding off!\n";
-		}
-		else
-		{
-			m_isBillboard = true;
-			std::cout << "Billboarding on!\n";
-		}
-		break;
 	case SDL_BUTTON_LEFT:
-		if (mode==SDL_PRESSED) m_d += 0.2;
-		else m_d -= 0.2;
+		m_angle += 1.5;
+		break;
+	case SDL_BUTTON_RIGHT:
+		m_angle -= 1.5;
 		break;
 	default:
 		return false;
