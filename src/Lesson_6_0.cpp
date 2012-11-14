@@ -51,7 +51,7 @@ void Lesson_6_0::drawGLScene()
 	// Turn on OpenGL blending.
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glColor4f(0.0, 1.0, 0.0, 0.7);
+	glColor4f(0.0, 1.0, 0.0, 0.5);
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
