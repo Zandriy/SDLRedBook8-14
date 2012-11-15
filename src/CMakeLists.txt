@@ -51,6 +51,8 @@ SET(SDL_OGL_PROJECT_SOURCE
 	Lesson_6_0.cpp
 	Lesson_6_1.cpp
 	Lesson_6_2.cpp
+	Lesson_6_3.cpp
+	Lesson_6_5.cpp
 	)
 
 SET(SDL_OGL_PROJECT_TARGET prg)
