@@ -10,21 +10,8 @@
 
 #include "Lesson.h"
 
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
-#include <fstream>
-
 class Lesson_6_1 : public Lesson
 {
-	// Structure of bitmap file.
-	struct BitMapFile
-	{
-	   int sizeX;
-	   int sizeY;
-	   unsigned char *data;
-	};
-
 public:
 	Lesson_6_1();
 	virtual ~Lesson_6_1();
