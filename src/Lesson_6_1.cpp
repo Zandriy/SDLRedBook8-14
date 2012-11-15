@@ -44,6 +44,7 @@ void Lesson_6_1::drawGLScene()
 	draw();
 
 	glDisable(GL_BLEND);
+	glShadeModel (GL_SMOOTH);
 }
 
 void Lesson_6_1::draw()
