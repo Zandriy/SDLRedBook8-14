@@ -22,17 +22,6 @@ Lesson_6_2::Lesson_6_2()
 , m_transparentZ(MINZ)
 , m_stop(true)
 {
-	/*
-	m_sphereList = glGenLists(1);
-	glNewList(m_sphereList, GL_COMPILE);
-	OGLShapes::solidSphere (0.4, 16, 16);
-	glEndList();
-
-	m_cubeList = glGenLists(1);
-	glNewList(m_cubeList, GL_COMPILE);
-	OGLShapes::solidCube (0.6);
-	glEndList();
-	*/
 }
 
 Lesson_6_2::~Lesson_6_2() {
@@ -56,6 +45,22 @@ void Lesson_6_2::reshape(int width, int height)
 
 void Lesson_6_2::drawGLScene()
 {
+	if ( !m_sphereList )
+	{
+		m_sphereList = glGenLists(1);
+		glNewList(m_sphereList, GL_COMPILE);
+		OGLShapes::solidSphere (0.4, 16, 16);
+		glEndList();
+	}
+
+	if ( !m_cubeList )
+	{
+		m_cubeList = glGenLists(1);
+		glNewList(m_cubeList, GL_COMPILE);
+		OGLShapes::solidCube (0.6);
+		glEndList();
+	}
+
 	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 0.15 };
 	GLfloat mat_shininess[] = { 100.0 };
 	GLfloat position[] = { 0.5, 0.5, 1.0, 0.0 };
@@ -91,8 +96,7 @@ void Lesson_6_2::draw()
 	glTranslatef (-0.15, -0.15, m_solidZ);
 	glMaterialfv(GL_FRONT, GL_EMISSION, mat_zero);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_solid);
-	//glCallList (m_sphereList);
-	OGLShapes::solidSphere (0.4, 16, 16);
+	glCallList (m_sphereList);
 	glPopMatrix ();
 
 	glPushMatrix ();
@@ -104,8 +108,7 @@ void Lesson_6_2::draw()
 	glEnable (GL_BLEND);
 	glDepthMask (GL_FALSE);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE);
-	//glCallList (m_cubeList);
-	OGLShapes::solidCube (0.6);
+	glCallList (m_cubeList);
 	glDepthMask (GL_TRUE);
 	glDisable (GL_BLEND);
 	glPopMatrix ();

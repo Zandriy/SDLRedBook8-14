@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return (char*)&"6-2. Alpha3D (a-A, r-R) !!! try to use lists";
+		return (char*)&"6-2. Alpha3D (a-A, r-R)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);
