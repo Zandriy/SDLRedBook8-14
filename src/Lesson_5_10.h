@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return (char*)&"5-10. ColorMat";
+		return (char*)&"5-10. ColorMat (mouse L-M-R)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);

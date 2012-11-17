@@ -17,7 +17,7 @@
 #define NVERT 8
 
 Lesson_6_poly::Lesson_6_poly()
-: m_polySmooth(GL_TRUE)
+: m_polySmooth(GL_FALSE)
 {
 }
 
@@ -39,6 +39,8 @@ void Lesson_6_poly::drawGLScene()
 {
 	glCullFace (GL_BACK);
 	glEnable (GL_CULL_FACE);
+	// here is problem with GL_SRC_ALPHA_SATURATE,
+	// most probably because of double buffering
 	glBlendFunc (GL_SRC_ALPHA_SATURATE, GL_ONE);
 	glHint(GL_POLYGON_SMOOTH_HINT,GL_NICEST);
 
