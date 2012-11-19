@@ -7,8 +7,6 @@
 
 #include "Lesson_6_poly.h"
 
-#include "OGLShapes.h"
-
 #include <SDL/SDL.h>
 #include <stdlib.h>
 #include <stdio.h>

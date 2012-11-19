@@ -7,8 +7,6 @@
 
 #include "Lesson_7_1.h"
 
-#include "OGLShapes.h"
-
 #include <SDL/SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
