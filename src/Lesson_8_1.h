@@ -1,7 +1,7 @@
 /*
  * Lesson_8_1.h
  *
- *  Created on: Oct 3, 2012
+ *  Created on: Nov 22, 2012
  *      Author: Andrew Zhabura
  */
 
@@ -20,7 +20,7 @@ public:
 	virtual void drawGLScene();
 	virtual char* getName()
 	{
-		return (char*)&"8-1. Hello";
+		return (char*)&"8-1. DrawF";
 	}
 
 private:

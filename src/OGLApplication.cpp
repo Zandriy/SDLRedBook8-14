@@ -10,7 +10,7 @@
 // if BPP is 0, it will be set to maximum possible
 #define SURFACE_BPP		24
 
-#define INIT_W		300
+#define INIT_W		100
 #define INIT_H		100
 #define INIT_LESSON		1
 
@@ -199,7 +199,7 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 			break;
 		case SDLK_1:
 			m_OGL_Consumer->setLesson(m_curLesson = 0);
-			resizeWindow( 250, 250 );
+			resizeWindow( 100, 100 );
 			break;
 		default:
 			break;
