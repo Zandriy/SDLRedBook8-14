@@ -24,41 +24,7 @@ SET(SDL_OGL_PROJECT_SOURCE
 	OGLShapes.cpp
 	OGLApplication.cpp
 	OGLConsumer.cpp
-	Lesson_1_2.cpp
-	Lesson_1_3.cpp
-	Lesson_2_5.cpp
-	Lesson_2_6.cpp
-	Lesson_2_7.cpp
-	Lesson_2_9.cpp
-	Lesson_2_10.cpp
-	Lesson_2_11.cpp
-	Lesson_2_13.cpp
-	Lesson_2_15.cpp
-	Lesson_2_15ex.cpp
-	Lesson_3_1.cpp
-	Lesson_3_2.cpp
-	Lesson_3_5.cpp
-	Lesson_3_6.cpp
-	Lesson_3_7.cpp
-	Lesson_3_8.cpp
-	Lesson_4_1.cpp
-	Lesson_5_1.cpp
-	Lesson_5_6.cpp
-	Lesson_5_7.cpp
-	Lesson_5_8.cpp
-	Lesson_5_9.cpp
-	Lesson_5_10.cpp
-	Lesson_6_0.cpp
-	Lesson_6_1.cpp
-	Lesson_6_2.cpp
-	Lesson_6_3.cpp
-	Lesson_6_poly.cpp
-	Lesson_6_5.cpp
-	Lesson_6_7.cpp
-	Lesson_7_1.cpp
-	Lesson_7_2.cpp
-	Lesson_7_5.cpp
-	Lesson_7_7.cpp
+	Lesson_8_1.cpp
 	)
 
 SET(SDL_OGL_PROJECT_TARGET prg)

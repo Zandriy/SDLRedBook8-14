@@ -10,9 +10,9 @@
 // if BPP is 0, it will be set to maximum possible
 #define SURFACE_BPP		24
 
-#define INIT_W		500
-#define INIT_H		500
-#define INIT_LESSON		26
+#define INIT_W		300
+#define INIT_H		100
+#define INIT_LESSON		1
 
 OGL_Application::OGL_Application()
 :	m_surface (NULL)
@@ -200,142 +200,6 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 		case SDLK_1:
 			m_OGL_Consumer->setLesson(m_curLesson = 0);
 			resizeWindow( 250, 250 );
-			break;
-		case SDLK_2:
-			m_OGL_Consumer->setLesson(m_curLesson = 1);
-			resizeWindow( 250, 250 );
-			break;
-		case SDLK_3:
-			m_OGL_Consumer->setLesson(m_curLesson = 2);
-			resizeWindow( 400, 150 );
-			break;
-		case SDLK_4:
-			m_OGL_Consumer->setLesson(m_curLesson = 3);
-			resizeWindow( 350, 150 );
-			break;
-		case SDLK_5:
-			m_OGL_Consumer->setLesson(m_curLesson = 4);
-			resizeWindow( 350, 350 );
-			break;
-		case SDLK_6:
-			m_OGL_Consumer->setLesson(m_curLesson = 5);
-			resizeWindow( 350, 350 );
-			break;
-		case SDLK_7:
-			m_OGL_Consumer->setLesson(m_curLesson = 6);
-			resizeWindow( 350, 350 );
-			break;
-		case SDLK_8:
-			m_OGL_Consumer->setLesson(m_curLesson = 7);
-			resizeWindow( 350, 350 );
-			break;
-		case SDLK_9:
-			m_OGL_Consumer->setLesson(m_curLesson = 8);
-			resizeWindow( 350, 350 );
-			break;
-		case SDLK_0:
-			m_OGL_Consumer->setLesson(m_curLesson = 9);
-			resizeWindow( 350, 350 );
-			break;
-		case SDLK_q:
-			m_OGL_Consumer->setLesson(m_curLesson = 10);
-			resizeWindow( 350, 350 );
-			break;
-		case SDLK_w:
-			m_OGL_Consumer->setLesson(m_curLesson = 11);
-			resizeWindow( 350, 350 );
-			break;
-		case SDLK_e:
-			m_OGL_Consumer->setLesson(m_curLesson = 12);
-			resizeWindow( 450, 150 );
-			break;
-		case SDLK_r:
-			m_OGL_Consumer->setLesson(m_curLesson = 13);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_t:
-			m_OGL_Consumer->setLesson(m_curLesson = 14);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_y:
-			m_OGL_Consumer->setLesson(m_curLesson = 15);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_u:
-			m_OGL_Consumer->setLesson(m_curLesson = 16);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_i:
-			m_OGL_Consumer->setLesson(m_curLesson = 17);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_o:
-			m_OGL_Consumer->setLesson(m_curLesson = 18);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_p:
-			m_OGL_Consumer->setLesson(m_curLesson = 19);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_a:
-			m_OGL_Consumer->setLesson(m_curLesson = 20);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_s:
-			m_OGL_Consumer->setLesson(m_curLesson = 21);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_d:
-			m_OGL_Consumer->setLesson(m_curLesson = 22);
-			resizeWindow( 1000, 200 );
-			break;
-		case SDLK_f:
-			m_OGL_Consumer->setLesson(m_curLesson = 23);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_g:
-			m_OGL_Consumer->setLesson(m_curLesson = 24);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_h:
-			m_OGL_Consumer->setLesson(m_curLesson = 25);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_j:
-			m_OGL_Consumer->setLesson(m_curLesson = 26);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_k:
-			m_OGL_Consumer->setLesson(m_curLesson = 27);
-			resizeWindow( 200, 200 );
-			break;
-		case SDLK_l:
-			m_OGL_Consumer->setLesson(m_curLesson = 28);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_z:
-			m_OGL_Consumer->setLesson(m_curLesson = 29);
-			resizeWindow( 1000, 200 );
-			break;
-		case SDLK_x:
-			m_OGL_Consumer->setLesson(m_curLesson = 30);
-			resizeWindow( 600, 300 );
-			break;
-		case SDLK_c:
-			m_OGL_Consumer->setLesson(m_curLesson = 31);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_v:
-			m_OGL_Consumer->setLesson(m_curLesson = 32);
-			resizeWindow( 650, 50 );
-			break;
-		case SDLK_b:
-			m_OGL_Consumer->setLesson(m_curLesson = 33);
-			resizeWindow( 440, 120 );
-			break;
-		case SDLK_n:
-			m_OGL_Consumer->setLesson(m_curLesson = 34);
-			resizeWindow( 650, 50 );
 			break;
 		default:
 			break;

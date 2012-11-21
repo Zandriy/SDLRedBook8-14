@@ -1,22 +1,22 @@
 /*
- * Lesson_1_2.cpp
+ * Lesson_8_1.cpp
  *
  *  Created on: Oct 3, 2012
  *      Author: Andrew Zhabura
  */
 
-#include "Lesson_1_2.h"
+#include "Lesson_8_1.h"
 
-Lesson_1_2::Lesson_1_2() {
+Lesson_8_1::Lesson_8_1() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Lesson_1_2::~Lesson_1_2() {
+Lesson_8_1::~Lesson_8_1() {
 	// TODO Auto-generated destructor stub
 }
 
-void Lesson_1_2::reshape(int width, int height)
+void Lesson_8_1::reshape(int width, int height)
 {
 	// Setup our viewport.
 	glViewport( 0, 0, ( GLint )width, ( GLint )height );
@@ -34,7 +34,7 @@ void Lesson_1_2::reshape(int width, int height)
 	glLoadIdentity();
 }
 
-void Lesson_1_2::drawGLScene()
+void Lesson_8_1::drawGLScene()
 {
 	// Clear The Screen And The Depth Buffer
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -45,7 +45,7 @@ void Lesson_1_2::drawGLScene()
 	glLoadIdentity();
 }
 
-void Lesson_1_2::draw()
+void Lesson_8_1::draw()
 {
 	glColor3f(1.0, 1.0, 1.0);
 
