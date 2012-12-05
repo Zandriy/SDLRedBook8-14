@@ -12,7 +12,7 @@
 
 #define INIT_W		100
 #define INIT_H		100
-#define INIT_LESSON		1
+#define INIT_SAMPLE		1
 
 OGL_Application::OGL_Application()
 :	m_surface (NULL)
@@ -23,7 +23,7 @@ OGL_Application::OGL_Application()
 ,	m_height(INIT_H)
 ,	m_bpp(SURFACE_BPP)
 ,	m_OGL_Consumer(NULL)
-,	m_curLesson(INIT_LESSON)
+,	m_curSample(INIT_SAMPLE)
 {
 }
 
@@ -90,15 +90,13 @@ void OGL_Application::init()
 	}
 
 	m_OGL_Consumer = new OGL_Consumer;
-
-	m_OGL_Consumer->initGL();
 }
 
 int OGL_Application::exec()
 {
-	// the start lesson
-	m_OGL_Consumer->setLesson(m_curLesson);
-	SDL_WM_SetCaption(m_OGL_Consumer->getLessonName(), NULL);
+	// the start Sample
+	m_OGL_Consumer->setSample(m_curSample);
+	SDL_WM_SetCaption(m_OGL_Consumer->getSampleName(), NULL);
 	resizeWindow( INIT_W, INIT_H );
 
 	// used to collect events
@@ -132,7 +130,7 @@ int OGL_Application::exec()
 					handleKeyPress( &event.key.keysym );
 					break;
 				case SDL_MOUSEBUTTONDOWN:
-					m_OGL_Consumer->sendMessage(m_curLesson, event.button.button, event.button.state,
+					m_OGL_Consumer->sendMessage(m_curSample, event.button.button, event.button.state,
 							event.button.x, event.button.y);
 					break;
 				case SDL_QUIT:
@@ -180,7 +178,7 @@ bool OGL_Application::resizeWindow( int width, int height )
 // function to handle key press events
 void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 {
-	if ( m_OGL_Consumer->sendMessage(m_curLesson, keysym->sym, keysym->mod, 0, 0) )
+	if ( m_OGL_Consumer->sendMessage(m_curSample, keysym->sym, keysym->mod, 0, 0) )
 			return;
 
 	switch ( keysym->sym )
@@ -198,14 +196,14 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 			if(m_surface == NULL) m_breakReason = SDL_QUIT; /* If you can't switch back for some reason, then epic fail */
 			break;
 		case SDLK_1:
-			m_OGL_Consumer->setLesson(m_curLesson = 0);
+			m_OGL_Consumer->setSample(m_curSample = 0);
 			resizeWindow( 100, 100 );
 			break;
 		default:
 			break;
 	}
 
-	SDL_WM_SetCaption(m_OGL_Consumer->getLessonName(), NULL);
+	SDL_WM_SetCaption(m_OGL_Consumer->getSampleName(), NULL);
 }
 
 // Here goes our drawing code

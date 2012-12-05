@@ -1,12 +1,12 @@
 /*
- * Lesson.h
+ * Sample.h
  *
- *  Created on: Oct 3, 2012
+ *  Created on: Dec 6, 2012
  *      Author: Andrew Zhabura
  */
 
-#ifndef LESSON_H_
-#define LESSON_H_
+#ifndef Sample_H_
+#define Sample_H_
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
@@ -16,19 +16,30 @@
 #include <GL/glu.h>
 #endif
 
-class Lesson
+class Sample
 {
 public:
-	virtual ~Lesson(){}
+	virtual ~Sample(){}
 
 	virtual void reshape(int width, int height) = 0;
-	virtual void drawGLScene() = 0;
 	virtual char* getName() = 0;
 
 	virtual bool sendMessage(int message, int mode, int x, int y)
 	{
 		return false;
 	}
+
+	void drawGLScene()
+	{
+		initGL();
+		draw();
+		restoreGL();
+	}
+
+protected:
+	virtual void draw() = 0;
+	virtual void initGL() = 0;
+	virtual void restoreGL() = 0;
 };
 
-#endif /* LESSON_2_10_H_ */
+#endif /* Sample_2_10_H_ */

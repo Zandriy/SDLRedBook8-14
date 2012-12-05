@@ -30,7 +30,7 @@ private:
 	unsigned int  m_height;
 	unsigned int  m_bpp;
 	OGL_Consumer * m_OGL_Consumer;
-	unsigned int  m_curLesson;
+	unsigned int  m_curSample;
 };
 
 #endif // OGL_APPLICATION_H_

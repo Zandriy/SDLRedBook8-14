@@ -7,76 +7,51 @@
 
 #include "OGLConsumer.h"
 
-#include "Lesson_8_1.h"
+#include "Sample_8_1.h"
 
-#define LESSON_QTY 1
+#define Sample_QTY 1
 
 OGL_Consumer::OGL_Consumer()
-:	m_lesson(new Lesson * [LESSON_QTY])
-,	m_lessonNum(0)
+:	m_Sample(new Sample * [Sample_QTY])
+,	m_SampleNum(0)
 {
-	m_lesson[0] = new Lesson_8_1;
+	m_Sample[0] = new Sample_8_1;
 }
 
 OGL_Consumer::~OGL_Consumer()
 {
-	for (int i = 0; i < LESSON_QTY; ++i)
+	for (int i = 0; i < Sample_QTY; ++i)
 	{
-		if (m_lesson[i])
-			delete m_lesson[i];
+		if (m_Sample[i])
+			delete m_Sample[i];
 	}
 }
 
-// general OpenGL initialization function
-void OGL_Consumer::initGL()
+void OGL_Consumer::setSample(unsigned int SampleNum)
 {
-	// Enable smooth shading
-	glShadeModel( GL_SMOOTH );
-
-	// Set the background black
-	glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-
-	// Depth buffer setup
-	glClearDepth( 1.0f );
-
-	// Enables Depth Testing
-	glEnable( GL_DEPTH_TEST );
-
-	// Enables Light
-	//glEnable( GL_LIGHTING );
-
-	// The Type Of Depth Test To Do
-	glDepthFunc( GL_LEQUAL );
-
-	// Really Nice Perspective Calculations
-	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-}
-
-void OGL_Consumer::setLesson(unsigned int lessonNum)
-{
-	if (lessonNum >= LESSON_QTY)
+	if (SampleNum >= Sample_QTY)
 		return;
 
-	m_lessonNum = lessonNum;
+	m_SampleNum = SampleNum;
 }
 
-bool OGL_Consumer::sendMessage(unsigned int lessonNum, int message, int mode, int x, int y)
+bool OGL_Consumer::sendMessage(unsigned int SampleNum, int message, int mode, int x, int y)
 {
-	return m_lesson[m_lessonNum]->sendMessage(message, mode, x, y);
+	return m_Sample[m_SampleNum]->sendMessage(message, mode, x, y);
 }
 
 void OGL_Consumer::reshape(unsigned int width, unsigned int height)
 {
-	m_lesson[m_lessonNum]->reshape(width, height);
+	m_Sample[m_SampleNum]->reshape(width, height);
 }
 
 // Here goes our drawing code
 void OGL_Consumer::drawGLScene()
 {
-	m_lesson[m_lessonNum]->drawGLScene();
+	m_Sample[m_SampleNum]->drawGLScene();
 }
 
-char* OGL_Consumer::getLessonName()
+char* OGL_Consumer::getSampleName()
 {
-	return m_lesson[m_lessonNum]->getName();
+	return m_Sample[m_SampleNum]->getName();
 }

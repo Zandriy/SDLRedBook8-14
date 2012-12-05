@@ -8,23 +8,22 @@
 #ifndef OGL_CONSUMER_H_
 #define OGL_CONSUMER_H_
 
-class Lesson;
+class Sample;
 
 class OGL_Consumer
 {
 public:
 	OGL_Consumer();
 	~OGL_Consumer();
-	void initGL();
-	void setLesson(unsigned int lessonNum);
-	bool sendMessage(unsigned int lessonNum, int message, int mode, int x, int y);
+	void setSample(unsigned int SampleNum);
+	bool sendMessage(unsigned int SampleNum, int message, int mode, int x, int y);
 	void reshape(unsigned int width, unsigned int height);
 	void drawGLScene();
-	char* getLessonName();
+	char* getSampleName();
 
 private:
-	Lesson ** m_lesson;
-	unsigned int m_lessonNum;
+	Sample ** m_Sample;
+	unsigned int m_SampleNum;
 };
 
 #endif // OGL_CONSUMER_H_

@@ -24,7 +24,7 @@ SET(SDL_OGL_PROJECT_SOURCE
 	OGLShapes.cpp
 	OGLApplication.cpp
 	OGLConsumer.cpp
-	Lesson_8_1.cpp
+	Sample_8_1.cpp
 	)
 
 SET(SDL_OGL_PROJECT_TARGET prg)
