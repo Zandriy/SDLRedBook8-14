@@ -74,7 +74,7 @@ void Sample_8_2::draw()
 void Sample_8_2::initGL()
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glClearColor(0.0, 0.0, 0.5, 0.0);
 	glShadeModel (GL_FLAT);
 
 	glPushClientAttrib(GL_ALL_CLIENT_ATTRIB_BITS);
