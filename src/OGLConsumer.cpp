@@ -5,17 +5,26 @@
  *      Author: Andrew Zhabura
  */
 
+#include <exception>
+
 #include "OGLConsumer.h"
 
 #include "Sample_8_1.h"
+#include "Sample_8_2.h"
 
-#define Sample_QTY 1
+#define Sample_QTY 2
 
 OGL_Consumer::OGL_Consumer()
 :	m_Sample(new Sample * [Sample_QTY])
 ,	m_SampleNum(0)
 {
-	m_Sample[0] = new Sample_8_1;
+	int i = -1;
+
+	m_Sample[++i] = new Sample_8_1;
+	m_Sample[++i] = new Sample_8_2;
+
+	if ( ++i != Sample_QTY )
+		throw this;
 }
 
 OGL_Consumer::~OGL_Consumer()

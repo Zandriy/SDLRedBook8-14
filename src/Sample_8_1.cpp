@@ -43,9 +43,10 @@ void Sample_8_1::draw()
 void Sample_8_1::initGL()
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glShadeModel (GL_FLAT);
 
-	glPushClientAttrib(GL_CLIENT_PIXEL_STORE_BIT);
+	glPushClientAttrib(GL_ALL_CLIENT_ATTRIB_BITS);
 	glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
 
 	glClear(GL_COLOR_BUFFER_BIT);

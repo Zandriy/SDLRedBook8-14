@@ -10,7 +10,7 @@
 // if BPP is 0, it will be set to maximum possible
 #define SURFACE_BPP		24
 
-#define INIT_W		100
+#define INIT_W		300
 #define INIT_H		100
 #define INIT_SAMPLE		1
 
@@ -198,6 +198,10 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 		case SDLK_1:
 			m_OGL_Consumer->setSample(m_curSample = 0);
 			resizeWindow( 100, 100 );
+			break;
+		case SDLK_2:
+			m_OGL_Consumer->setSample(m_curSample = 1);
+			resizeWindow( 300, 100 );
 			break;
 		default:
 			break;

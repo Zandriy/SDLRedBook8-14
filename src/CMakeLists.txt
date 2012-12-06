@@ -25,6 +25,7 @@ SET(SDL_OGL_PROJECT_SOURCE
 	OGLApplication.cpp
 	OGLConsumer.cpp
 	Sample_8_1.cpp
+	Sample_8_2.cpp
 	)
 
 SET(SDL_OGL_PROJECT_TARGET prg)
