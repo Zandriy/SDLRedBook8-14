@@ -69,14 +69,21 @@ void Sample_8_3::makeCheckImage()
 
 	int i, j, c;
 
-	m_checkImage = new GLubyte[checkImageHeight * checkImageWidth* checkImageColors];
+	m_checkImage = new GLubyte**[checkImageHeight];
+
+	for (i = 0; i < checkImageHeight; ++i)
+	{
+		m_checkImage[i] = new GLubyte*[checkImageWidth];
+		for (j = 0; j < checkImageWidth; ++j)
+			m_checkImage[i][j] = new GLubyte[checkImageColors];
+	}
 
 	for (i = 0; i < checkImageHeight; i++) {
 		for (j = 0; j < checkImageWidth; j++) {
-			c = ((((i&0x8)==0)^((j&0x8))==0))*255;
-			m_checkImage[i*j+0] = (GLubyte) c;
-			m_checkImage[i*j+1] = (GLubyte) c;
-			m_checkImage[i*j+2] = (GLubyte) c;
+			c = 200;//((((i&0x8)==0)^((j&0x8))==0))*255;
+			m_checkImage[i][j][0] = (GLubyte) c;
+			m_checkImage[i][j][1] = (GLubyte) c;
+			m_checkImage[i][j][2] = (GLubyte) c;
 		}
 	}
 }
