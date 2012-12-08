@@ -130,8 +130,13 @@ int OGL_Application::exec()
 					handleKeyPress( &event.key.keysym );
 					break;
 				case SDL_MOUSEBUTTONDOWN:
-					m_OGL_Consumer->sendMessage(m_curSample, event.button.button, event.button.state,
+				case SDL_MOUSEBUTTONUP:
+					m_OGL_Consumer->sendMessage(m_curSample, event.type, event.button.button,
 							event.button.x, event.button.y);
+					break;
+				case SDL_MOUSEMOTION:
+					m_OGL_Consumer->sendMessage(m_curSample, event.type, event.motion.state,
+							event.motion.x, event.motion.y);
 					break;
 				case SDL_QUIT:
 					// handle quit requests

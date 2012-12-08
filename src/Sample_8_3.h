@@ -10,6 +10,10 @@
 
 #include "Sample.h"
 
+#define		checkImageWidth		64
+#define		checkImageHeight	64
+#define		checkImageColors	3
+
 class Sample_8_3 : public Sample
 {
 public:
@@ -30,9 +34,13 @@ protected:
 	void restoreGL();
 
 private:
-	GLubyte *m_checkImage;
+	GLubyte m_checkImage[checkImageWidth][checkImageHeight][checkImageColors];
 	GLdouble m_zoomFactor;
 	GLint m_height;
+	bool m_bImageCreated;
+	bool m_bMotion;
+	int m_X;
+	int m_Y;
 
 	void makeCheckImage();
 	void motion(int x, int y);
