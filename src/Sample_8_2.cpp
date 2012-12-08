@@ -93,8 +93,10 @@ void Sample_8_2::restoreGL()
 
 void Sample_8_2::makeRasterFont()
 {
+	/* it doesn't work on MAC
 	if (m_fontOffset)
 		return; // the font have been already created
+		*/
 
 	GLuint i, j;
 

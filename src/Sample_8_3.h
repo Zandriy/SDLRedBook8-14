@@ -30,7 +30,7 @@ protected:
 	void restoreGL();
 
 private:
-	GLubyte ***m_checkImage;
+	GLubyte *m_checkImage;
 	GLdouble m_zoomFactor;
 	GLint m_height;
 

@@ -16,6 +16,10 @@
 #include <GL/glu.h>
 #endif
 
+#ifndef	GL_ALL_CLIENT_ATTRIB_BITS
+#define	GL_ALL_CLIENT_ATTRIB_BITS	GL_CLIENT_PIXEL_STORE_BIT | GL_CLIENT_VERTEX_ARRAY_BIT
+#endif
+
 class Sample
 {
 public:
