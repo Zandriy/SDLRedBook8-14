@@ -1,12 +1,12 @@
 /*
- * Sample_8_3.h
+ * Sample_8_4.h
  *
  *  Created on: Dec 7, 2012
  *      Author: Andrew Zhabura
  */
 
-#ifndef Sample_8_3_H_
-#define Sample_8_3_H_
+#ifndef Sample_8_4_H_
+#define Sample_8_4_H_
 
 #include "Sample.h"
 
@@ -14,16 +14,16 @@
 #define		checkImageHeight	64
 #define		checkImageColors	3
 
-class Sample_8_3 : public Sample
+class Sample_8_4 : public Sample
 {
 public:
-	Sample_8_3();
-	virtual ~Sample_8_3();
+	Sample_8_4();
+	virtual ~Sample_8_4();
 
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"8-3. Image(r-R,z-Z)";
+		return (char*)&"8-4. Image(r-R,z-Z)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);
@@ -46,4 +46,4 @@ private:
 	void motion(int x, int y);
 };
 
-#endif /* Sample_8_3_H_ */
+#endif /* Sample_8_4_H_ */

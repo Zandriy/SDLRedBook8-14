@@ -1,14 +1,14 @@
 /*
- * Sample_8_3.cpp
+ * Sample_8_4.cpp
  *
  *  Created on: Dec 7, 2012
  *      Author: Andrew Zhabura
  */
 
-#include "Sample_8_3.h"
+#include "Sample_8_4.h"
 #include <SDL/SDL.h>
 
-Sample_8_3::Sample_8_3()
+Sample_8_4::Sample_8_4()
 :	m_bImageCreated(false)
 ,	m_zoomFactor( 1.0 )
 ,	m_height(0)
@@ -18,11 +18,11 @@ Sample_8_3::Sample_8_3()
 {
 }
 
-Sample_8_3::~Sample_8_3()
+Sample_8_4::~Sample_8_4()
 {
 }
 
-void Sample_8_3::reshape(int w, int h)
+void Sample_8_4::reshape(int w, int h)
 {
 	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
 	m_height = (GLint) h;
@@ -33,7 +33,7 @@ void Sample_8_3::reshape(int w, int h)
 	glLoadIdentity();
 }
 
-void Sample_8_3::draw()
+void Sample_8_4::draw()
 {
 	glRasterPos2i(0, 0);
 	glDrawPixels(checkImageWidth, checkImageHeight, GL_RGB,
@@ -43,7 +43,7 @@ void Sample_8_3::draw()
 		motion(m_X, m_Y);
 }
 
-void Sample_8_3::initGL()
+void Sample_8_4::initGL()
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 	glClearColor(0.5, 0.0, 0.0, 0.0);
@@ -57,14 +57,14 @@ void Sample_8_3::initGL()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Sample_8_3::restoreGL()
+void Sample_8_4::restoreGL()
 {
 	glPopAttrib();
 	glPopClientAttrib();
 }
 
 
-void Sample_8_3::makeCheckImage()
+void Sample_8_4::makeCheckImage()
 {
 	if (m_bImageCreated)
 		return; // the image has been already created
@@ -83,7 +83,7 @@ void Sample_8_3::makeCheckImage()
 	m_bImageCreated = true;
 }
 
-void Sample_8_3::motion(int x, int y)
+void Sample_8_4::motion(int x, int y)
 {
 	static GLint screeny;
 
@@ -94,7 +94,7 @@ void Sample_8_3::motion(int x, int y)
 	glPixelZoom (1.0, 1.0);
 }
 
-bool Sample_8_3::sendMessage(int message, int mode, int x, int y)
+bool Sample_8_4::sendMessage(int message, int mode, int x, int y)
 {
 	switch (message) {
 	case SDLK_r:
