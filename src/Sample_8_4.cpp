@@ -1,29 +1,28 @@
 /*
- * Sample_8_3.cpp
+ * Sample_8_4.cpp
  *
  *  Created on: Dec 7, 2012
  *      Author: Andrew Zhabura
  */
 
-#include "Sample_8_3.h"
+#include "Sample_8_4.h"
 #include <SDL/SDL.h>
 
-#define		checkImageWidth		64
-#define		checkImageHeight	64
-#define		checkImageColors	3
-
-Sample_8_3::Sample_8_3()
-:	m_checkImage( NULL )
+Sample_8_4::Sample_8_4()
+:	m_bImageCreated(false)
 ,	m_zoomFactor( 1.0 )
 ,	m_height(0)
+,	m_bMotion(false)
+,	m_X(0)
+,	m_Y(0)
 {
 }
 
-Sample_8_3::~Sample_8_3()
+Sample_8_4::~Sample_8_4()
 {
 }
 
-void Sample_8_3::reshape(int w, int h)
+void Sample_8_4::reshape(int w, int h)
 {
 	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
 	m_height = (GLint) h;
@@ -34,17 +33,20 @@ void Sample_8_3::reshape(int w, int h)
 	glLoadIdentity();
 }
 
-void Sample_8_3::draw()
+void Sample_8_4::draw()
 {
 	glRasterPos2i(0, 0);
 	glDrawPixels(checkImageWidth, checkImageHeight, GL_RGB,
 			GL_UNSIGNED_BYTE, m_checkImage);
+
+	if (m_bMotion)
+		motion(m_X, m_Y);
 }
 
-void Sample_8_3::initGL()
+void Sample_8_4::initGL()
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glClearColor(0.5, 0.0, 0.0, 0.0);
 	glShadeModel (GL_FLAT);
 
 	glPushClientAttrib(GL_ALL_CLIENT_ATTRIB_BITS);
@@ -55,43 +57,33 @@ void Sample_8_3::initGL()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Sample_8_3::restoreGL()
+void Sample_8_4::restoreGL()
 {
 	glPopAttrib();
 	glPopClientAttrib();
 }
 
 
-void Sample_8_3::makeCheckImage()
+void Sample_8_4::makeCheckImage()
 {
-	if (m_checkImage)
+	if (m_bImageCreated)
 		return; // the image has been already created
 
 	int i, j, c;
 
-	m_checkImage = new GLubyte[checkImageHeight * checkImageWidth * checkImageColors];
-/*
-	m_checkImage = new GLubyte**[checkImageHeight];
-
-	for (i = 0; i < checkImageHeight; ++i)
-	{
-		m_checkImage[i] = new GLubyte*[checkImageWidth];
-		for (j = 0; j < checkImageWidth; ++j)
-			m_checkImage[i][j] = new GLubyte[checkImageColors];
-	}
-	*/
-
 	for (i = 0; i < checkImageHeight; i++) {
 		for (j = 0; j < checkImageWidth; j++) {
-			c = 255;//((((i&0x8)==0)^((j&0x8))==0))*255;
-			m_checkImage[i*checkImageHeight+j*checkImageWidth+0] = 255; //(GLubyte) c;
-			m_checkImage[i*checkImageHeight+j*checkImageWidth+1] = 0; //(GLubyte) c;
-			m_checkImage[i*checkImageHeight+j*checkImageWidth+2] = 0; //(GLubyte) c;
+			c = ((((i&0x8)==0)^((j&0x8))==0))*255;
+			m_checkImage[i][j][0] = (GLubyte) c;
+			m_checkImage[i][j][1] = (GLubyte) c;
+			m_checkImage[i][j][2] = (GLubyte) c;
 		}
 	}
+
+	m_bImageCreated = true;
 }
 
-void Sample_8_3::motion(int x, int y)
+void Sample_8_4::motion(int x, int y)
 {
 	static GLint screeny;
 
@@ -102,7 +94,7 @@ void Sample_8_3::motion(int x, int y)
 	glPixelZoom (1.0, 1.0);
 }
 
-bool Sample_8_3::sendMessage(int message, int mode, int x, int y)
+bool Sample_8_4::sendMessage(int message, int mode, int x, int y)
 {
 	switch (message) {
 	case SDLK_r:
@@ -111,7 +103,7 @@ bool Sample_8_3::sendMessage(int message, int mode, int x, int y)
 		drawGLScene();
 		break;
 	case SDLK_z:
-		if (KMOD_NONE == mode)
+		if (KMOD_NONE != mode)
 			m_zoomFactor += 0.5;
 		else
 			m_zoomFactor -= 0.5;
@@ -123,22 +115,23 @@ bool Sample_8_3::sendMessage(int message, int mode, int x, int y)
 
 		printf ("zoomFactor is now %4.1f\n", m_zoomFactor);
 		break;
-	case SDL_BUTTON_LEFT:
-	case SDL_BUTTON_RIGHT:
-
-		if (mode==SDL_PRESSED)
+	case SDL_MOUSEBUTTONDOWN:
+		m_bMotion = true;
+		m_X = x;
+		m_Y = y;
+		break;
+	case SDL_MOUSEBUTTONUP:
+		m_bMotion = false;
+		break;
+	case SDL_MOUSEMOTION:
+		if (mode)
 		{
-			initGL();
-			motion(x, y);
-			restoreGL();
-
-			printf ("x = %d; y = %d\n", x, y);
+			m_X = x;
+			m_Y = y;
 		}
-		else
-			return false;
-
 		break;
 	default:
+
 		return false;
 		break;
 	}
