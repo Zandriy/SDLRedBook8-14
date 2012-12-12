@@ -12,7 +12,7 @@
 
 #define INIT_W		510
 #define INIT_H		510
-#define INIT_SAMPLE		3
+#define INIT_SAMPLE		4
 
 OGL_Application::OGL_Application()
 :	m_surface (NULL)
@@ -214,6 +214,10 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 			break;
 		case SDLK_4:
 			m_OGL_Consumer->setSample(m_curSample = 3);
+			resizeWindow( 510, 510 );
+			break;
+		case SDLK_5:
+			m_OGL_Consumer->setSample(m_curSample = 4);
 			resizeWindow( 510, 510 );
 			break;
 		default:
