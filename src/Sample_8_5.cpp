@@ -6,10 +6,14 @@
  */
 
 #include "Sample_8_5.h"
+
+#include <SDL/SDL.h>
+
 #include "glext.h"
 
 Sample_8_5::Sample_8_5()
 :	m_bClrTableCreated(false)
+,	m_bInvert(true)
 {
 	m_image.loadBMP( "textures/iceberg.bmp" );
 }
@@ -32,9 +36,16 @@ void Sample_8_5::draw()
 {
 	createClrTable();
 
-	glColorTable(GL_COLOR_TABLE, GL_RGB, tableSize,
-			GL_RGB, GL_UNSIGNED_BYTE, (void*) m_clrTable);
-	glEnable(GL_COLOR_TABLE);
+	if (m_bInvert)
+	{
+		glColorTable(GL_COLOR_TABLE, GL_RGB, tableSize,
+				GL_RGB, GL_UNSIGNED_BYTE, (void*) m_clrTable);
+
+		if (glGetError() == GL_INVALID_OPERATION)
+			printf ("glColorTable() is not supported\n");
+		else
+			glEnable(GL_COLOR_TABLE);
+	}
 
 	glRasterPos2i(5, 5);
 	glDrawPixels( m_image.sizeX(), m_image.sizeY(), GL_RGB,
@@ -75,4 +86,24 @@ void Sample_8_5::createClrTable()
 	}
 
 	m_bClrTableCreated = true;
+}
+
+bool Sample_8_5::sendMessage(int message, int mode, int x, int y)
+{
+	switch (message) {
+	case SDLK_i:
+		m_bInvert = !m_bInvert;
+		if (m_bInvert)
+			printf ("Inverted picture\n");
+		else
+			printf ("Original picture\n");
+		drawGLScene();
+		break;
+	default:
+
+		return false;
+		break;
+	}
+
+	return true;
 }
