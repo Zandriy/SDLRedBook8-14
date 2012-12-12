@@ -40,6 +40,12 @@ public:
 	// Works only for uncompressed m_bmp files of 24-bit color.
 	void loadBMP( std::string filename )
 	{
+		if (m_data)
+		{
+			delete [] m_data;
+			m_data = NULL;
+		}
+
 		unsigned int size, offset, headerSize;
 
 		// Read input file name.
@@ -90,7 +96,7 @@ public:
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"8-5. Colortable(o-O,i-I,r-R,g-G,b-B)";
+		return (char*)&"8-5. Colortable(1-2,o-O,i-I,r-R,g-G,b-B)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);

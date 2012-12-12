@@ -11,11 +11,50 @@
 
 #include "glext.h"
 
+#include <map>
+#include <string>
+
+class OGLError
+{
+public:
+	OGLError()
+	{
+		// The value of this symbolic constant is guaranteed to be 0.
+		errMap[ GL_NO_ERROR ] = "No error has been recorded.";
+		// The offending command is ignored and has no other side effect than to set the error flag.
+		errMap[ GL_INVALID_ENUM ] = "An unacceptable value is specified for an enumerated argument.";
+		// The offending command is ignored and has no other side effect than to set the error flag.
+		errMap[ GL_INVALID_VALUE ] = "A numeric argument is out of range.";
+		// The offending command is ignored and has no other side effect than to set the error flag.
+		errMap[ GL_INVALID_OPERATION ] = "The specified operation is not allowed in the current state.";
+		// The offending command is ignored and has no other side effect than to set the error flag.
+		errMap[ GL_INVALID_FRAMEBUFFER_OPERATION ] = "The framebuffer object is not complete.";
+		// The state of the GL is undefined, except for the state of the error flags, after this error is recorded.
+		errMap[ GL_OUT_OF_MEMORY ] = "There is not enough memory left to execute the command.";
+
+		errMap[ GL_STACK_UNDERFLOW ] = "An attempt has been made to perform an operation that would cause an internal stack to underflow.";
+		errMap[ GL_STACK_OVERFLOW ] = "An attempt has been made to perform an operation that would cause an internal stack to overflow.";
+	}
+
+	bool checkError()
+	{
+		int err = glGetError();
+		if (!err) return true;
+
+		printf (errMap[err].c_str());
+		printf ("\n");
+
+		return false;
+	}
+private:
+	std::map<int, std::string> errMap;
+};
+
 Sample_8_5::Sample_8_5()
 :	m_prevTblType(NONE)
 ,	m_tblType(INVERT)
 {
-	m_image.loadBMP( "textures/iceberg.bmp" );
+	m_image.loadBMP( "textures/peak.bmp" );
 }
 
 Sample_8_5::~Sample_8_5()
@@ -35,16 +74,17 @@ void Sample_8_5::reshape(int w, int h)
 void Sample_8_5::draw()
 {
 	createClrTable();
+	OGLError err;
 
 	if (m_tblType != NONE)
 	{
 		glColorTable(GL_COLOR_TABLE, GL_RGB, tableSize,
 				GL_RGB, GL_UNSIGNED_BYTE, (void*) m_clrTable);
 
-		if (glGetError() == GL_INVALID_OPERATION)
-			printf ("glColorTable() is not supported\n");
-		else
+		if (err.checkError())
 			glEnable(GL_COLOR_TABLE);
+		else
+			m_tblType = NONE;
 	}
 
 	glRasterPos2i(5, 5);
@@ -139,6 +179,12 @@ bool Sample_8_5::sendMessage(int message, int mode, int x, int y)
 	case SDLK_b:
 		m_tblType = BLUE_CHANNEL;
 		printf ("Blue channel of picture\n");
+		break;
+	case SDLK_1:
+		m_image.loadBMP( "textures/peak.bmp" );
+		break;
+	case SDLK_2:
+		m_image.loadBMP( "textures/iceberg.bmp" );
 		break;
 	default:
 		return false;
