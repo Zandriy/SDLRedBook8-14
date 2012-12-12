@@ -90,7 +90,7 @@ public:
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"8-5. Colortable(i-I)";
+		return (char*)&"8-5. Colortable(o-O,i-I,r-R,g-G,b-B)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);
@@ -101,10 +101,18 @@ protected:
 	void restoreGL();
 
 private:
+	enum TableType_t {
+		NONE,
+		INVERT,
+		RED_CHANNEL,
+		GREEN_CHANNEL,
+		BLUE_CHANNEL
+	};
+
 	GLubyte m_clrTable[tableSize][rgb];
-	bool	m_bClrTableCreated;
 	OGLImageRec	m_image;
-	bool	m_bInvert;
+	TableType_t	m_prevTblType;
+	TableType_t	m_tblType;
 
 	void createClrTable();
 };
