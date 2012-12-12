@@ -10,9 +10,76 @@
 
 #include "Sample.h"
 
-#define		checkImageWidth		64
-#define		checkImageHeight	64
-#define		checkImageColors	3
+#define		tableSize	256
+#define		rgb			3
+
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
+
+class OGLImageRec
+{
+public:
+	OGLImageRec()
+	:	m_sizeX(0)
+	,	m_sizeY(0)
+	,	m_data(NULL)
+	{
+	}
+
+	~OGLImageRec()
+	{
+		delete [] m_data;
+	}
+
+	unsigned int sizeX() { return m_sizeX; }
+	unsigned int sizeY() { return m_sizeY; }
+	unsigned char* data() { return m_data; }
+
+	// Routine to read a bitmap file.
+	// Works only for uncompressed m_bmp files of 24-bit color.
+	void loadBMP( std::string filename )
+	{
+		unsigned int size, offset, headerSize;
+
+		// Read input file name.
+		std::ifstream infile(filename.c_str(), std::ios::binary);
+
+		// Get the starting point of the image data.
+		infile.seekg(10);
+		infile.read((char *) &offset, 4);
+
+		// Get the header size of the bitmap.
+		infile.read((char *) &headerSize,4);
+
+		// Get width and height values in the bitmap header.
+		infile.seekg(18);
+		infile.read( (char *) &m_sizeX, 4);
+		infile.read( (char *) &m_sizeY, 4);
+
+		// Allocate buffer for the image.
+		size = m_sizeX * m_sizeY * 24;
+		m_data = new unsigned char[size];
+
+		// Read bitmap data.
+		infile.seekg(offset);
+		infile.read((char *) m_data , size);
+
+		// Reverse color from bgr to rgb.
+		int temp;
+		for (int i = 0; i < size; i += 3)
+		{
+			temp = m_data[i];
+			m_data[i] = m_data[i+2];
+			m_data[i+2] = temp;
+		}
+	}
+
+private:
+	unsigned int m_sizeX;
+	unsigned int m_sizeY;
+	unsigned char *m_data;
+};
 
 class Sample_8_5 : public Sample
 {
@@ -26,24 +93,17 @@ public:
 		return (char*)&"8-5. Colortable";
 	}
 
-	virtual bool sendMessage(int message, int mode, int x, int y);
-
 protected:
 	void draw();
 	void initGL();
 	void restoreGL();
 
 private:
-	GLubyte m_checkImage[checkImageWidth][checkImageHeight][checkImageColors];
-	GLdouble m_zoomFactor;
-	GLint m_height;
-	bool m_bImageCreated;
-	bool m_bMotion;
-	int m_X;
-	int m_Y;
+	GLubyte m_clrTable[tableSize][rgb];
+	bool	m_bClrTableCreated;
+	OGLImageRec	m_image;
 
-	void makeCheckImage();
-	void motion(int x, int y);
+	void createClrTable();
 };
 
 #endif /* Sample_8_5_H_ */
