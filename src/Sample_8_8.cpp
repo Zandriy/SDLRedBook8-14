@@ -126,16 +126,19 @@ bool Sample_8_8::sendMessage(int message, int mode, int x, int y)
 		if (!m_bLoad)
 			return false;
 		m_image.loadBMP( "textures/mounts.bmp" );
+		m_prevSink = !m_prevSink;
 		break;
 	case SDLK_2:
 		if (!m_bLoad)
 			return false;
 		m_image.loadBMP( "textures/iceberg.bmp" );
+		m_prevSink = !m_prevSink;
 		break;
 	case SDLK_3:
 		if (!m_bLoad)
 			return false;
 		m_image.loadBMP( "textures/forest.bmp" );
+		m_prevSink = !m_prevSink;
 		break;
 	default:
 		m_bLoad = false;
