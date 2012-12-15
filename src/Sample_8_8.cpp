@@ -13,8 +13,6 @@
 #include "OGLError.h"
 #include "OGLInspector.h"
 
-#define	 HISTOGRAM_SIZE	256
-
 Sample_8_8::Sample_8_8()
 :	m_bImagSprt(false)
 ,	m_bLoad(false)
@@ -41,7 +39,6 @@ void Sample_8_8::reshape(int w, int h)
 void Sample_8_8::draw()
 {
 	int i;
-	GLushort values[HISTOGRAM_SIZE][3];
 
 	OGLError err;
 	OGLInspector inspector;

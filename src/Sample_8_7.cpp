@@ -11,7 +11,6 @@
 
 #include "glext.h"
 #include "OGLError.h"
-#include "OGLInspector.h"
 
 GLfloat m[16] = {
 		0.0, 1.0, 0.0, 0.0,
@@ -45,24 +44,15 @@ void Sample_8_7::reshape(int w, int h)
 void Sample_8_7::draw()
 {
 	OGLError err;
-	OGLInspector inspector;
 
 	if (m_prevReversing != m_reversing)
 	{
-		if (inspector.ImagingSupported())
-		{
-			setColorMatrix();
+		setColorMatrix();
 
 			if (err.checkError())
 				glEnable(GL_COLOR_TABLE);
 			else
 				m_prevReversing = m_reversing;
-		}
-		else
-		{
-			printf ("GL_ARB_imaging is not supported\n");
-			m_prevReversing = m_reversing;
-		}
 	}
 
 	glRasterPos2i(5, 5);

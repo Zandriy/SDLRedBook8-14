@@ -11,6 +11,8 @@
 #include "Sample.h"
 #include "OGLImageRec.h"
 
+#define	 HISTOGRAM_SIZE	256
+
 class Sample_8_8 : public Sample
 {
 public:
@@ -36,6 +38,7 @@ private:
 	bool m_bLoad;
 	GLboolean	m_sink;
 	GLboolean	m_prevSink;
+	GLushort values[HISTOGRAM_SIZE][3];
 };
 
 #endif /* Sample_8_8_H_ */
