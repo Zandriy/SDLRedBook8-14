@@ -47,9 +47,6 @@ void Sample_8_7::draw()
 	if (m_prevReversing != m_reversing)
 	{
 		setColorMatrix();
-
-		err.checkError();
-
 		m_prevReversing = m_reversing;
 	}
 
