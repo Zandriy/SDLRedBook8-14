@@ -47,12 +47,12 @@ void Sample_8_7::draw()
 
 	if (m_prevReversing != m_reversing)
 	{
+		m_prevReversing = m_reversing;
+
 		setColorMatrix();
 
-			if (err.checkError())
-				glEnable(GL_COLOR_TABLE);
-			else
-				m_prevReversing = m_reversing;
+		if (err.checkError())
+			glEnable(GL_COLOR_TABLE);
 	}
 
 	glRasterPos2i(5, 5);
