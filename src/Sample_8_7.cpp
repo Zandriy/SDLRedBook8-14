@@ -11,6 +11,7 @@
 
 #include "glext.h"
 #include "OGLError.h"
+#include "OGLInspector.h"
 
 GLfloat m[16] = {
 		0.0, 1.0, 0.0, 0.0,
@@ -22,6 +23,7 @@ GLfloat m[16] = {
 Sample_8_7::Sample_8_7()
 :	m_reversing(false)
 ,	m_prevReversing(true)
+,	m_bLoad(false)
 {
 	m_image.loadBMP( "textures/tree_mount.bmp" );
 }
@@ -43,19 +45,29 @@ void Sample_8_7::reshape(int w, int h)
 void Sample_8_7::draw()
 {
 	OGLError err;
+	OGLInspector inspector;
 
 	if (m_prevReversing != m_reversing)
 	{
-		setColorMatrix();
-		m_prevReversing = m_reversing;
+		if (inspector.ImagingSupported())
+		{
+			setColorMatrix();
+
+			if (err.checkError())
+				glEnable(GL_COLOR_TABLE);
+			else
+				m_prevReversing = m_reversing;
+		}
+		else
+		{
+			printf ("GL_ARB_imaging is not supported\n");
+			m_prevReversing = m_reversing;
+		}
 	}
 
 	glRasterPos2i(5, 5);
 	glDrawPixels( m_image.sizeX(), m_image.sizeY(), GL_RGB,
 			GL_UNSIGNED_BYTE, m_image.data() );
-
-	glDisable(GL_CONVOLUTION_2D);
-
 }
 
 void Sample_8_7::initGL()
@@ -86,19 +98,32 @@ bool Sample_8_7::sendMessage(int message, int mode, int x, int y)
 		else
 			printf ("Original picture\n");
 		break;
+	case SDLK_EQUALS:
+		m_bLoad = true;
+		break;
 	case SDLK_1:
+		if (!m_bLoad)
+			return false;
 		m_image.loadBMP( "textures/tree_mount.bmp" );
 		break;
 	case SDLK_2:
+		if (!m_bLoad)
+			return false;
 		m_image.loadBMP( "textures/iceberg.bmp" );
 		break;
 	case SDLK_3:
+		if (!m_bLoad)
+			return false;
 		m_image.loadBMP( "textures/forest.bmp" );
 		break;
 	default:
+		m_bLoad = false;
 		return false;
 		break;
 	}
+
+	if (message != SDLK_EQUALS)
+		m_bLoad = false;
 
 	drawGLScene();
 	return true;

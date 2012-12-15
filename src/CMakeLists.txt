@@ -24,12 +24,14 @@ SET(SDL_OGL_PROJECT_SOURCE
 	OGLShapes.cpp
 	OGLApplication.cpp
 	OGLConsumer.cpp
+	OGLInspector.cpp
 	Sample_8_1.cpp
 	Sample_8_2.cpp
 	Sample_8_4.cpp
 	Sample_8_5.cpp
 	Sample_8_6.cpp
 	Sample_8_7.cpp
+	Sample_8_8.cpp
 	)
 
 SET(SDL_OGL_PROJECT_TARGET prg)

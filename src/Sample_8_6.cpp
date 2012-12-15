@@ -11,6 +11,7 @@
 
 #include "glext.h"
 #include "OGLError.h"
+#include "OGLInspector.h"
 
 GLfloat horizontal[3][3]={{0,-1,0},{0,1,0},{0,0,0}};
 GLfloat vertical[3][3]= {{0,0,0},{-1,1,0},{0,0,0}};
@@ -21,6 +22,7 @@ GLfloat laplacian[3][3]= {{-0.125,-0.125,-0.125},
 
 Sample_8_6::Sample_8_6()
 :	m_fltrType(NONE)
+,	m_bLoad(false)
 {
 	m_image.loadBMP( "textures/pyramid.bmp" );
 }
@@ -42,15 +44,24 @@ void Sample_8_6::reshape(int w, int h)
 void Sample_8_6::draw()
 {
 	OGLError err;
+	OGLInspector inspector;
 
 	if (m_fltrType != NONE)
 	{
-		setFilter();
+		if (inspector.ImagingSupported())
+		{
+			setFilter();
 
-		if (err.checkError())
-			glEnable(GL_CONVOLUTION_2D);
+			if (err.checkError())
+				glEnable(GL_CONVOLUTION_2D);
+			else
+				m_fltrType = NONE;
+		}
 		else
+		{
+			printf ("GL_ARB_imaging is not supported\n");
 			m_fltrType = NONE;
+		}
 	}
 
 	glRasterPos2i(5, 5);
@@ -98,19 +109,32 @@ bool Sample_8_6::sendMessage(int message, int mode, int x, int y)
 		m_fltrType = LAPLACIAN;
 		printf ("Green channel of picture\n");
 		break;
+	case SDLK_EQUALS:
+		m_bLoad = true;
+		break;
 	case SDLK_1:
+		if (!m_bLoad)
+			return false;
 		m_image.loadBMP( "textures/pyramid.bmp" );
 		break;
 	case SDLK_2:
+		if (!m_bLoad)
+			return false;
 		m_image.loadBMP( "textures/iceberg.bmp" );
 		break;
 	case SDLK_3:
+		if (!m_bLoad)
+			return false;
 		m_image.loadBMP( "textures/forest.bmp" );
 		break;
 	default:
+		m_bLoad = false;
 		return false;
 		break;
 	}
+
+	if (message != SDLK_EQUALS)
+		m_bLoad = false;
 
 	drawGLScene();
 	return true;

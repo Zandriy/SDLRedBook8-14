@@ -11,10 +11,12 @@
 
 #include "glext.h"
 #include "OGLError.h"
+#include "OGLInspector.h"
 
 Sample_8_5::Sample_8_5()
 :	m_prevTblType(NONE)
 ,	m_tblType(INVERT)
+,	m_bLoad(false)
 {
 	m_image.loadBMP( "textures/peak.bmp" );
 }
@@ -35,18 +37,28 @@ void Sample_8_5::reshape(int w, int h)
 
 void Sample_8_5::draw()
 {
-	createClrTable();
 	OGLError err;
+	OGLInspector inspector;
+
+	createClrTable();
 
 	if (m_tblType != NONE)
 	{
-		glColorTable(GL_COLOR_TABLE, GL_RGB, tableSize,
+		if (inspector.ImagingSupported())
+		{
+			glColorTable(GL_COLOR_TABLE, GL_RGB, tableSize,
 				GL_RGB, GL_UNSIGNED_BYTE, (void*) m_clrTable);
 
-		if (err.checkError())
-			glEnable(GL_COLOR_TABLE);
+			if (err.checkError())
+				glEnable(GL_COLOR_TABLE);
+			else
+				m_tblType = NONE;
+		}
 		else
+		{
+			printf ("GL_ARB_imaging is not supported\n");
 			m_tblType = NONE;
+		}
 	}
 
 	glRasterPos2i(5, 5);
@@ -142,19 +154,32 @@ bool Sample_8_5::sendMessage(int message, int mode, int x, int y)
 		m_tblType = BLUE_CHANNEL;
 		printf ("Blue channel of picture\n");
 		break;
+	case SDLK_EQUALS:
+		m_bLoad = true;
+		break;
 	case SDLK_1:
+		if (!m_bLoad)
+			return false;
 		m_image.loadBMP( "textures/peak.bmp" );
 		break;
 	case SDLK_2:
+		if (!m_bLoad)
+			return false;
 		m_image.loadBMP( "textures/iceberg.bmp" );
 		break;
 	case SDLK_3:
+		if (!m_bLoad)
+			return false;
 		m_image.loadBMP( "textures/forest.bmp" );
 		break;
 	default:
+		m_bLoad = false;
 		return false;
 		break;
 	}
+
+	if (message != SDLK_EQUALS)
+		m_bLoad = false;
 
 	drawGLScene();
 	return true;

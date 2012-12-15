@@ -20,7 +20,7 @@ public:
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"8-6. Convolution(1-2-3,o-O,h-H,v-V,l-L)";
+		return (char*)&"8-6. Convolution(=1,=2,=3,o-O,h-H,v-V,l-L)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);
@@ -40,6 +40,7 @@ private:
 
 	OGLImageRec	m_image;
 	FilterType_t	m_fltrType;
+	bool m_bLoad;
 
 	void setFilter();
 };

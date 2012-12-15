@@ -23,7 +23,7 @@ public:
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"8-5. Colortable(1-2-3,o-O,i-I,r-R,g-G,b-B)";
+		return (char*)&"8-5. Colortable(=1,=2,=3,o-O,i-I,r-R,g-G,b-B)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);
@@ -46,6 +46,7 @@ private:
 	OGLImageRec	m_image;
 	TableType_t	m_prevTblType;
 	TableType_t	m_tblType;
+	bool m_bLoad;
 
 	void createClrTable();
 };
