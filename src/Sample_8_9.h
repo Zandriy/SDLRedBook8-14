@@ -22,7 +22,7 @@ public:
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"8-9. MinMax(=1,=2,=3)";
+		return (char*)&"8-9. MinMax(=1,=2,=3,s-S)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);

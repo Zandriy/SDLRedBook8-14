@@ -118,6 +118,10 @@ bool Sample_8_8::sendMessage(int message, int mode, int x, int y)
 	switch (message) {
 	case SDLK_s:
 		m_sink = !m_sink;
+		if (m_sink)
+			printf("SINK\n");
+		else
+			printf("NO SINK\n");
 		break;
 	case SDLK_EQUALS:
 		m_bLoad = true;

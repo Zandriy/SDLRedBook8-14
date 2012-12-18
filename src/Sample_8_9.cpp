@@ -19,7 +19,7 @@ Sample_8_9::Sample_8_9()
 ,	m_sink(GL_FALSE)
 ,	m_prevSink(GL_TRUE)
 {
-	m_image.loadBMP( "textures/mounts.bmp" );
+	m_image.loadBMP( "textures/pagoda.bmp" );
 }
 
 Sample_8_9::~Sample_8_9()
@@ -38,27 +38,29 @@ void Sample_8_9::reshape(int w, int h)
 
 void Sample_8_9::draw()
 {
-	int i;
+	GLubyte values[6];
 
 	OGLError err;
 	OGLInspector inspector;
 
 	if (m_prevSink != m_sink)
 	{
-		m_prevSink = m_sink;
-
 		m_bImagSprt = inspector.ImagingSupported();
 		if (m_bImagSprt)
 		{
-			glHistogram(GL_HISTOGRAM, HISTOGRAM_SIZE, GL_RGB, m_sink);
+			glMinmax(GL_MINMAX, GL_RGB, m_sink);
 
 			if (err.checkError())
-				glEnable(GL_HISTOGRAM);
+			{
+				glEnable(GL_MINMAX);
+				glResetMinmax(GL_MINMAX);
+			}
 			else
 				m_bImagSprt = false;
 		}
 		else
 		{
+			m_prevSink = m_sink;
 			printf ("GL_ARB_imaging is not supported\n");
 			m_bImagSprt = false;
 		}
@@ -68,37 +70,22 @@ void Sample_8_9::draw()
 	glDrawPixels( m_image.sizeX(), m_image.sizeY(), GL_RGB,
 			GL_UNSIGNED_BYTE, m_image.data() );
 
-	if (m_bImagSprt)
+	if (m_prevSink != m_sink)
 	{
-		glGetHistogram(GL_HISTOGRAM, GL_TRUE, GL_RGB, GL_UNSIGNED_SHORT, values);
+		m_prevSink = m_sink;
+		glGetMinmax(GL_MINMAX,GL_TRUE,GL_RGB,GL_UNSIGNED_BYTE,values);
 
-		/* Plot histogram */
-
-		glBegin(GL_LINE_STRIP);
-		glColor3f(1.0, 0.0, 0.0);
-		for ( i = 0; i < HISTOGRAM_SIZE; i++ )
-			glVertex2s(i, values[i][0]);
-		glEnd();
-
-		glBegin(GL_LINE_STRIP);
-		glColor3f(0.0, 1.0, 0.0);
-		for ( i = 0; i < HISTOGRAM_SIZE; i++ )
-			glVertex2s(i, values[i][1]);
-		glEnd();
-
-		glBegin(GL_LINE_STRIP);
-		glColor3f(0.0, 0.0, 1.0);
-		for ( i = 0; i < HISTOGRAM_SIZE; i++ )
-			glVertex2s(i, values[i][2]);
-		glEnd();
+		printf("====== MIN-MAX ======\n");
+		printf("Red : min = %d max = %d\n",values[0],values[3]);
+		printf("Green: min = %d max = %d\n",values[1],values[4]);
+		printf("Blue : min = %d max = %d\n",values[3],values[5]);
 	}
-
 }
 
 void Sample_8_9::initGL()
 {
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	glClearColor(0.5, 0.8, 0.6, 0.0);
+	glClearColor(0.5, 0.0, 0.6, 0.0);
 	glShadeModel (GL_FLAT);
 
 	glPushClientAttrib(GL_ALL_CLIENT_ATTRIB_BITS);
@@ -118,6 +105,10 @@ bool Sample_8_9::sendMessage(int message, int mode, int x, int y)
 	switch (message) {
 	case SDLK_s:
 		m_sink = !m_sink;
+		if (m_sink)
+			printf("SINK\n");
+		else
+			printf("NO SINK\n");
 		break;
 	case SDLK_EQUALS:
 		m_bLoad = true;
@@ -125,13 +116,13 @@ bool Sample_8_9::sendMessage(int message, int mode, int x, int y)
 	case SDLK_1:
 		if (!m_bLoad)
 			return false;
-		m_image.loadBMP( "textures/mounts.bmp" );
+		m_image.loadBMP( "textures/pagoda.bmp" );
 		m_prevSink = !m_prevSink;
 		break;
 	case SDLK_2:
 		if (!m_bLoad)
 			return false;
-		m_image.loadBMP( "textures/iceberg.bmp" );
+		m_image.loadBMP( "textures/fish.bmp" );
 		m_prevSink = !m_prevSink;
 		break;
 	case SDLK_3:
