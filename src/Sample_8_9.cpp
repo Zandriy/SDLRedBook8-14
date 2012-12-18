@@ -62,7 +62,6 @@ void Sample_8_9::draw()
 		{
 			m_prevSink = m_sink;
 			printf ("GL_ARB_imaging is not supported\n");
-			m_bImagSprt = false;
 		}
 	}
 

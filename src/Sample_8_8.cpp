@@ -60,7 +60,6 @@ void Sample_8_8::draw()
 		else
 		{
 			printf ("GL_ARB_imaging is not supported\n");
-			m_bImagSprt = false;
 		}
 	}
 
