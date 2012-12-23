@@ -57,6 +57,7 @@ void Sample_8_2::reshape(int w, int h)
 	glLoadIdentity();
 	glOrtho (0.0, w, 0.0, h, -1.0, 1.0);
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void Sample_8_2::draw()
@@ -96,7 +97,7 @@ void Sample_8_2::makeRasterFont()
 	/* it doesn't work on MAC
 	if (m_fontOffset)
 		return; // the font have been already created
-		*/
+	 */
 
 	GLuint i, j;
 

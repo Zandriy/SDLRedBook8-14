@@ -28,6 +28,7 @@ void Sample_8_1::reshape(int w, int h)
 	glLoadIdentity();
 	glOrtho (0, w, 0, h, -1.0, 1.0);
 	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void Sample_8_1::draw()
