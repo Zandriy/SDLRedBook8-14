@@ -1,3 +1,4 @@
 build/
 OpenGL
 .directory
+OriginalSamples/*/
