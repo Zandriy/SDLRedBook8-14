@@ -9,7 +9,6 @@
 #define Sample_9_3_H_
 
 #include "Sample.h"
-#include "OGLImageRec.h"
 
 #define checkImageWidth 64
 #define	 checkImageHeight 64

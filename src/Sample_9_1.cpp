@@ -31,7 +31,7 @@ void Sample_9_1::reshape(int w, int h)
 	gluPerspective(60.0, (GLfloat) w/(GLfloat) h, 1.0, 30.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glTranslatef(0.0, 0.0, -3.6);
+	glTranslatef(0.0, 0.0, -4.0);
 }
 
 void Sample_9_1::draw()
@@ -74,7 +74,6 @@ void Sample_9_1::initGL()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-	glBindTexture(GL_TEXTURE_2D, m_texName);
 }
 
 void Sample_9_1::restoreGL()
