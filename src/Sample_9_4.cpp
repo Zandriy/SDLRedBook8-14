@@ -16,6 +16,7 @@
 Sample_9_4::Sample_9_4()
 :	m_texName(0)
 ,	m_imageCreated(false)
+,	m_deep(0.0)
 {
 }
 
@@ -37,15 +38,20 @@ void Sample_9_4::reshape(int w, int h)
 void Sample_9_4::draw()
 {
 	glBegin(GL_QUADS);
-	glTexCoord3f(0.0, 0.0, 0.0); glVertex3f(-2.25, -1.0, 0.0);
-	glTexCoord3f(0.0, 1.0, 0.0); glVertex3f(-2.25, 1.0, 0.0);
-	glTexCoord3f(1.0, 1.0, 1.0); glVertex3f(-0.25, 1.0, 0.0);
-	glTexCoord3f(1.0, 0.0, 1.0); glVertex3f(-0.25, -1.0, 0.0);
+	glTexCoord3f(0.0, 0.0, 0.0); glVertex3f(-2.05, 0.05, 0.0);
+	glTexCoord3f(0.0, 1.0, 0.0); glVertex3f(-2.05, 2.05, 0.0);
+	glTexCoord3f(1.0, 1.0, 1.0); glVertex3f(-0.05, 2.05, 0.0);
+	glTexCoord3f(1.0, 0.0, 1.0); glVertex3f(-0.05, 0.05, 0.0);
 
-	glTexCoord3f(0.0, 0.0, 1.0); glVertex3f(0.25, -1.0, 0.0);
-	glTexCoord3f(0.0, 1.0, 1.0); glVertex3f(0.25, 1.0, 0.0);
-	glTexCoord3f(1.0, 1.0, 0.0); glVertex3f(2.25, 1.0, 0.0);
-	glTexCoord3f(1.0, 0.0, 0.0); glVertex3f(2.25, -1.0, 0.0);
+	glTexCoord3f(0.0, 0.0, 1.0); glVertex3f(0.05, 0.05, 0.0);
+	glTexCoord3f(0.0, 1.0, 1.0); glVertex3f(0.05, 2.05, 0.0);
+	glTexCoord3f(1.0, 1.0, 0.0); glVertex3f(2.05, 2.05, 0.0);
+	glTexCoord3f(1.0, 0.0, 0.0); glVertex3f(2.05, 0.05, 0.0);
+
+	glTexCoord3f(0.0, 0.0, m_deep); glVertex3f(-1.0, -2.05, 0.0);
+	glTexCoord3f(0.0, 1.0, m_deep); glVertex3f(-1.0, -0.05, 0.0);
+	glTexCoord3f(1.0, 1.0, m_deep); glVertex3f( 1.0, -0.05, 0.0);
+	glTexCoord3f(1.0, 0.0, m_deep); glVertex3f( 1.0, -2.05, 0.0);
 	glEnd();
 }
 
@@ -72,7 +78,6 @@ void Sample_9_4::initGL()
 	glTexImage3D(GL_TEXTURE_3D,0,GL_RGB,iwidth,iheight,idepth, 0,
 			GL_RGB,GL_UNSIGNED_BYTE,m_image);
 
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_TEXTURE_3D);
 }
@@ -80,10 +85,34 @@ void Sample_9_4::initGL()
 void Sample_9_4::restoreGL()
 {
 	glBindTexture(GL_TEXTURE_2D, NULL);
-	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_3D);
 
 	glPopAttrib();
 	glPopClientAttrib();
+}
+
+bool Sample_9_4::sendMessage(int message, int mode, int x, int y)
+{
+	switch (message) {
+	case SDLK_d:
+		m_deep += 0.1;
+		if(m_deep >= 1.1)
+			m_deep = 0.0;
+		printf("Texture deep is %.1f\n", m_deep);
+		break;
+	case SDLK_s:
+		m_deep -= 0.1;
+		if(m_deep < 0.0)
+			m_deep = 1.0;
+		printf("Texture deep is %.1f\n", m_deep);
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	drawGLScene();
+	return true;
 }
 
 void Sample_9_4::makeImage()

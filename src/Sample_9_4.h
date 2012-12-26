@@ -23,8 +23,10 @@ public:
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"9-4. Texture3d";
+		return (char*)&"9-4. Texture3d(d-D,s-S)";
 	}
+
+	virtual bool sendMessage(int message, int mode, int x, int y);
 
 protected:
 	void draw();
@@ -35,6 +37,7 @@ private:
 	GLubyte m_image[idepth][iheight][iwidth][3];
 	bool m_imageCreated;
 	GLuint m_texName;
+	GLfloat m_deep;
 
 	void makeImage();
 };
