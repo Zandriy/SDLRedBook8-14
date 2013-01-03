@@ -16,6 +16,9 @@
 Sample_9_1::Sample_9_1()
 :	m_texName(0)
 ,	m_imageCreated(false)
+,	m_texDir(0)
+,	m_texClamp(false)
+,	m_texCoord(1.0)
 {
 }
 
@@ -38,14 +41,14 @@ void Sample_9_1::draw()
 {
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.0, 0.0); glVertex3f(-2.0, -1.0, 0.0);
-	glTexCoord2f(0.0, 1.0); glVertex3f(-2.0, 1.0, 0.0);
-	glTexCoord2f(1.0, 1.0); glVertex3f(0.0, 1.0, 0.0);
-	glTexCoord2f(1.0, 0.0); glVertex3f(0.0, -1.0, 0.0);
+	glTexCoord2f(0.0, m_texCoord); glVertex3f(-2.0, 1.0, 0.0);
+	glTexCoord2f(m_texCoord, m_texCoord); glVertex3f(0.0, 1.0, 0.0);
+	glTexCoord2f(m_texCoord, 0.0); glVertex3f(0.0, -1.0, 0.0);
 
 	glTexCoord2f(0.0, 0.0); glVertex3f(1.0, -1.0, 0.0);
-	glTexCoord2f(0.0, 1.0); glVertex3f(1.0, 1.0, 0.0);
-	glTexCoord2f(1.0, 1.0); glVertex3f(2.41421, 1.0, -1.41421);
-	glTexCoord2f(1.0, 0.0); glVertex3f(2.41421, -1.0, -1.41421);
+	glTexCoord2f(0.0, m_texCoord); glVertex3f(1.0, 1.0, 0.0);
+	glTexCoord2f(m_texCoord, m_texCoord); glVertex3f(2.41421, 1.0, -1.41421);
+	glTexCoord2f(m_texCoord, 0.0); glVertex3f(2.41421, -1.0, -1.41421);
 	glEnd();
 }
 
@@ -63,8 +66,30 @@ void Sample_9_1::initGL()
 
 	glBindTexture(GL_TEXTURE_2D, m_texName);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	if(!m_texClamp)
+	{
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	}
+	else
+	{
+		if (m_texDir == 1)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		}
+		else if (m_texDir == 2)
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+		}
+		else
+		{
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+		}
+	}
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
@@ -83,6 +108,41 @@ void Sample_9_1::restoreGL()
 
 	glPopAttrib();
 	glPopClientAttrib();
+}
+
+bool Sample_9_1::sendMessage(int message, int mode, int x, int y)
+{
+	switch (message) {
+	case SDLK_d:
+		m_texDir++;
+		if(m_texDir >= 3)
+			m_texDir = 0;
+
+		if (m_texDir == 1)
+			printf("Clamp direction is WRAP_S\n");
+		else if (m_texDir == 2)
+			printf("Clamp direction is WRAP_T\n");
+		else
+			printf("Clamp direction is WRAP_S and WRAP_T\n");
+		break;
+	case SDLK_c:
+		m_texClamp = !m_texClamp;
+		if ( m_texClamp )
+			printf("GL_CLAMP is set\n");
+		else
+			printf("GL_REPEAT is set\n");
+		break;
+	case SDLK_s:
+		m_texCoord = m_texCoord < 3.0 ? 3.0 : 1.0;
+		printf("Texture coordinate is %.1f\n", m_texCoord);
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	drawGLScene();
+	return true;
 }
 
 void Sample_9_1::makeCheckImage()

@@ -22,8 +22,10 @@ public:
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"9-1. Checker";
+		return (char*)&"9-1. Checker(d-D,c-C,s-S)";
 	}
+
+	virtual bool sendMessage(int message, int mode, int x, int y);
 
 protected:
 	void draw();
@@ -34,6 +36,9 @@ private:
 	GLubyte m_checkImage[checkImageHeight][checkImageWidth][4];
 	bool m_imageCreated;
 	GLuint m_texName;
+	int m_texDir;
+	bool m_texClamp;
+	GLfloat m_texCoord;
 
 	void makeCheckImage();
 };
