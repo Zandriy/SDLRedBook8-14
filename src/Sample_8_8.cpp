@@ -39,6 +39,7 @@ void Sample_8_8::reshape(int w, int h)
 void Sample_8_8::draw()
 {
 	int i;
+	GLushort values[HISTOGRAM_SIZE][3];
 
 	OGLError err;
 	OGLInspector inspector;
@@ -69,7 +70,10 @@ void Sample_8_8::draw()
 
 	if (m_bImagSprt)
 	{
-		glGetHistogram(GL_HISTOGRAM, GL_TRUE, GL_RGB, GL_UNSIGNED_SHORT, values);
+		if (m_sink)
+			glGetHistogram(GL_HISTOGRAM, GL_FALSE, GL_RGB, GL_UNSIGNED_SHORT, values);
+		else
+			glGetHistogram(GL_HISTOGRAM, GL_TRUE, GL_RGB, GL_UNSIGNED_SHORT, values);
 
 		/* Plot histogram */
 

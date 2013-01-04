@@ -8,7 +8,6 @@
 #ifndef OGLInspector_H
 #define OGLInspector_H
 
-#include <set>
 #include <cstring>
 #include <string>
 
@@ -23,7 +22,6 @@
 
 class OGLInspector
 {
-	typedef std::set<std::string> VecStr_t;
 public:
 	OGLInspector();
 	~OGLInspector();
@@ -32,7 +30,7 @@ public:
 	bool PBOSupported();
 	bool ImagingSupported();
 private:
-	VecStr_t m_extNames;
+	std::string m_extNames;
 };
 
 

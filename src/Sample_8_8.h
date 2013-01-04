@@ -38,7 +38,6 @@ private:
 	bool m_bLoad;
 	GLboolean	m_sink;
 	GLboolean	m_prevSink;
-	GLushort values[HISTOGRAM_SIZE][3];
 };
 
 #endif /* Sample_8_8_H_ */

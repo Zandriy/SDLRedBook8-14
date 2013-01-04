@@ -6,6 +6,7 @@
  */
 
 #include <algorithm>
+#include <iostream>
 
 #include "OGLInspector.h"
 
@@ -14,17 +15,7 @@ OGLInspector::OGLInspector()
 	char* str = 0;
 	char* token = 0;
 
-	str = (char*)glGetString(GL_EXTENSIONS);
-
-	// split extensions
-	if(!str) return;
-
-	token = strtok((char*)str, " ");
-	while(token)
-	{
-		m_extNames.insert(token);    // put a extension into struct
-		token = strtok(0, " ");               // next token
-	}
+	m_extNames = (char*)glGetString(GL_EXTENSIONS);
 }
 
 OGLInspector::~OGLInspector()
@@ -34,8 +25,8 @@ OGLInspector::~OGLInspector()
 
 bool OGLInspector::isExtSupported(const std::string& extName)
 {
-	if ( m_extNames.find(extName) != m_extNames.end() )
-			return true;
+	if ( m_extNames.find(extName) != std::string::npos )
+		return true;
 
 	return false;
 }
