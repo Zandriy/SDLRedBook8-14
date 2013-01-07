@@ -15,7 +15,7 @@
 #define ACSIZE	8
 #define JITTER	j8
 
-/* accFrustumN()
+/* accFrustum1()
  * The first 6 arguments are identical to the glFrustum() call.
  *
  * pixdx and pixdy are anti-alias jitter in pixels.
@@ -26,11 +26,11 @@
  * focus is distance from eye to plane in focus.
  * focus must be greater than, but not equal to 0.0.
  *
- * Note that accFrustumN() calls glTranslatef().  You will
+ * Note that accFrustum1() calls glTranslatef().  You will
  * probably want to insure that your ModelView matrix has been
- * initialized to identity before calling accFrustumN().
+ * initialized to identity before calling accFrustum1().
  */
-void accFrustumN(GLdouble left, GLdouble right, GLdouble bottom,
+void accFrustum1(GLdouble left, GLdouble right, GLdouble bottom,
 		GLdouble top, GLdouble zNear, GLdouble zFar, GLdouble pixdx,
 		GLdouble pixdy, GLdouble eyedx, GLdouble eyedy, GLdouble focus)
 {
@@ -54,7 +54,7 @@ void accFrustumN(GLdouble left, GLdouble right, GLdouble bottom,
 	glTranslatef (-eyedx, -eyedy, 0.0);
 }
 
-/* accPerspectiveN()
+/* accPerspective1()
  *
  * The first 4 arguments are identical to the gluPerspective() call.
  * pixdx and pixdy are anti-alias jitter in pixels.
@@ -65,9 +65,9 @@ void accFrustumN(GLdouble left, GLdouble right, GLdouble bottom,
  * focus is distance from eye to plane in focus.
  * focus must be greater than, but not equal to 0.0.
  *
- * Note that accPerspectiveN() calls accFrustumN().
+ * Note that accPerspective1() calls accFrustum1().
  */
-void accPerspectiveN(GLdouble fovy, GLdouble aspect,
+void accPerspective1(GLdouble fovy, GLdouble aspect,
 		GLdouble zNear, GLdouble zFar, GLdouble pixdx, GLdouble pixdy,
 		GLdouble eyedx, GLdouble eyedy, GLdouble focus)
 {
@@ -81,7 +81,7 @@ void accPerspectiveN(GLdouble fovy, GLdouble aspect,
 	right = top * aspect;
 	left = -right;
 
-	accFrustumN (left, right, bottom, top, zNear, zFar,
+	accFrustum1 (left, right, bottom, top, zNear, zFar,
 			pixdx, pixdy, eyedx, eyedy, focus);
 }
 

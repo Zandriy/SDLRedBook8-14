@@ -25,8 +25,6 @@ protected:
 	void draw();
 	void initGL();
 	void restoreGL();
-
-private:
 };
 
 #endif /* SAMPLE_10_1_H_ */
