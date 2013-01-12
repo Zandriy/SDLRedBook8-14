@@ -7,6 +7,9 @@
 
 #include "Sample_10_1.h"
 #include "OGLShapes.h"
+#include "OGLInspector.h"
+
+#include <SDL/SDL.h>
 
 #define YELLOWMAT   1
 #define BLUEMAT 2
@@ -35,6 +38,7 @@ void Sample_10_1::reshape(int w, int h)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	glEnable(GL_STENCIL_TEST);
 	glClear(GL_STENCIL_BUFFER_BIT);
 	glStencilFunc (GL_ALWAYS, 0x1, 0x1);
 	glStencilOp (GL_REPLACE, GL_REPLACE, GL_REPLACE);
@@ -44,6 +48,7 @@ void Sample_10_1::reshape(int w, int h)
 		glVertex2f (1.0, 0.0);
 		glVertex2f (0.0, -1.0);
 	glEnd();
+	glDisable(GL_STENCIL_TEST);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -118,4 +123,22 @@ void Sample_10_1::restoreGL()
 	glDisable(GL_STENCIL_TEST);
 
 	glPopAttrib();
+}
+
+
+bool Sample_10_1::sendMessage(int message, int mode, int x, int y)
+{
+	switch (message) {
+	case SDLK_b:
+		OGLInspector::BuffersReport();
+		break;
+	case SDLK_s:
+		OGLInspector::StencilReport();
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	return true;
 }

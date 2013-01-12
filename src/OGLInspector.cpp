@@ -40,3 +40,179 @@ bool OGLInspector::ImagingSupported()
 {
 	return isExtSupported("GL_ARB_imaging");
 }
+
+/** auxiliary functions
+ *
+ */
+void printStencilFunc(GLint func)
+{
+	switch(func)
+	{
+	case GL_NEVER:
+		printf("GL_NEVER");
+		break;
+	case GL_ALWAYS:
+		printf("GL_ALWAYS");
+		break;
+	case GL_LESS:
+		printf("GL_LESS");
+		break;
+	case GL_LEQUAL:
+		printf("GL_LEQUAL");
+		break;
+	case GL_GEQUAL:
+		printf("GL_GEQUAL");
+		break;
+	case GL_GREATER:
+		printf("GL_GREATER");
+		break;
+	case GL_EQUAL:
+		printf("GL_EQUAL");
+		break;
+	case GL_NOTEQUAL:
+		printf("GL_NOTEQUAL");
+		break;
+	default:
+		printf("!!!wrong");
+		break;
+	}
+}
+
+void printStencilOpFunc(GLint func)
+{
+	switch(func)
+	{
+	case GL_KEEP:
+		printf("GL_KEEP");
+		break;
+	case GL_ZERO:
+		printf("GL_ZERO");
+		break;
+	case GL_REPLACE:
+		printf("GL_REPLACE");
+		break;
+	case GL_INCR:
+		printf("GL_INCR");
+		break;
+	case GL_DECR:
+		printf("GL_DECR");
+		break;
+	case GL_INVERT:
+		printf("GL_INVERT");
+		break;
+	default:
+		printf("!!!wrong");
+		break;
+	}
+}
+
+/** static functions
+ *
+ */
+
+void OGLInspector::BuffersReport()
+{
+	GLint resInt;
+	GLboolean resBool;
+
+	printf("####################################################\n");
+	printf("################## BuffersReport ###################\n");
+	printf("####################################################\n");
+
+	printf("=================================================================\n");
+
+	glGetIntegerv(GL_RED_BITS, &resInt);
+	printf("| GL_RED_BITS\t| GL_GREEN_BITS\t| GL_BLUE_BITS\t| GL_ALPHA_BITS\t|\n| %d\t\t", resInt);
+	glGetIntegerv(GL_GREEN_BITS, &resInt);
+	printf("| %d\t\t", resInt);
+	glGetIntegerv(GL_BLUE_BITS, &resInt);
+	printf("| %d\t\t", resInt);
+	glGetIntegerv(GL_RED_BITS, &resInt);
+	printf("| %d\t\t|\n", resInt);
+
+	printf("=================================================================\n");
+
+	glGetIntegerv(GL_INDEX_BITS, &resInt);
+	printf("| GL_INDEX_BITS\t| GL_DEPTH_BITS\t| GL_STENCIL_BITS\t|\n| %d\t\t", resInt);
+	glGetIntegerv(GL_DEPTH_BITS, &resInt);
+	printf("| %d\t\t", resInt);
+	glGetIntegerv(GL_STENCIL_BITS, &resInt);
+	printf("| %d\t\t\t|\n", resInt);
+
+	printf("=================================================================================================\n");
+
+	glGetIntegerv(GL_ACCUM_RED_BITS, &resInt);
+	printf("| GL_ACCUM_RED_BITS\t| GL_ACCUM_GREEN_BITS\t| GL_ACCUM_BLUE_BITS\t| GL_ACCUM_ALPHA_BITS\t|\n| %d\t\t\t", resInt);
+	glGetIntegerv(GL_ACCUM_GREEN_BITS, &resInt);
+	printf("| %d\t\t\t", resInt);
+	glGetIntegerv(GL_ACCUM_BLUE_BITS, &resInt);
+	printf("| %d\t\t\t", resInt);
+	glGetIntegerv(GL_ACCUM_RED_BITS, &resInt);
+	printf("| %d\t\t\t|\n", resInt);
+
+	printf("=================================================================================================\n");
+
+	glGetBooleanv(GL_STEREO, &resBool);
+	printf("| GL_STEREO\t| GL_DOUBLEBUFFER\t| GL_AUX_BUFFERS\t|\n| %s\t\t", resBool ? "yes" : "no");
+	glGetBooleanv(GL_DOUBLEBUFFER, &resBool);
+	printf("| %s\t\t\t", resBool ? "yes" : "no");
+	glGetIntegerv(GL_AUX_BUFFERS, &resInt);
+	printf("| %d\t\t\t|\n", resInt);
+
+	printf("===================================================================================\n");
+}
+
+void OGLInspector::StencilReport()
+{
+	GLint resInt;
+	GLboolean resBool = glIsEnabled(GL_STENCIL_TEST);
+
+	printf("####################################################\n");
+	printf("################## StencilReport ###################\n");
+	printf("####################################################\n");
+
+	printf("+++++++++++ GL_STENCIL_TEST enabled: %s +++++++++++\n",  resBool ? "yes" : " no");
+
+	glGetIntegerv(GL_STENCIL_BITS, &resInt);
+	if (!resInt)
+		printf("!!!!!!!!!!! STENCIL BUFFER doesn't exist !!!!!!!!!!!\n");
+
+	printf("=========================================================\n");
+
+	printf("| GL_STENCIL_WRITEMASK\t| GL_STENCIL_BACK_WRITEMASK\t|\n");
+	glGetIntegerv(GL_STENCIL_WRITEMASK, &resInt);
+	printf("| 0x%08X\t\t", resInt);
+	glGetIntegerv(GL_STENCIL_BACK_WRITEMASK, &resInt);
+	printf("| 0x%08X\t\t\t|\n", resInt);
+
+	printf("=========================================================================\n");
+
+	printf("| GL_STENCIL_FUNC\t| GL_STENCIL_REF\t| GL_STENCIL_VALUE_MASK\t|\n");
+	glGetIntegerv(GL_STENCIL_FUNC, &resInt);
+	printf("| ");
+	printStencilFunc(resInt);
+	printf("\t\t");
+
+	glGetIntegerv(GL_STENCIL_REF, &resInt);
+	printf("| 0x%08X\t\t", resInt);
+	glGetIntegerv(GL_STENCIL_VALUE_MASK, &resInt);
+	printf("| 0x%08X\t\t|\n", resInt);
+
+	printf("=========================================================================================\n");
+
+	printf("| GL_STENCIL_FAIL\t| GL_STENCIL_PASS_DEPTH_FAIL\t| GL_STENCIL_PASS_DEPTH_PASS\t|\n");
+	glGetIntegerv(GL_STENCIL_FAIL, &resInt);
+	printf("| ");
+	printStencilOpFunc(resInt);
+	printf("\t\t");
+	glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, &resInt);
+	printf("| ");
+	printStencilOpFunc(resInt);
+	printf("\t\t\t");
+	glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, &resInt);
+	printf("| ");
+	printStencilOpFunc(resInt);
+	printf("\t\t\t|\n");
+
+	printf("=========================================================================================\n");
+}

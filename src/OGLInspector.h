@@ -29,6 +29,9 @@ public:
 	bool isExtSupported(const std::string& extName);
 	bool PBOSupported();
 	bool ImagingSupported();
+
+	static void BuffersReport();
+	static void StencilReport();
 private:
 	std::string m_extNames;
 };

@@ -59,10 +59,11 @@ void OGL_Application::init()
 	}
 
 	// the flags to pass to SDL_SetVideoMode
-	m_videoFlags  = SDL_OPENGL;          // Enable OpenGL in SDL
-	m_videoFlags |= SDL_GL_DOUBLEBUFFER; // Enable double buffering
-	m_videoFlags |= SDL_HWPALETTE;       // Store the palette in hardware
-	m_videoFlags |= SDL_RESIZABLE;       // Enable window resizing
+	m_videoFlags  = SDL_OPENGL;         // Enable OpenGL in SDL
+	m_videoFlags |= SDL_DOUBLEBUF; 		// Enable double buffering (valid only with SDL_HWSURFACE)
+	m_videoFlags |= SDL_HWSURFACE; 		// Enable creation the video surface in video memory
+	m_videoFlags |= SDL_HWPALETTE;      // Store the palette in hardware
+	m_videoFlags |= SDL_RESIZABLE;      // Enable window resizing
 
 	// This checks to see if surfaces can be stored in memory
 	if ( m_videoInfo->hw_available )
@@ -74,8 +75,10 @@ void OGL_Application::init()
 	if ( m_videoInfo->blit_hw )
 		m_videoFlags |= SDL_HWACCEL;
 
-	// Sets up OpenGL double buffering
-	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+	// Sets up OpenGL attributes, this must be done before SDL_SetVideoMode()
+	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );	// double buffering
+	SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 24 );	// the minimum number of bits in the depth buffer
+	SDL_GL_SetAttribute( SDL_GL_STENCIL_SIZE, 8 );	// the minimum number of bits in the stencil buffer
 
 	// get a SDL surface
 	m_surface = SDL_SetVideoMode( m_width, m_height, m_bpp,
