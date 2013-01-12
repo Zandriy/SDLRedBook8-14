@@ -18,6 +18,7 @@ Sample_8_8::Sample_8_8()
 ,	m_bLoad(false)
 ,	m_sink(GL_FALSE)
 ,	m_prevSink(GL_TRUE)
+,	m_reset(GL_TRUE)
 {
 	m_image.loadBMP( "textures/mounts.bmp" );
 }
@@ -70,10 +71,7 @@ void Sample_8_8::draw()
 
 	if (m_bImagSprt)
 	{
-		if (m_sink)
-			glGetHistogram(GL_HISTOGRAM, GL_FALSE, GL_RGB, GL_UNSIGNED_SHORT, values);
-		else
-			glGetHistogram(GL_HISTOGRAM, GL_TRUE, GL_RGB, GL_UNSIGNED_SHORT, values);
+		glGetHistogram(GL_HISTOGRAM, m_reset, GL_RGB, GL_UNSIGNED_SHORT, values);
 
 		/* Plot histogram */
 
@@ -125,6 +123,13 @@ bool Sample_8_8::sendMessage(int message, int mode, int x, int y)
 			printf("SINK\n");
 		else
 			printf("NO SINK\n");
+		break;
+	case SDLK_r:
+		m_reset = !m_reset;
+		if (m_reset)
+			printf("RESET histogram\n");
+		else
+			printf("NO RESET histogram\n");
 		break;
 	case SDLK_EQUALS:
 		m_bLoad = true;

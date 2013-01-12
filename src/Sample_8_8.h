@@ -22,7 +22,7 @@ public:
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"8-8. Histogram(=1,=2,=3,s-S)";
+		return (char*)&"8-8. Histogram(=1,=2,=3,s-S,r-R)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);
@@ -37,6 +37,7 @@ private:
 	bool m_bImagSprt;
 	bool m_bLoad;
 	GLboolean	m_sink;
+	GLboolean	m_reset;
 	GLboolean	m_prevSink;
 };
 
