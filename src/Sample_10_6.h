@@ -18,8 +18,10 @@ public:
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"10-6. Dof)";
+		return (char*)&"10-6. Dof(b-B)";
 	}
+
+	bool sendMessage(int message, int mode, int x, int y);
 
 protected:
 	void draw();

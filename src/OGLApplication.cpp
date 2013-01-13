@@ -3,7 +3,7 @@
  *
  *  Created on: Sep 30, 2012
  *      Author: Andrew Zhabura
-*/
+ */
 
 #include "OGLApplication.h"
 
@@ -118,39 +118,39 @@ int OGL_Application::exec()
 		{
 			switch( event.type )
 			{
-				case SDL_ACTIVEEVENT:
-					// Something's happend with our focus
-					// If we lost focus or we are iconified, we
-					// shouldn't draw the m_surface
+			case SDL_ACTIVEEVENT:
+				// Something's happend with our focus
+				// If we lost focus or we are iconified, we
+				// shouldn't draw the m_surface
 
-					if ( event.active.gain == 0 )
-						m_isActive = false;
-					else
-						m_isActive = true;
-					break;
-				case SDL_VIDEORESIZE:
-					// handle resize m_event
-					resizeWindow( event.resize.w, event.resize.h);
-					break;
-				case SDL_KEYDOWN:
-					// handle key presses
-					handleKeyPress( &event.key.keysym );
-					break;
-				case SDL_MOUSEBUTTONDOWN:
-				case SDL_MOUSEBUTTONUP:
-					m_OGL_Consumer->sendMessage(m_curSample, event.type, event.button.button,
-							event.button.x, event.button.y);
-					break;
-				case SDL_MOUSEMOTION:
-					m_OGL_Consumer->sendMessage(m_curSample, event.type, event.motion.state,
-							event.motion.x, event.motion.y);
-					break;
-				case SDL_QUIT:
-					// handle quit requests
-					m_breakReason = SDL_QUIT;
-					break;
-				default:
-					break;
+				if ( event.active.gain == 0 )
+					m_isActive = false;
+				else
+					m_isActive = true;
+				break;
+			case SDL_VIDEORESIZE:
+				// handle resize m_event
+				resizeWindow( event.resize.w, event.resize.h);
+				break;
+			case SDL_KEYDOWN:
+				// handle key presses
+				handleKeyPress( &event.key.keysym );
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONUP:
+				m_OGL_Consumer->sendMessage(m_curSample, event.type, event.button.button,
+						event.button.x, event.button.y);
+				break;
+			case SDL_MOUSEMOTION:
+				m_OGL_Consumer->sendMessage(m_curSample, event.type, event.motion.state,
+						event.motion.x, event.motion.y);
+				break;
+			case SDL_QUIT:
+				// handle quit requests
+				m_breakReason = SDL_QUIT;
+				break;
+			default:
+				break;
 			}
 		}
 
@@ -191,104 +191,104 @@ bool OGL_Application::resizeWindow( int width, int height )
 void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 {
 	if ( m_OGL_Consumer->sendMessage(m_curSample, keysym->sym, keysym->mod, 0, 0) )
-			return;
+		return;
 
 	switch ( keysym->sym )
 	{
-		case SDLK_ESCAPE:
-			// ESC key was pressed
-			m_breakReason = SDL_QUIT;
-			break;
-		case SDLK_F10:
-			// F10 key was pressed
-			// this toggles fullm_surface mode
-			//int flags = m_surface->flags; /* Save the current flags in case toggling fails */
-			m_surface = SDL_SetVideoMode(0, 0, m_bpp, m_surface->flags ^ SDL_FULLSCREEN); /*Toggles FullScreen Mode */
-			//if(m_surface == NULL) m_surface = SDL_SetVideoMode(0, 0, 0, flags); /* If toggle FullScreen failed, then switch back */
-			if(m_surface == NULL) m_breakReason = SDL_QUIT; /* If you can't switch back for some reason, then epic fail */
-			break;
-		case SDLK_1:
-			m_OGL_Consumer->setSample(m_curSample = 0);
-			resizeWindow( 100, 100 );
-			break;
-		case SDLK_2:
-			m_OGL_Consumer->setSample(m_curSample = 1);
-			resizeWindow( 300, 100 );
-			break;
-		case SDLK_3:
-			m_OGL_Consumer->setSample(m_curSample = 2);
-			resizeWindow( 250, 250 );
-			break;
-		case SDLK_4:
-			m_OGL_Consumer->setSample(m_curSample = 3);
-			resizeWindow( 510, 510 );
-			break;
-		case SDLK_5:
-			m_OGL_Consumer->setSample(m_curSample = 4);
-			resizeWindow( 510, 510 );
-			break;
-		case SDLK_6:
-			m_OGL_Consumer->setSample(m_curSample = 5);
-			resizeWindow( 510, 510 );
-			break;
-		case SDLK_7:
-			m_OGL_Consumer->setSample(m_curSample = 6);
-			resizeWindow( 510, 510 );
-			break;
-		case SDLK_8:
-			m_OGL_Consumer->setSample(m_curSample = 7);
-			resizeWindow( 510, 510 );
-			break;
-		case SDLK_9:
-			m_OGL_Consumer->setSample(m_curSample = 8);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_0:
-			m_OGL_Consumer->setSample(m_curSample = 9);
-			resizeWindow( 250, 250 );
-			break;
-		case SDLK_q:
-			m_OGL_Consumer->setSample(m_curSample = 10);
-			resizeWindow( 250, 250 );
-			break;
-		case SDLK_w:
-			m_OGL_Consumer->setSample(m_curSample = 11);
-			resizeWindow( 250, 250 );
-			break;
-		case SDLK_e:
-			m_OGL_Consumer->setSample(m_curSample = 12);
-			resizeWindow( 500, 500 );
-			break;
-		case SDLK_r:
-			m_OGL_Consumer->setSample(m_curSample = 13);
-			resizeWindow( 250, 250 );
-			break;
-		case SDLK_t:
-			m_OGL_Consumer->setSample(m_curSample = 14);
-			resizeWindow( 350, 350 );
-			break;
-		case SDLK_y:
-			m_OGL_Consumer->setSample(m_curSample = 15);
-			resizeWindow( 400, 400 );
-			break;
-		case SDLK_u:
-			m_OGL_Consumer->setSample(m_curSample = 16);
-			resizeWindow( 310, 310 );
-			break;
-		case SDLK_i:
-			m_OGL_Consumer->setSample(m_curSample = 17);
-			resizeWindow( 310, 310 );
-			break;
-		case SDLK_o:
-			m_OGL_Consumer->setSample(m_curSample = 18);
-			resizeWindow( 400, 400 );
-			break;
-		case SDLK_p:
-			m_OGL_Consumer->setSample(m_curSample = 19);
-			resizeWindow( 400, 400 );
-			break;
-		default:
-			break;
+	case SDLK_ESCAPE:
+		// ESC key was pressed
+		m_breakReason = SDL_QUIT;
+		break;
+	case SDLK_F10:
+		// F10 key was pressed
+		// this toggles fullm_surface mode
+		//int flags = m_surface->flags; /* Save the current flags in case toggling fails */
+		m_surface = SDL_SetVideoMode(0, 0, m_bpp, m_surface->flags ^ SDL_FULLSCREEN); /*Toggles FullScreen Mode */
+		//if(m_surface == NULL) m_surface = SDL_SetVideoMode(0, 0, 0, flags); /* If toggle FullScreen failed, then switch back */
+		if(m_surface == NULL) m_breakReason = SDL_QUIT; /* If you can't switch back for some reason, then epic fail */
+		break;
+	case SDLK_1:
+		m_OGL_Consumer->setSample(m_curSample = 0);
+		resizeWindow( 100, 100 );
+		break;
+	case SDLK_2:
+		m_OGL_Consumer->setSample(m_curSample = 1);
+		resizeWindow( 300, 100 );
+		break;
+	case SDLK_3:
+		m_OGL_Consumer->setSample(m_curSample = 2);
+		resizeWindow( 250, 250 );
+		break;
+	case SDLK_4:
+		m_OGL_Consumer->setSample(m_curSample = 3);
+		resizeWindow( 510, 510 );
+		break;
+	case SDLK_5:
+		m_OGL_Consumer->setSample(m_curSample = 4);
+		resizeWindow( 510, 510 );
+		break;
+	case SDLK_6:
+		m_OGL_Consumer->setSample(m_curSample = 5);
+		resizeWindow( 510, 510 );
+		break;
+	case SDLK_7:
+		m_OGL_Consumer->setSample(m_curSample = 6);
+		resizeWindow( 510, 510 );
+		break;
+	case SDLK_8:
+		m_OGL_Consumer->setSample(m_curSample = 7);
+		resizeWindow( 510, 510 );
+		break;
+	case SDLK_9:
+		m_OGL_Consumer->setSample(m_curSample = 8);
+		resizeWindow( 500, 500 );
+		break;
+	case SDLK_0:
+		m_OGL_Consumer->setSample(m_curSample = 9);
+		resizeWindow( 250, 250 );
+		break;
+	case SDLK_q:
+		m_OGL_Consumer->setSample(m_curSample = 10);
+		resizeWindow( 250, 250 );
+		break;
+	case SDLK_w:
+		m_OGL_Consumer->setSample(m_curSample = 11);
+		resizeWindow( 250, 250 );
+		break;
+	case SDLK_e:
+		m_OGL_Consumer->setSample(m_curSample = 12);
+		resizeWindow( 500, 500 );
+		break;
+	case SDLK_r:
+		m_OGL_Consumer->setSample(m_curSample = 13);
+		resizeWindow( 250, 250 );
+		break;
+	case SDLK_t:
+		m_OGL_Consumer->setSample(m_curSample = 14);
+		resizeWindow( 350, 350 );
+		break;
+	case SDLK_y:
+		m_OGL_Consumer->setSample(m_curSample = 15);
+		resizeWindow( 400, 400 );
+		break;
+	case SDLK_u:
+		m_OGL_Consumer->setSample(m_curSample = 16);
+		resizeWindow( 310, 310 );
+		break;
+	case SDLK_i:
+		m_OGL_Consumer->setSample(m_curSample = 17);
+		resizeWindow( 310, 310 );
+		break;
+	case SDLK_o:
+		m_OGL_Consumer->setSample(m_curSample = 18);
+		resizeWindow( 400, 400 );
+		break;
+	case SDLK_p:
+		m_OGL_Consumer->setSample(m_curSample = 19);
+		resizeWindow( 400, 400 );
+		break;
+	default:
+		break;
 	}
 
 	SDL_WM_SetCaption(m_OGL_Consumer->getSampleName(), NULL);
@@ -306,7 +306,7 @@ void OGL_Application::drawGLScene()
 	/* Draw it to the screen */
 	SDL_GL_SwapBuffers( );
 
-	// Gather our frames per second
+	/* // Gather our frames per second
 	Frames++;
 	{
 		Uint32 t = SDL_GetTicks();
@@ -314,10 +314,11 @@ void OGL_Application::drawGLScene()
 			float seconds = (t - T0) / 1000.0;
 			float fps = Frames / seconds;
 			// debug output
-			// printf("%d frames in %g seconds = %g FPS\n", Frames, seconds, fps);
+			 printf("%d frames in %g seconds = %g FPS\n", Frames, seconds, fps);
 			T0 = t;
 			Frames = 0;
 		}
 	}
+	*/
 }
 

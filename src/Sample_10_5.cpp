@@ -7,10 +7,12 @@
 
 #include "Sample_10_5.h"
 #include "OGLShapes.h"
+#include "OGLInspector.h"
+#include <SDL/SDL.h>
 
-#define SPHERE_FACES 64
+#define SPHERE_FACES 128
 #define PROJ_SIZE 8
-#define TIME_JITTER_STEPS 10
+#define TIME_JITTER_STEPS 15
 #define FULL_ROT 0
 #define SCALE_FACTOR 1.0
 
@@ -95,6 +97,21 @@ void Sample_10_5::restoreGL()
 	glDisable(GL_RESCALE_NORMAL);
 
 	glPopAttrib();
+}
+
+bool Sample_10_5::sendMessage(int message, int mode, int x, int y)
+{
+	switch (message) {
+	case SDLK_b:
+		OGLInspector::BuffersReport();
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	drawGLScene();
+	return true;
 }
 
 void Sample_10_5::displayObjects(GLfloat xoffset,GLfloat yrot)

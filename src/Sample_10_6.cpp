@@ -9,12 +9,14 @@
 #include "OGLShapes.h"
 #include "jitter.h"
 #include <cmath>
+#include "OGLInspector.h"
+#include <SDL/SDL.h>
 
-#define PI_ 	3.14159265358979323846
+#define PI 	3.14159265358979323846
 #define ACSIZE	8
 #define JITTER	j8
 
-/* accFrustum2()
+/* accFrustum_()
  * The first 6 arguments are identical to the glFrustum() call.
  *
  * pixdx and pixdy are anti-alias jitter in pixels.
@@ -25,11 +27,11 @@
  * focus is distance from eye to plane in focus.
  * focus must be greater than, but not equal to 0.0.
  *
- * Note that accFrustum2() calls glTranslatef().  You will
+ * Note that accFrustum_() calls glTranslatef().  You will
  * probably want to insure that your ModelView matrix has been
- * initialized to identity before calling accFrustum2().
+ * initialized to identity before calling accFrustum_().
  */
-void accFrustum2(GLdouble left, GLdouble right, GLdouble bottom,
+void accFrustum_(GLdouble left, GLdouble right, GLdouble bottom,
 		GLdouble top, GLdouble zNear, GLdouble zFar, GLdouble pixdx,
 		GLdouble pixdy, GLdouble eyedx, GLdouble eyedy, GLdouble focus)
 {
@@ -53,7 +55,7 @@ void accFrustum2(GLdouble left, GLdouble right, GLdouble bottom,
 	glTranslatef (-eyedx, -eyedy, 0.0);
 }
 
-/* accPerspective2()
+/* accPerspective_()
  *
  * The first 4 arguments are identical to the gluPerspective() call.
  * pixdx and pixdy are anti-alias jitter in pixels.
@@ -64,15 +66,15 @@ void accFrustum2(GLdouble left, GLdouble right, GLdouble bottom,
  * focus is distance from eye to plane in focus.
  * focus must be greater than, but not equal to 0.0.
  *
- * Note that accPerspective2() calls accFrustum2().
+ * Note that accPerspective_() calls accFrustum_().
  */
-void accPerspective2(GLdouble fovy, GLdouble aspect,
+void accPerspective_(GLdouble fovy, GLdouble aspect,
 		GLdouble zNear, GLdouble zFar, GLdouble pixdx, GLdouble pixdy,
 		GLdouble eyedx, GLdouble eyedy, GLdouble focus)
 {
 	GLdouble fov2,left,right,bottom,top;
 
-	fov2 = ((fovy*PI_) / 180.0) / 2.0;
+	fov2 = ((fovy*PI) / 180.0) / 2.0;
 
 	top = zNear / (cos(fov2) / sin(fov2));
 	bottom = -top;
@@ -80,7 +82,7 @@ void accPerspective2(GLdouble fovy, GLdouble aspect,
 	right = top * aspect;
 	left = -right;
 
-	accFrustum2 (left, right, bottom, top, zNear, zFar,
+	accFrustum_ (left, right, bottom, top, zNear, zFar,
 			pixdx, pixdy, eyedx, eyedy, focus);
 }
 
@@ -108,7 +110,7 @@ void Sample_10_6::draw()
 
 	for (jitter = 0; jitter < ACSIZE; jitter++) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		accPerspective2 (45.0,
+		accPerspective_ (45.0,
 				(GLdouble) viewport[2]/(GLdouble) viewport[3],
 				1.0, 15.0, 0.0, 0.0,
 				0.33*j8[jitter].x, 0.33*j8[jitter].y, 5.0);
@@ -164,7 +166,7 @@ void Sample_10_6::initGL()
 	/*  make sphere display list */
 	m_sphereList = glGenLists(1);
 	glNewList (m_sphereList, GL_COMPILE);
-	OGLShapes::solidSphere(0.5, 10, 10);
+	OGLShapes::solidSphere(0.5, 64, 64);
 	glEndList ();
 }
 
@@ -177,6 +179,21 @@ void Sample_10_6::restoreGL()
 	glDisable(GL_DEPTH_TEST);
 
 	glPopAttrib();
+}
+
+bool Sample_10_6::sendMessage(int message, int mode, int x, int y)
+{
+	switch (message) {
+	case SDLK_b:
+		OGLInspector::BuffersReport();
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	drawGLScene();
+	return true;
 }
 
 void Sample_10_6::renderSphere (GLfloat x, GLfloat y, GLfloat z,
