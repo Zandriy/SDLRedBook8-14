@@ -7,6 +7,7 @@
 
 #include "Sample_10_3.h"
 #include "OGLShapes.h"
+#include "OGLInspector.h"
 #include "jitter.h"
 #include <cmath>
 #include <SDL/SDL.h>
@@ -155,6 +156,9 @@ bool Sample_10_3::sendMessage(int message, int mode, int x, int y)
 		break;
 	case SDLK_n:
 		m_accDraw = 1;
+		break;
+	case SDLK_b:
+		OGLInspector::BuffersReport();
 		break;
 	default:
 		return false;

@@ -79,6 +79,10 @@ void OGL_Application::init()
 	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );	// double buffering
 	SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 24 );	// the minimum number of bits in the depth buffer
 	SDL_GL_SetAttribute( SDL_GL_STENCIL_SIZE, 8 );	// the minimum number of bits in the stencil buffer
+	SDL_GL_SetAttribute( SDL_GL_ACCUM_RED_SIZE, 8 ); // the minimum number of bits for the red channel of the accumulation buffer
+	SDL_GL_SetAttribute( SDL_GL_ACCUM_GREEN_SIZE, 8 ); // the minimum number of bits for the green channel of the accumulation buffer
+	SDL_GL_SetAttribute( SDL_GL_ACCUM_BLUE_SIZE, 8 ); // the minimum number of bits for the blue channel of the accumulation buffer
+	SDL_GL_SetAttribute( SDL_GL_ACCUM_ALPHA_SIZE, 8 ); // the minimum number of bits for the alpha channel of the accumulation buffer
 
 	// get a SDL surface
 	m_surface = SDL_SetVideoMode( m_width, m_height, m_bpp,

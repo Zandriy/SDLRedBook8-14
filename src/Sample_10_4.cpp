@@ -7,6 +7,7 @@
 
 #include "Sample_10_4.h"
 #include "OGLShapes.h"
+#include "OGLInspector.h"
 #include "jitter.h"
 #include <cmath>
 #include <SDL/SDL.h>
@@ -15,75 +16,12 @@
 #define ACSIZE	8
 #define JITTER	j8
 
-/* accFrustum1()
- * The first 6 arguments are identical to the glFrustum() call.
- *
- * pixdx and pixdy are anti-alias jitter in pixels.
- * Set both equal to 0.0 for no anti-alias jitter.
- * eyedx and eyedy are depth-of field jitter in pixels.
- * Set both equal to 0.0 for no depth of field effects.
- *
- * focus is distance from eye to plane in focus.
- * focus must be greater than, but not equal to 0.0.
- *
- * Note that accFrustum1() calls glTranslatef().  You will
- * probably want to insure that your ModelView matrix has been
- * initialized to identity before calling accFrustum1().
+/*	Note that 4.5 is the distance in world space between
+ *	left and right and bottom and top.
+ *	This formula converts fractional pixel movement to
+ *	world coordinates.
  */
-void accFrustum1(GLdouble left, GLdouble right, GLdouble bottom,
-		GLdouble top, GLdouble zNear, GLdouble zFar, GLdouble pixdx,
-		GLdouble pixdy, GLdouble eyedx, GLdouble eyedy, GLdouble focus)
-{
-	GLdouble xwsize, ywsize;
-	GLdouble dx, dy;
-	GLint viewport[4];
-
-	glGetIntegerv (GL_VIEWPORT, viewport);
-
-	xwsize = right - left;
-	ywsize = top - bottom;
-
-	dx = -(pixdx*xwsize/(GLdouble) viewport[2] + eyedx*zNear/focus);
-	dy = -(pixdy*ywsize/(GLdouble) viewport[3] + eyedy*zNear/focus);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glFrustum (left + dx, right + dx, bottom + dy, top + dy, zNear, zFar);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslatef (-eyedx, -eyedy, 0.0);
-}
-
-/* accPerspective1()
- *
- * The first 4 arguments are identical to the gluPerspective() call.
- * pixdx and pixdy are anti-alias jitter in pixels.
- * Set both equal to 0.0 for no anti-alias jitter.
- * eyedx and eyedy are depth-of field jitter in pixels.
- * Set both equal to 0.0 for no depth of field effects.
- *
- * focus is distance from eye to plane in focus.
- * focus must be greater than, but not equal to 0.0.
- *
- * Note that accPerspective1() calls accFrustum1().
- */
-void accPerspective1(GLdouble fovy, GLdouble aspect,
-		GLdouble zNear, GLdouble zFar, GLdouble pixdx, GLdouble pixdy,
-		GLdouble eyedx, GLdouble eyedy, GLdouble focus)
-{
-	GLdouble fov2,left,right,bottom,top;
-
-	fov2 = ((fovy*PI_) / 180.0) / 2.0;
-
-	top = zNear / (cos(fov2) / sin(fov2));
-	bottom = -top;
-
-	right = top * aspect;
-	left = -right;
-
-	accFrustum1 (left, right, bottom, top, zNear, zFar,
-			pixdx, pixdy, eyedx, eyedy, focus);
-}
+#define COORD_DIST	4.5
 
 Sample_10_4::Sample_10_4()
 :	m_accDraw(ACSIZE)
@@ -100,9 +38,9 @@ void Sample_10_4::reshape(int w, int h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	if (w <= h)
-		glOrtho (-2.25, 2.25, -2.25*h/w, 2.25*h/w, -10.0, 10.0);
+		glOrtho (-(COORD_DIST/2), (COORD_DIST/2), -(COORD_DIST/2)*h/w, (COORD_DIST/2)*h/w, -10.0, 10.0);
 	else
-		glOrtho (-2.25*w/h, 2.25*w/h, -2.25, 2.25, -10.0, 10.0);
+		glOrtho (-(COORD_DIST/2)*w/h, (COORD_DIST/2)*w/h, -(COORD_DIST/2), (COORD_DIST/2), -10.0, 10.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -118,13 +56,8 @@ void Sample_10_4::draw()
 	for (jitter = 0; jitter < m_accDraw; jitter++) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glPushMatrix ();
-		/*	Note that 4.5 is the distance in world space between
-		 *	left and right and bottom and top.
-		 *	This formula converts fractional pixel movement to
-		 *	world coordinates.
-		 */
-		glTranslatef (j8[jitter].x*4.5/viewport[2],
-				j8[jitter].y*4.5/viewport[3], 0.0);
+		glTranslatef (j8[jitter].x*COORD_DIST/viewport[2],
+				j8[jitter].y*COORD_DIST/viewport[3], 0.0);
 		displayObjects ();
 		glPopMatrix ();
 		glAccum(GL_ACCUM, 1.0/m_accDraw);
@@ -169,6 +102,9 @@ bool Sample_10_4::sendMessage(int message, int mode, int x, int y)
 		break;
 	case SDLK_n:
 		m_accDraw = 1;
+		break;
+	case SDLK_b:
+		OGLInspector::BuffersReport();
 		break;
 	default:
 		return false;
