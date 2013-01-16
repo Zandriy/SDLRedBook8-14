@@ -29,8 +29,9 @@
 #include "Sample_10_4.h"
 #include "Sample_10_5.h"
 #include "Sample_10_6.h"
+#include "Sample_11_3.h"
 
-#define Sample_QTY 20
+#define Sample_QTY 21
 
 OGL_Consumer::OGL_Consumer()
 :	m_Sample(new Sample * [Sample_QTY])
@@ -58,6 +59,7 @@ OGL_Consumer::OGL_Consumer()
 	m_Sample[++i] = new Sample_10_4;
 	m_Sample[++i] = new Sample_10_5;
 	m_Sample[++i] = new Sample_10_6;
+	m_Sample[++i] = new Sample_11_3;
 
 	if ( ++i != Sample_QTY )
 		throw this;
