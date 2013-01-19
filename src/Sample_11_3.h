@@ -27,8 +27,8 @@ protected:
 	void restoreGL();
 
 private:
-	   GLUtesselator *m_tobj;
-	   GLuint m_startList;
+	GLUtesselator *m_tobj;
+	GLuint m_startList;
 };
 
 #endif /* SAMPLE_11_3_H_ */
