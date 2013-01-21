@@ -125,7 +125,6 @@ void Sample_10_1::restoreGL()
 	glPopAttrib();
 }
 
-
 bool Sample_10_1::sendMessage(int message, int mode, int x, int y)
 {
 	switch (message) {
