@@ -18,7 +18,7 @@ public:
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"12-5. Surface(c-C)";
+		return (char*)&"12-5. Trim(c-C)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);

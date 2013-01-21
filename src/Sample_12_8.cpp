@@ -94,8 +94,6 @@ void Sample_12_8::draw()
 	gluEndTrim (m_theNurb);
 	gluEndSurface(m_theNurb);
 
-	glPopMatrix();
-
 	if (m_showPoints) {
 		glPointSize(5.0);
 		glDisable(GL_LIGHTING);
