@@ -307,6 +307,10 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 		m_OGL_Consumer->setSample(m_curSample = 24);
 		resizeWindow( 500, 500 );
 		break;
+	case SDLK_h:
+		m_OGL_Consumer->setSample(m_curSample = 25);
+		resizeWindow( 500, 500 );
+		break;
 	default:
 		break;
 	}
