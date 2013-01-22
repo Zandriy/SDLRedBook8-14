@@ -1,7 +1,7 @@
 /*
  * Sample_13_2.cpp
  *
- *  Created on: Jan 4, 2013
+ *  Created on: Jan 22, 2013
  *      Author: Andrew Zhabura
  */
 
@@ -200,7 +200,6 @@ void Sample_13_2::selectObjects()
 	drawTriangle (2.0, 2.0, 3.0, 2.0, 2.5, 3.0, -1.0);
 	drawTriangle (2.0, 2.0, 3.0, 2.0, 2.5, 3.0, -9.0);
 	glPopMatrix ();
-	glFlush ();
 
 	hits = glRenderMode (GL_RENDER);
 	processHits (hits, selectBuf);
