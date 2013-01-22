@@ -1,24 +1,24 @@
 /*
- * Sample_13_3.h
+ * Sample_13_6.h
  *
  *  Created on: Jan 22, 2013
  *      Author: Andrew Zhabura
  */
 
-#ifndef SAMPLE_13_3_H_
-#define SAMPLE_13_3_H_
+#ifndef SAMPLE_13_6_H_
+#define SAMPLE_13_6_H_
 
 #include "Sample.h"
 
-class Sample_13_3: public Sample {
+class Sample_13_6: public Sample {
 public:
-	Sample_13_3();
-	virtual ~Sample_13_3();
+	Sample_13_6();
+	virtual ~Sample_13_6();
 
 	virtual void reshape(int width, int height);
 	virtual char* getName()
 	{
-		return (char*)&"13-3. PickSquare(mouse)";
+		return (char*)&"13-6. PickDepth(mouse)";
 	}
 
 	virtual bool sendMessage(int message, int mode, int x, int y);
@@ -28,10 +28,8 @@ protected:
 	void initGL();
 	void restoreGL();
 
-	int m_board[3][3];   /*  amount of color for each square	*/
-
-	void drawSquares(GLenum mode);
+	void drawRects(GLenum mode);
 	void processHits (GLint hits, GLuint buffer[]);
 };
 
-#endif /* SAMPLE_13_3_H_ */
+#endif /* SAMPLE_13_6_H_ */

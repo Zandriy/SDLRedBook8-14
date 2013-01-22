@@ -39,9 +39,7 @@ void Sample_13_3::reshape(int w, int h)
 void Sample_13_3::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-
 	drawSquares (GL_RENDER);
-
 }
 
 void Sample_13_3::initGL()
