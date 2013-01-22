@@ -138,11 +138,11 @@ int OGL_Application::exec()
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
-				m_OGL_Consumer->sendMessage(m_curSample, event.type, event.button.button,
+				m_OGL_Consumer->sendMessage(m_curSample, event.button.button, event.button.state,
 						event.button.x, event.button.y);
 				break;
 			case SDL_MOUSEMOTION:
-				m_OGL_Consumer->sendMessage(m_curSample, event.type, event.motion.state,
+				m_OGL_Consumer->sendMessage(m_curSample, event.button.button, event.motion.state,
 						event.motion.x, event.motion.y);
 				break;
 			case SDL_QUIT:
@@ -327,6 +327,10 @@ void OGL_Application::handleKeyPress( SDL_keysym *keysym )
 		m_OGL_Consumer->setSample(m_curSample = 29);
 		resizeWindow( 200, 200 );
 		break;
+	case SDLK_x:
+		m_OGL_Consumer->setSample(m_curSample = 30);
+		resizeWindow( 200, 200 );
+		break;
 	default:
 		break;
 	}
@@ -359,6 +363,6 @@ void OGL_Application::drawGLScene()
 			Frames = 0;
 		}
 	}
-	*/
+	 */
 }
 

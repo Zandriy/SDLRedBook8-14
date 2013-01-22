@@ -55,6 +55,7 @@ SET(SDL_OGL_PROJECT_SOURCE
 	Sample_12_7.cpp
 	Sample_12_8.cpp
 	Sample_13_2.cpp
+	Sample_13_3.cpp
 	)
 
 SET(SDL_OGL_PROJECT_TARGET prg)
