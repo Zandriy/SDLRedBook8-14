@@ -16,6 +16,8 @@ OGLInspector::OGLInspector()
 	char* token = 0;
 
 	m_extNames = GetExtensions();
+	m_extNames.append(" ");
+	m_extNames.append(GetGluExtensions());
 }
 
 OGLInspector::~OGLInspector()
@@ -92,12 +94,20 @@ std::string  OGLInspector::GetExtensions()
 
 std::string  OGLInspector::GetGluVersion()
 {
+#ifndef GLU_VERSION_1_1
+	return "1.0";
+#else
 	return (char*)(gluGetString(GLU_VERSION));
+#endif
 }
 
 std::string  OGLInspector::GetGluExtensions()
 {
+#ifndef GLU_VERSION_1_1
+	return "";
+#else
 	return (char*)(gluGetString(GLU_EXTENSIONS));
+#endif
 }
 
 

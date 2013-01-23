@@ -8,6 +8,7 @@
 #include "Sample_14.h"
 #include "OGLInspector.h"
 
+#include <string>
 #include <SDL/SDL.h>
 
 ////// NUMBERS
@@ -397,90 +398,116 @@ void Sample_14::draw()
 	printStrokedString(test);
 	glPopMatrix();
 
+	GLfloat yStart = m_y;
+	const GLfloat lineH = 15.0;
+
+	yStart -= lineH;
 	glColor3f(0.0, 0.0, 1.0);
 	glPushMatrix();
-	glTranslatef(5.0, m_y - 15, 0.0);
+	glTranslatef(5.0, yStart, 0.0);
 	printStrokedString("Last Error");
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(140.0, m_y - 15, 0.0);
+	glTranslatef(140.0, yStart, 0.0);
 	printStrokedString("| ");
 	printStrokedString(OGLInspector::GetLastError().c_str());
 	glPopMatrix();
 
+	yStart -= lineH;
 	glColor3f(0.0, 0.0, 1.0);
 	glPushMatrix();
-	glTranslatef(5.0, m_y - 30, 0.0);
+	glTranslatef(5.0, yStart, 0.0);
 	printStrokedString("Vendor");
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(140.0, m_y - 30, 0.0);
+	glTranslatef(140.0, yStart, 0.0);
 	printStrokedString("| ");
 	printStrokedString(OGLInspector::GetVendor().c_str());
 	glPopMatrix();
 
+	yStart -= lineH;
 	glColor3f(0.0, 0.0, 1.0);
 	glPushMatrix();
-	glTranslatef(5.0, m_y - 45, 0.0);
+	glTranslatef(5.0, yStart, 0.0);
 	printStrokedString("Renderer");
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(140.0, m_y - 45, 0.0);
+	glTranslatef(140.0, yStart, 0.0);
 	printStrokedString("| ");
 	printStrokedString(OGLInspector::GetRenderer().c_str());
 	glPopMatrix();
 
+	yStart -= lineH;
 	glColor3f(0.0, 0.0, 1.0);
 	glPushMatrix();
-	glTranslatef(5.0, m_y - 60, 0.0);
+	glTranslatef(5.0, yStart, 0.0);
 	printStrokedString("GL Version");
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(140.0, m_y - 60, 0.0);
+	glTranslatef(140.0, yStart, 0.0);
 	printStrokedString("| ");
 	printStrokedString(OGLInspector::GetVersion().c_str());
 	glPopMatrix();
 
+	yStart -= lineH;
 	glColor3f(0.0, 0.0, 1.0);
 	glPushMatrix();
-	glTranslatef(5.0, m_y - 75, 0.0);
+	glTranslatef(5.0, yStart, 0.0);
 	printStrokedString("GL Soft Version");
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(140.0, m_y - 75, 0.0);
+	glTranslatef(140.0, yStart, 0.0);
 	printStrokedString("| ");
 	printStrokedString(OGLInspector::GetSoftVersion().c_str());
 	glPopMatrix();
 
+	yStart -= lineH;
 	glColor3f(0.0, 0.0, 1.0);
 	glPushMatrix();
-	glTranslatef(5.0, m_y - 90, 0.0);
+	glTranslatef(5.0, yStart, 0.0);
 	printStrokedString("GLU Version");
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(140.0, m_y - 90, 0.0);
+	glTranslatef(140.0, yStart, 0.0);
 	printStrokedString("| ");
 	printStrokedString(OGLInspector::GetGluVersion().c_str());
 	glPopMatrix();
 
+	yStart -= lineH;
 	glColor3f(0.0, 0.0, 1.0);
 	glPushMatrix();
-	glTranslatef(5.0, m_y - 105, 0.0);
+	glTranslatef(5.0, yStart, 0.0);
 	printStrokedString("GL Extensions");
 	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(140.0, m_y - 105, 0.0);
-	printStrokedString("| ");
-	printStrokedString(OGLInspector::GetExtensions().c_str());
-	glPopMatrix();
+
+	std::string str = OGLInspector::GetExtensions();
+	int startPos = 0;
+	int p = 0;
+	int dist = 130;
+	while ( startPos != str.length() )
+	{
+		if (startPos + dist > str.length()-1)
+			p = str.length() - startPos - 1;
+		else
+			p = str.substr(startPos, dist).rfind(" ");
+
+		glPushMatrix();
+		glTranslatef(140.0, yStart, 0.0);
+		printStrokedString("| ");
+		printStrokedString(str.substr(startPos, p).c_str());
+		glPopMatrix();
+
+		startPos += (p + 1);
+		yStart -= lineH;
+	}
 
 	glColor3f(0.0, 0.0, 1.0);
 	glPushMatrix();
-	glTranslatef(5.0, m_y - 120, 0.0);
+	glTranslatef(5.0, yStart, 0.0);
 	printStrokedString("GLU Extensions");
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(140.0, m_y - 120, 0.0);
+	glTranslatef(140.0, yStart, 0.0);
 	printStrokedString("| ");
 	printStrokedString(OGLInspector::GetGluExtensions().c_str());
 	glPopMatrix();
