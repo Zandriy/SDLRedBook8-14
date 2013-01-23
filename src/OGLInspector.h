@@ -30,6 +30,15 @@ public:
 	bool PBOSupported();
 	bool ImagingSupported();
 
+	static std::string  GetLastError();
+	static std::string  GetVendor();
+	static std::string  GetRenderer();
+	static std::string  GetVersion();
+	static std::string  GetSoftVersion();
+	static std::string  GetExtensions();
+	static std::string  GetGluVersion();
+	static std::string  GetGluExtensions();
+
 	static void BuffersReport();
 	static void StencilReport();
 private:

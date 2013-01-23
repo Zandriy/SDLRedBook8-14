@@ -15,7 +15,7 @@ OGLInspector::OGLInspector()
 	char* str = 0;
 	char* token = 0;
 
-	m_extNames = (char*)glGetString(GL_EXTENSIONS);
+	m_extNames = GetExtensions();
 }
 
 OGLInspector::~OGLInspector()
@@ -40,6 +40,66 @@ bool OGLInspector::ImagingSupported()
 {
 	return isExtSupported("GL_ARB_imaging");
 }
+
+std::string OGLInspector::GetLastError()
+{
+	return (char*)(gluErrorString(glGetError()));
+}
+
+std::string  OGLInspector::GetVendor()
+{
+	return (char*)(glGetString(GL_VENDOR));
+}
+
+std::string  OGLInspector::GetRenderer()
+{
+	return (char*)(glGetString(GL_RENDERER));
+}
+
+std::string  OGLInspector::GetVersion()
+{
+	return (char*)(glGetString(GL_VERSION));
+}
+
+std::string  OGLInspector::GetSoftVersion()
+{
+#ifdef	GL_VERSION_1_5
+	return "1.5";
+#endif
+#ifdef	GL_VERSION_1_4
+	return "1.4";
+#endif
+#ifdef	GL_VERSION_1_3
+	return "1.3";
+#endif
+#ifdef	GL_VERSION_1_2
+	return "1.2";
+#endif
+#ifdef	GL_VERSION_1_1
+	return "1.1";
+#endif
+#ifdef	GL_VERSION_1_0
+	return "1.0";
+#endif
+
+	return "newer than 1.5";
+}
+
+std::string  OGLInspector::GetExtensions()
+{
+	return (char*)(glGetString(GL_EXTENSIONS));
+}
+
+std::string  OGLInspector::GetGluVersion()
+{
+	return (char*)(gluGetString(GLU_VERSION));
+}
+
+std::string  OGLInspector::GetGluExtensions()
+{
+	return (char*)(gluGetString(GLU_EXTENSIONS));
+}
+
 
 /** auxiliary functions
  *
