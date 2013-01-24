@@ -25,64 +25,64 @@ void CALLBACK errorCallbackNURBS(GLenum errorCode)
 
 void CALLBACK beginCallbackNURBS(GLenum whichType)
 {
-   glBegin (whichType);  /*  resubmit rendering directive  */
-   printf ("glBegin(");
-   switch (whichType) {  /*  print diagnostic message  */
-      case GL_LINES:
-	 printf ("GL_LINES)\n");
-	 break;
-      case GL_LINE_LOOP:
-	 printf ("GL_LINE_LOOP)\n");
-	 break;
-      case GL_LINE_STRIP:
-	 printf ("GL_LINE_STRIP)\n");
-	 break;
-      case GL_TRIANGLES:
-	 printf ("GL_TRIANGLES)\n");
-	 break;
-      case GL_TRIANGLE_STRIP:
-	 printf ("GL_TRIANGLE_STRIP)\n");
-	 break;
-      case GL_TRIANGLE_FAN:
-	 printf ("GL_TRIANGLE_FAN)\n");
-	 break;
-      case GL_QUADS:
-	 printf ("GL_QUADS)\n");
-	 break;
-      case GL_QUAD_STRIP:
-	 printf ("GL_QUAD_STRIP)\n");
-	 break;
-      case GL_POLYGON:
-	 printf ("GL_POLYGON)\n");
-	 break;
-      default:
-	 break;
-   }
+	glBegin (whichType);  /*  resubmit rendering directive  */
+	printf ("glBegin(");
+	switch (whichType) {  /*  print diagnostic message  */
+	case GL_LINES:
+		printf ("GL_LINES)\n");
+		break;
+	case GL_LINE_LOOP:
+		printf ("GL_LINE_LOOP)\n");
+		break;
+	case GL_LINE_STRIP:
+		printf ("GL_LINE_STRIP)\n");
+		break;
+	case GL_TRIANGLES:
+		printf ("GL_TRIANGLES)\n");
+		break;
+	case GL_TRIANGLE_STRIP:
+		printf ("GL_TRIANGLE_STRIP)\n");
+		break;
+	case GL_TRIANGLE_FAN:
+		printf ("GL_TRIANGLE_FAN)\n");
+		break;
+	case GL_QUADS:
+		printf ("GL_QUADS)\n");
+		break;
+	case GL_QUAD_STRIP:
+		printf ("GL_QUAD_STRIP)\n");
+		break;
+	case GL_POLYGON:
+		printf ("GL_POLYGON)\n");
+		break;
+	default:
+		break;
+	}
 }
 
 void CALLBACK endCallbackNURBS()
 {
-   glEnd();  /*  resubmit rendering directive  */
-   printf ("glEnd()\n");
+	glEnd();  /*  resubmit rendering directive  */
+	printf ("glEnd()\n");
 }
 
 void CALLBACK vertexCallbackNURBS(GLfloat *vertex)
 {
-   glVertex3fv(vertex);  /*  resubmit rendering directive  */
-   printf ("glVertex3f (%5.3f, %5.3f, %5.3f)\n",
-	   vertex[0], vertex[1], vertex[2]);
+	glVertex3fv(vertex);  /*  resubmit rendering directive  */
+	printf ("glVertex3f (%5.3f, %5.3f, %5.3f)\n",
+			vertex[0], vertex[1], vertex[2]);
 }
 
 void CALLBACK normalCallbackNURBS(GLfloat *normal)
 {
-   glNormal3fv(normal);  /*  resubmit rendering directive  */
-   printf ("glNormal3f (%5.3f, %5.3f, %5.3f)\n",
-           normal[0], normal[1], normal[2]);
+	glNormal3fv(normal);  /*  resubmit rendering directive  */
+	printf ("glNormal3f (%5.3f, %5.3f, %5.3f)\n",
+			normal[0], normal[1], normal[2]);
 }
 
 Sample_12_7::Sample_12_7()
 : m_showPoints(false)
-, m_theNurb(gluNewNurbsRenderer())
+, m_theNurb(NULL)
 {
 	/*
 	 *  Initializes the control points of the surface to a small hill.
@@ -104,7 +104,6 @@ Sample_12_7::Sample_12_7()
 
 Sample_12_7::~Sample_12_7()
 {
-	gluDeleteNurbsRenderer(m_theNurb);
 }
 
 void Sample_12_7::reshape(int w, int h)
@@ -172,20 +171,21 @@ void Sample_12_7::initGL()
 	glEnable(GL_AUTO_NORMAL);
 	glEnable(GL_NORMALIZE);
 
-
-	   gluNurbsProperty(m_theNurb, GLU_NURBS_MODE,
-			    GLU_NURBS_TESSELLATOR);
-	   gluNurbsProperty(m_theNurb, GLU_SAMPLING_TOLERANCE, 25.0);
-	   gluNurbsProperty(m_theNurb, GLU_DISPLAY_MODE, GLU_FILL);
-	   gluNurbsCallback(m_theNurb, GLU_ERROR, (GLvoid (*) ()) &errorCallbackNURBS);
-	   gluNurbsCallback(m_theNurb, GLU_NURBS_BEGIN, (GLvoid (*) ()) &beginCallbackNURBS);
-	   gluNurbsCallback(m_theNurb, GLU_NURBS_VERTEX, (GLvoid (*) ()) &vertexCallbackNURBS);
-	   gluNurbsCallback(m_theNurb, GLU_NURBS_NORMAL, (GLvoid (*) ()) &normalCallbackNURBS);
-	   gluNurbsCallback(m_theNurb, GLU_NURBS_END, endCallbackNURBS);
+	m_theNurb = gluNewNurbsRenderer();
+	gluNurbsProperty(m_theNurb, GLU_NURBS_MODE,
+			GLU_NURBS_TESSELLATOR);
+	gluNurbsProperty(m_theNurb, GLU_SAMPLING_TOLERANCE, 25.0);
+	gluNurbsProperty(m_theNurb, GLU_DISPLAY_MODE, GLU_FILL);
+	gluNurbsCallback(m_theNurb, GLU_ERROR, (GLvoid (*) ()) &errorCallbackNURBS);
+	gluNurbsCallback(m_theNurb, GLU_NURBS_BEGIN, (GLvoid (*) ()) &beginCallbackNURBS);
+	gluNurbsCallback(m_theNurb, GLU_NURBS_VERTEX, (GLvoid (*) ()) &vertexCallbackNURBS);
+	gluNurbsCallback(m_theNurb, GLU_NURBS_NORMAL, (GLvoid (*) ()) &normalCallbackNURBS);
+	gluNurbsCallback(m_theNurb, GLU_NURBS_END, endCallbackNURBS);
 }
 
 void Sample_12_7::restoreGL()
 {
+	gluDeleteNurbsRenderer(m_theNurb);
 	glPopAttrib();
 }
 

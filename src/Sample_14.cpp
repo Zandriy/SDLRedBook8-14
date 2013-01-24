@@ -278,8 +278,9 @@ void Sample_14::reshape(int w, int h)
 
 void Sample_14::createLetters()
 {
-	if (!m_base)
-	{
+	// !!! commented because of problems on MAC
+	//if (!m_base)
+	//{
 		m_base = glGenLists (128);
 		glListBase(m_base);
 
@@ -364,9 +365,9 @@ void Sample_14::createLetters()
 		glNewList(m_base+'z', GL_COMPILE); drawLetter(m_Zdata); glEndList();
 
 		glNewList(m_base+' ', GL_COMPILE); glTranslatef(8.0, 0.0, 0.0); glEndList();
-	}
-	else
-		glListBase(m_base); // must be reset to prevent shifting
+	//}
+	//else
+	//	glListBase(m_base); // must be reset to prevent shifting
 }
 
 void Sample_14::draw()

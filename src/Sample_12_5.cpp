@@ -25,7 +25,7 @@ void CALLBACK nurbsError(GLenum errorCode)
 
 Sample_12_5::Sample_12_5()
 : m_showPoints(false)
-, m_theNurb(gluNewNurbsRenderer())
+, m_theNurb(NULL)
 {
 	/*
 	 *  Initializes the control points of the surface to a small hill.
@@ -47,7 +47,6 @@ Sample_12_5::Sample_12_5()
 
 Sample_12_5::~Sample_12_5()
 {
-	gluDeleteNurbsRenderer(m_theNurb);
 }
 
 void Sample_12_5::reshape(int w, int h)
@@ -115,6 +114,7 @@ void Sample_12_5::initGL()
 	glEnable(GL_AUTO_NORMAL);
 	glEnable(GL_NORMALIZE);
 
+	m_theNurb = gluNewNurbsRenderer();
 	gluNurbsProperty(m_theNurb, GLU_SAMPLING_TOLERANCE, 25.0);
 	gluNurbsProperty(m_theNurb, GLU_DISPLAY_MODE, GLU_FILL);
 	gluNurbsCallback(m_theNurb, GLU_ERROR,
@@ -123,6 +123,8 @@ void Sample_12_5::initGL()
 
 void Sample_12_5::restoreGL()
 {
+	gluDeleteNurbsRenderer(m_theNurb);
+
 	glPopAttrib();
 }
 
