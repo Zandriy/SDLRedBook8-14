@@ -25,11 +25,6 @@ protected:
 	void draw();
 	void initGL();
 	void restoreGL();
-
-private:
-	const GLfloat ctrlpoints[4][3] = {
-			{ -4.0, -4.0, 0.0}, { -2.0, 4.0, 0.0},
-			{2.0, -4.0, 0.0}, {4.0, 4.0, 0.0}};
 };
 
 #endif /* SAMPLE_12_1_H_ */

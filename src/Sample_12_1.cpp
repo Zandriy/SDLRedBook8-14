@@ -8,6 +8,10 @@
 #include "Sample_12_1.h"
 #include "OGLShapes.h"
 
+const GLfloat ctrlpoints_12_1[4][3] = {
+		{ -4.0, -4.0, 0.0}, { -2.0, 4.0, 0.0},
+		{2.0, -4.0, 0.0}, {4.0, 4.0, 0.0}};
+
 Sample_12_1::Sample_12_1()
 {
 }
@@ -47,7 +51,7 @@ void Sample_12_1::draw()
 	glColor3f(1.0, 1.0, 0.0);
 	glBegin(GL_POINTS);
 	for (i = 0; i < 4; i++)
-		glVertex3fv(&ctrlpoints[i][0]);
+		glVertex3fv(&ctrlpoints_12_1[i][0]);
 	glEnd();
 }
 
@@ -57,7 +61,7 @@ void Sample_12_1::initGL()
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glShadeModel(GL_FLAT);
-	glMap1f(GL_MAP1_VERTEX_3, 0.0, 1.0, 3, 4, &ctrlpoints[0][0]);
+	glMap1f(GL_MAP1_VERTEX_3, 0.0, 1.0, 3, 4, &ctrlpoints_12_1[0][0]);
 	glEnable(GL_MAP1_VERTEX_3);
 }
 

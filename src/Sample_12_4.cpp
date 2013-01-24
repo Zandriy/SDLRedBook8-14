@@ -14,6 +14,23 @@
 #define	imageHeight 64
 GLubyte image[3*imageWidth*imageHeight];
 
+const GLfloat ctrlpoints_12_4[4][4][3] = {
+		{{-1.5, -1.5, 4.0}, {-0.5, -1.5, 2.0}
+		, {0.5, -1.5, -1.0}, {1.5, -1.5, 2.0}}
+		, {{-1.5, -0.5, 1.0}, {-0.5, -0.5, 3.0}
+		, {0.5, -0.5, 0.0}, {1.5, -0.5, -1.0}}
+		, {{-1.5, 0.5, 4.0}, {-0.5, 0.5, 0.0}
+		, {0.5, 0.5, 3.0}, {1.5, 0.5, 4.0}}
+		, {{-1.5, 1.5, -2.0}, {-0.5, 1.5, -2.0}
+		, {0.5, 1.5, 0.0}, {1.5, 1.5, -1.0}}
+};
+
+
+const GLfloat texpts[2][2][2] = {
+		{{0.0, 0.0}, {0.0, 1.0}}
+		, {{1.0, 0.0}, {1.0, 1.0}}
+};
+
 void makeImage(void)
 {
 	int i, j;
@@ -88,7 +105,7 @@ void Sample_12_4::initGL()
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
 	glMap2f(GL_MAP2_VERTEX_3, 0, 1, 3, 4,
-			0, 1, 12, 4, &ctrlpoints[0][0][0]);
+			0, 1, 12, 4, &ctrlpoints_12_4[0][0][0]);
 	glMap2f(GL_MAP2_TEXTURE_COORD_2, 0, 1, 2, 2,
 			0, 1, 4, 2, &texpts[0][0][0]);
 	glEnable(GL_MAP2_TEXTURE_COORD_2);
